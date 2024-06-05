@@ -10,6 +10,7 @@
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/49d7584956.js" crossorigin="anonymous"></script>
 
 
     <!-- Make sure you put this AFTER Leaflet's CSS -->
@@ -24,7 +25,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
-    <script src="https://kit.fontawesome.com/49d7584956.js" crossorigin="anonymous"></script>
+    <script src="/leaflet/leaflet-hash.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -36,10 +37,9 @@
 
         .current-location-btn {
             position: absolute;
-            bottom: 20px;
-            right: 20px;
+            top: 90px;
+            left: 54px;
             z-index: 1000;
-            /* background: white; */
 
         }
 
@@ -296,14 +296,16 @@
 <body>
 
     <main>
+        <div class="container">
+            <div id="map" style="width: 100%; height: 800px;"></div>
 
-        <div id="map" style="width: 100%; height: 800px;"></div>
-
-        <div class="current-location-btn">
-            <button id="locateMeBtn" class="btn btn-primary border">
-                <i class="fa-solid fa-location-crosshairs"></i>
-            </button>
+            <div class="current-location-btn">
+                <button id="locateMeBtn" class="btn btn-primary border">
+                    <i class="fa-solid fa-location-crosshairs"></i>
+                </button>
+            </div>
         </div>
+
 
     </main>
 
@@ -385,8 +387,8 @@
         // Event click pada peta untuk menampilkan popup dengan tombol
         map.on('click', function(e) {
             var container = L.DomUtil.create('div', 'd-flex flex-column'),
-                startBtn = createButton('Start from this location', container),
-                destBtn = createButton('Go to this location', container);
+                startBtn = createButton('Mulai dari lokasi ini', container),
+                destBtn = createButton('Pergi ke lokasi ini', container);
 
             startBtn.onclick = function() {
                 control.spliceWaypoints(0, 1, e.latlng);
@@ -423,6 +425,9 @@
                 );
             });
         });
+
+        // Assuming your map instance is in a variable called map
+        var hash = new L.Hash(map);
     </script>
 </body>
 
