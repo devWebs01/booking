@@ -1,118 +1,51 @@
-<div>
-    <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="icon-grid menu-icon"></i>
-                    <span class="menu-title">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
-                    aria-controls="ui-basic">
-                    <i class="icon-layout menu-icon"></i>
-                    <span class="menu-title">UI Elements</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="ui-basic">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
-                        </li>
-                        <li class="nav-item"> <a class="nav-link"
-                                href="pages/ui-features/typography.html">Typography</a></li>
-                    </ul>
+<aside class="left-sidebar">
+    <!-- Sidebar scroll-->
+    <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+            <a href="#" class="text-nowrap logo-img">
+                <img src="{{ asset('/back-end/assets/images/logos/dark-logo.svg') }}" width="180" alt="" />
+            </a>
+            <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+                <i class="ti ti-x fs-8"></i>
+            </div>
+        </div>
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+            <ul id="sidebarnav">
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="/home" wire:navigate aria-expanded="false">
+                        <span>
+                            <i class="ti ti-layout-dashboard"></i>
+                        </span>
+                        <span class="hide-menu">Beranda</span>
+                    </a>
+                </li>
+                <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">UI COMPONENTS</span>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="#" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-article"></i>
+                        </span>
+                        <span class="hide-menu">Buttons</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded">
+                <div class="d-flex">
+                    <div class="unlimited-access-title me-3">
+                        <h6 class="fw-semibold fs-4 mb-6 text-dark w-85">Upgrade to pro</h6>
+                    </div>
+                    <div class="unlimited-access-img">
+                        <img src="{{ asset('/back-end/assets/images/backgrounds/rocket.png') }}" alt=""
+                            class="img-fluid">
+                    </div>
                 </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
-                    aria-controls="form-elements">
-                    <i class="icon-columns menu-icon"></i>
-                    <span class="menu-title">Form elements</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="form-elements">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic
-                                Elements</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-                    <i class="icon-bar-graph menu-icon"></i>
-                    <span class="menu-title">Charts</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="charts">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
-                    <i class="icon-grid-2 menu-icon"></i>
-                    <span class="menu-title">Tables</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="tables">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Basic
-                                table</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-                    <i class="icon-contract menu-icon"></i>
-                    <span class="menu-title">Icons</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="icons">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Mdi icons</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                    <i class="icon-head menu-icon"></i>
-                    <span class="menu-title">User Pages</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="auth">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a>
-                        </li>
-                        <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html">
-                                Register </a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false"
-                    aria-controls="error">
-                    <i class="icon-ban menu-icon"></i>
-                    <span class="menu-title">Error pages</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="error">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404
-                            </a></li>
-                        <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500
-                            </a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="pages/documentation/documentation.html">
-                    <i class="icon-paper menu-icon"></i>
-                    <span class="menu-title">Documentation</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
+            </div>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>

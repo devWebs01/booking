@@ -1,90 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US" dir="ltr">
 
 <head>
-
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ $title ?? '' }} - Laramap</title>
+    <title>Jadoo | Travel Agency Landing Page UI</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="{{ asset('/front-end/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/front-end/assets/img/favicons/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32"
+        href="{{ asset('/front-end/assets/img/favicons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16"
+        href="{{ asset('/front-end/assets/img/favicons/favicon-16x16.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/front-end/assets/img/favicons/favicon.ico') }}">
+    <link rel="manifest" href="{{ asset('/front-end/assets/img/favicons/manifest.json') }}">
+    <meta name="msapplication-TileImage" content="{{ asset('/front-end/assets/img/favicons/mstile-150x150.png') }}">
+    <meta name="theme-color" content="#ffffff">
 
-
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="{{ asset('/front-end/assets/css/fontawesome.css') }}">
-    <link rel="stylesheet" href="{{ asset('/front-end/assets/css/templatemo-scholar.css') }}">
-    <link rel="stylesheet" href="{{ asset('/front-end/assets/css/owl.css') }}">
-    <link rel="stylesheet" href="{{ asset('/front-end/assets/css/animate.css') }}">
-    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
-
+    <link href="{{ asset('/front-end/assets/css/theme.min.css') }}" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/21fb7efcbe.js" crossorigin="anonymous"></script>
     @livewireStyles
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-        * {
-            font-family: "Poppins", sans-serif;
-            font-weight: 600;
-        }
-    </style>
-
     @stack('styles')
     @vite([])
 </head>
 
 <body>
+    <main class="main" id="top">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-5 d-block"
+            data-navbar-on-scroll="data-navbar-on-scroll">
+            <div class="container"><a class="navbar-brand" href="#">
+                    <img src="{{ asset('/front-end/assets/img/logo.svg') }}" height="34" alt="logo" /></a><button
+                    class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon">
+                    </span></button>
+                <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
 
-    <!-- ***** Preloader Start ***** -->
-    {{-- <div id="js-preloader" class="js-preloader">
-        <div class="preloader-inner">
-            <span class="dot"></span>
-            <div class="dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </div> --}}
-    <!-- ***** Preloader End ***** -->
-
-    <!-- ***** Header Area Start ***** -->
-    <header class="header-area header-sticky">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
                     @livewire('layouts.guest-nav')
+
                 </div>
             </div>
-        </div>
-    </header>
-    <!-- ***** Header Area End ***** -->
+        </nav>
 
-    <main>
-        {{ $slot }}
-    </main>
+        <section class="container" style="padding-top: 7rem;">
+            {{ $slot }}
+        </section>
 
-    <footer>
-        <div class="container">
-            <div class="col-lg-12">
-                <p>Copyright © 2036 Scholar Organization. All rights reserved. &nbsp;&nbsp;&nbsp; Design: <a
-                        href="https://templatemo.com" rel="nofollow" target="_blank">TemplateMo</a> Distribution: <a
-                        href="https://themewagon.com" rel="nofollow" target="_blank">ThemeWagon</a></p>
-            </div>
-        </div>
-    </footer>
 
-    <!-- Scripts -->
-    <!-- Bootstrap core JavaScript -->
-    <script src="{{ asset('/front-end/vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('/front-end/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('/front-end/assets/js/isotope.min.js') }}"></script>
-    <script src="{{ asset('/front-end/assets/js/owl-carousel.js') }}"></script>
-    <script src="{{ asset('/front-end/assets/js/counter.js') }}"></script>
-    <script src="{{ asset('/front-end/assets/js/custom.js') }}"></script>
 
+    <script src="{{ asset('/front-end/vendors/@popperjs/popper.min.js') }}"></script>
+    <script src="{{ asset('/front-end/vendors/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/front-end/vendors/is/is.min.js') }}"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="{{ asset('/front-end/vendors/fontawesome/all.min.js') }}"></script>
+    <script src="{{ asset('/front-end/assets/js/theme.js') }}"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Volkhov:wght@700&amp;display=swap"
+        rel="stylesheet">
     @stack('scripts')
     @livewireScripts
 </body>
