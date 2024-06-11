@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Rental;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('pages.welcome');
+});
+
+Route::get('/test', function () {
+    $rentals = Rental::all();
+    return view('index', compact('rentals'));
 });
 
 Auth::routes();
