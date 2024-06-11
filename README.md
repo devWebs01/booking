@@ -65,3 +65,11 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 "# laramaps" 
+
+<a href="https://idx.google.com/import?url=https%3A%2F%2Fgithub.com%2FAestxyz%2Flaramaps.git">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://cdn.idx.dev/btn/open_dark_32.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://cdn.idx.dev/btn/open_light_32.svg">
+    <img height="32" alt="Open in IDX" src="https://cdn.idx.dev/btn/open_purple_32.svg">
+  </picture>
+</a>

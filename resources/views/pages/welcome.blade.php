@@ -8,16 +8,16 @@
                 <div class="col-md-5 col-lg-6 order-0 order-md-1 text-end"><img class="pt-7 pt-md-0 hero-img"
                         src="{{ asset('/front-end/assets/img/hero/hero-img.png') }}" alt="hero-header" /></div>
                 <div class="col-md-7 col-lg-6 text-md-start text-center py-6">
-                    <h4 class="fw-bold text-danger mb-3">Best Destinations around the world</h4>
-                    <h1 class="hero-title">Travel, enjoy and live a new and full life</h1>
+                    <h4 class="fw-bold text-danger mb-3">Perjalanan Terbaik ke seluruh tempat</h4>
+                    <h1 class="hero-title">Bepergian, nikmati, dan jalani hidup baru</h1>
                     <p class="mb-4 fw-medium">Built Wicket longer admire do barton vanity itself do in it.<br
-                            class="d-none d-xl-block" />Preferred to sportsmen it engrossed listening. Park gate<br
-                            class="d-none d-xl-block" />sell they west hard for the.</p>
+                            class="d-none d-xl-block">Preferred to sportsmen it engrossed listening. Park gate<br
+                            class="d-none d-xl-block">sell they west hard for the.</p>
                     <div class="text-center text-md-start"> <a
-                            class="btn btn-primary btn-lg me-md-4 mb-3 mb-md-0 border-0 primary-btn-shadow" href="#!"
-                            role="button">Find out more</a>
-                        <div class="w-100 d-block d-md-none"></div><a href="#!" role="button" data-bs-toggle="modal"
-                            data-bs-target="#popupVideo"><span
+                            class="btn btn-primary btn-lg me-md-4 mb-3 mb-md-0 border-0 primary-btn-shadow"
+                            href="#!" role="button">Find out more</a>
+                        <div class="w-100 d-block d-md-none"></div><a href="#!" role="button"
+                            data-bs-toggle="modal" data-bs-target="#popupVideo"><span
                                 class="btn btn-danger round-btn-lg rounded-circle me-3 danger-btn-shadow"> <img
                                     src="{{ asset('/front-end/assets/img/hero/play.svg') }}" width="15"
                                     alt="paly" /></span></a><span class="fw-medium">Play Demo</span>
@@ -105,7 +105,8 @@
                         <div class="card-body py-4 px-3">
                             <div class="d-flex flex-column flex-lg-row justify-content-between mb-3">
                                 <h4 class="text-secondary fw-medium"><a
-                                        class="link-900 text-decoration-none stretched-link" href="#!">Rome, Italty</a>
+                                        class="link-900 text-decoration-none stretched-link" href="#!">Rome,
+                                        Italty</a>
                                 </h4><span class="fs-1 fw-medium">$5,42k</span>
                             </div>
                             <div class="d-flex align-items-center"> <img
@@ -121,7 +122,8 @@
                         <div class="card-body py-4 px-3">
                             <div class="d-flex flex-column flex-lg-row justify-content-between mb-3">
                                 <h4 class="text-secondary fw-medium"><a
-                                        class="link-900 text-decoration-none stretched-link" href="#!">London, UK</a>
+                                        class="link-900 text-decoration-none stretched-link" href="#!">London,
+                                        UK</a>
                                 </h4><span class="fs-1 fw-medium">$4.2k</span>
                             </div>
                             <div class="d-flex align-items-center"> <img
@@ -137,7 +139,8 @@
                         <div class="card-body py-4 px-3">
                             <div class="d-flex flex-column flex-lg-row justify-content-between mb-3">
                                 <h4 class="text-secondary fw-medium"><a
-                                        class="link-900 text-decoration-none stretched-link" href="#!">Full Europe</a>
+                                        class="link-900 text-decoration-none stretched-link" href="#!">Full
+                                        Europe</a>
                                 </h4><span class="fs-1 fw-medium">$15k</span>
                             </div>
                             <div class="d-flex align-items-center"> <img
@@ -161,7 +164,8 @@
                     </div>
                     <div class="d-flex align-items-start mb-5">
                         <div class="bg-primary me-sm-4 me-3 p-3" style="border-radius: 13px"> <img
-                                src="{{ asset('/front-end/assets/img/steps/selection.svg') }}" width="22" alt="steps" />
+                                src="{{ asset('/front-end/assets/img/steps/selection.svg') }}" width="22"
+                                alt="steps" />
                         </div>
                         <div class="flex-1">
                             <h5 class="text-secondary fw-bold fs-0">Choose Destination</h5>
@@ -181,7 +185,8 @@
                     </div>
                     <div class="d-flex align-items-start mb-5">
                         <div class="bg-info me-sm-4 me-3 p-3" style="border-radius: 13px"> <img
-                                src="{{ asset('/front-end/assets/img/steps/taxi.svg') }}" width="22" alt="steps" />
+                                src="{{ asset('/front-end/assets/img/steps/taxi.svg') }}" width="22"
+                                alt="steps" />
                         </div>
                         <div class="flex-1">
                             <h5 class="text-secondary fw-bold fs-0">Reach Airport on Selected Date</h5>
@@ -192,8 +197,8 @@
                 </div>
                 <div class="col-lg-6 d-flex justify-content-center align-items-start">
                     <div class="card position-relative shadow" style="max-width: 370px;">
-                        <div class="position-absolute z-index--1 me-10 me-xxl-0" style="right:-160px;top:-210px;"> <img
-                                src="{{ asset('/front-end/assets/img/steps/bg.png') }}" style="max-width:550px;"
+                        <div class="position-absolute z-index--1 me-10 me-xxl-0" style="right:-160px;top:-210px;">
+                            <img src="{{ asset('/front-end/assets/img/steps/bg.png') }}" style="max-width:550px;"
                                 alt="shape" /> </div>
                         <div class="card-body p-3"> <img class="mb-4 mt-2 rounded-2 w-100"
                                 src="{{ asset('/front-end/assets/img/steps/booking-img.jpg') }}" alt="booking" />
@@ -205,12 +210,14 @@
                                             alt="" /></span><span class="btn icon-item"> <img
                                             src="{{ asset('/front-end/assets/img/steps/map.svg') }}"
                                             alt="" /></span><span class="btn icon-item"> <img
-                                            src="{{ asset('/front-end/assets/img/steps/send.svg') }}" alt="" /></span>
+                                            src="{{ asset('/front-end/assets/img/steps/send.svg') }}"
+                                            alt="" /></span>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center mt-n1"><img class="me-3"
-                                            src="{{ asset('/front-end/assets/img/steps/building.svg') }}" width="18"
-                                            alt="building" /><span class="fs--1 fw-medium">24 people going</span></div>
+                                            src="{{ asset('/front-end/assets/img/steps/building.svg') }}"
+                                            width="18" alt="building" /><span class="fs--1 fw-medium">24 people
+                                            going</span></div>
                                     <div class="show-onhover position-relative">
                                         <div class="card hideEl shadow position-absolute end-0 start-xl-50 bottom-100 translate-xl-middle-x ms-3"
                                             style="width: 260px;border-radius:18px;">
@@ -226,15 +233,15 @@
                                                         </h6>
                                                         <div class="progress" style="height: 6px;">
                                                             <div class="progress-bar" role="progressbar"
-                                                                style="width: 40%;" aria-valuenow="25" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
+                                                                style="width: 40%;" aria-valuenow="25"
+                                                                aria-valuemin="0" aria-valuemax="100"></div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div><button class="btn"> <img
-                                                src="{{ asset('/front-end/assets/img/steps/heart.svg') }}" width="20"
-                                                alt="step" /></button>
+                                                src="{{ asset('/front-end/assets/img/steps/heart.svg') }}"
+                                                width="20" alt="step" /></button>
                                     </div>
                                 </div>
                             </div>
@@ -250,7 +257,8 @@
                 <div class="col-lg-5">
                     <div class="mb-8 text-start">
                         <h5 class="text-secondary">Testimonials </h5>
-                        <h3 class="fs-xl-10 fs-lg-8 fs-7 fw-bold font-cursive text-capitalize">What people say about Us.
+                        <h3 class="fs-xl-10 fs-lg-8 fs-7 fw-bold font-cursive text-capitalize">What people say about
+                            Us.
                         </h3>
                     </div>
                 </div>
@@ -323,8 +331,9 @@
                                 style="height:60px;width:20px;"> <button class="carousel-control-prev position-static"
                                     type="button" data-bs-target="#testimonialIndicator" data-bs-slide="prev"><img
                                         src="{{ asset('/front-end/assets/img/icons/up.svg') }}" width="16"
-                                        alt="icon" /></button><button class="carousel-control-next position-static"
-                                    type="button" data-bs-target="#testimonialIndicator" data-bs-slide="next"><img
+                                        alt="icon" /></button><button
+                                    class="carousel-control-next position-static" type="button"
+                                    data-bs-target="#testimonialIndicator" data-bs-slide="next"><img
                                         src="{{ asset('/front-end/assets/img/icons/down.svg') }}" width="16"
                                         alt="icon" /></button></div>
                         </div>
@@ -377,7 +386,8 @@
                         src="{{ asset('/front-end/assets/img/cta/send.png') }}" style="max-width:70px;"
                         alt="send icon" /></div>
                 <div class="position-absolute end-0 top-0 z-index--1"> <img
-                        src="{{ asset('/front-end/assets/img/cta/shape-bg2') }}.png" width="264" alt="cta shape" />
+                        src="{{ asset('/front-end/assets/img/cta/shape-bg2') }}.png" width="264"
+                        alt="cta shape" />
                 </div>
                 <div class="position-absolute start-0 bottom-0 ms-3 z-index--1 d-none d-sm-block"> <img
                         src="{{ asset('/front-end/assets/img/cta/shape-bg1') }}.png" style="max-width: 340px;"
@@ -390,8 +400,9 @@
                             <div class="col-sm">
                                 <div class="input-group-icon"><input class="form-control form-little-squirrel-control"
                                         type="email" placeholder="Enter email " aria-label="email" /><img
-                                        class="input-box-icon" src="{{ asset('/front-end/assets/img/cta/mail.svg') }}"
-                                        width="17" alt="mail" /></div>
+                                        class="input-box-icon"
+                                        src="{{ asset('/front-end/assets/img/cta/mail.svg') }}" width="17"
+                                        alt="mail" /></div>
                             </div>
                             <div class="col-sm-auto"><button
                                     class="btn btn-danger orange-gradient-btn fs--1">Subscribe</button></div>
@@ -412,22 +423,28 @@
                 <div class="col-lg-2 col-md-4 mb-4 mb-lg-0 order-lg-1 order-md-2">
                     <h4 class="footer-heading-color fw-bold font-sans-serif mb-3 mb-lg-4">Company</h4>
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none" href="#!">About</a>
+                        <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none"
+                                href="#!">About</a>
                         </li>
-                        <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none" href="#!">Careers</a>
+                        <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none"
+                                href="#!">Careers</a>
                         </li>
-                        <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none" href="#!">Mobile</a>
+                        <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none"
+                                href="#!">Mobile</a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-4 mb-4 mb-lg-0 order-lg-2 order-md-3">
                     <h4 class="footer-heading-color fw-bold font-sans-serif mb-3 mb-lg-4">Contact</h4>
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none" href="#!">Help/FAQ</a>
+                        <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none"
+                                href="#!">Help/FAQ</a>
                         </li>
-                        <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none" href="#!">Press</a>
+                        <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none"
+                                href="#!">Press</a>
                         </li>
-                        <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none" href="#!">Affiliate</a>
+                        <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none"
+                                href="#!">Affiliate</a>
                         </li>
                     </ul>
                 </div>
@@ -436,22 +453,26 @@
                     <ul class="list-unstyled mb-0">
                         <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none"
                                 href="#!">Airlinefees</a></li>
-                        <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none" href="#!">Airline</a>
+                        <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none"
+                                href="#!">Airline</a>
                         </li>
-                        <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none" href="#!">Low fare
+                        <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none" href="#!">Low
+                                fare
                                 tips</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-5 col-12 mb-4 mb-md-6 mb-lg-0 order-lg-4 order-md-1">
-                    <div class="icon-group mb-4"> <a class="text-decoration-none icon-item shadow-social" id="facebook"
-                            href="#!"><i class="fab fa-facebook-f"> </i></a><a
+                    <div class="icon-group mb-4"> <a class="text-decoration-none icon-item shadow-social"
+                            id="facebook" href="#!"><i class="fab fa-facebook-f"> </i></a><a
                             class="text-decoration-none icon-item shadow-social" id="instagram" href="#!"><i
                                 class="fab fa-instagram"> </i></a><a
                             class="text-decoration-none icon-item shadow-social" id="twitter" href="#!"><i
                                 class="fab fa-twitter"> </i></a></div>
                     <h4 class="fw-medium font-sans-serif text-secondary mb-3">Discover our app</h4>
-                    <div class="d-flex align-items-center"> <a href="#!"> <img class="me-2" src="{{ asset('
-                        /front-end/assets/img/play-store.png') }}" alt="play store" /></a><a href="#!"> <img
+                    <div class="d-flex align-items-center"> <a href="#!"> <img class="me-2"
+                                src="{{ asset('
+                                                        /front-end/assets/img/play-store.png') }}"
+                                alt="play store" /></a><a href="#!"> <img
                                 src="{{ asset('/front-end/assets/img/apple-store.png') }}" alt="apple store" /></a>
                     </div>
                 </div>
