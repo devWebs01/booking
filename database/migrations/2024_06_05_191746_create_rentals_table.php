@@ -20,8 +20,6 @@ return new class extends Migration
             $table->text('address');
             $table->string('latitude');
             $table->string('longitude');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->longText('description');
             $table->timestamps();
         });
     }

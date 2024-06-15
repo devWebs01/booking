@@ -1,23 +1,23 @@
 <?php
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state};
-use App\Models\Category;
+use App\Models\Rental;
+
 
 name('mapping');
 
 state([
-    'categories' => fn() => Category::with('cars')->get(),
-    // 'getRental' => fn() => Rental::all(),
+    'firstRental' => fn() => Rental::first(),
 ]);
 
 ?>
 <x-guest-layout>
     <x-slot name="title">Mapping Pages</x-slot>
-    @include('layouts.leaflet')
 
     @volt
+    @include('layouts.leaflet-rental')
     <div>
-        <div class="container-fluid">
+        <div class="container-fluid pt-lg-5 mt-lg-5">
             <div id="map" class="rounded" style="width: 100%; height: 800px;"></div>
 
             <div class="d-flex align-items-center gap-3">

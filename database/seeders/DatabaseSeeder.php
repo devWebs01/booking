@@ -13,15 +13,12 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         \App\Models\User::factory(10)->create();
-        
+
         $this->call([
+            CarSeeder::class,
             RentalSeeder::class,
         ]);
 
-        // \App\Models\Rental::factory(10)->create();
-        \App\Models\Category::factory(10)->create();
-        \App\Models\Car::factory(10)->create();
-        \App\Models\CarImage::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

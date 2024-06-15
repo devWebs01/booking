@@ -19,7 +19,6 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->company(),
-            'rental_id' => Rental::inRandomOrder()->first()->id,
         ];
     }
 }

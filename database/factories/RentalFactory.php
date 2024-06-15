@@ -27,8 +27,6 @@ class RentalFactory extends Factory
             'address' => $this->faker->address(),
             'latitude' => $this->faker->latitude(),
             'longitude' => $this->faker->longitude(),
-            'user_id' => User::factory(),
-            'description' => $this->faker->paragraph(),
         ];
     }
 }

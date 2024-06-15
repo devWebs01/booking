@@ -341,126 +341,6 @@
             }).addTo(map);
         }
 
-        function addRentalMarkers(rentals) {
-            rentals.forEach(rental => {
-                if (rental.latitude && rental.longitude) {
-                    let marker = L.marker([rental.latitude, rental.longitude]).addTo(map);
-                    marker.bindPopup(`<b>${rental.name}</b><br>${rental.address}`).openPopup();
-                }
-            });
-        }
-
-        function initializeGeolocation() {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var lat = position.coords.latitude;
-                var lng = position.coords.longitude;
-                var currentLocation = L.latLng(lat, lng);
-
-                if (map) {
-                    map.setView(currentLocation, 15);
-                    control.spliceWaypoints(0, 1, currentLocation);
-                } else {
-                    initializeMap(currentLocation, 15);
-                }
-
-                L.marker(currentLocation).addTo(map)
-                    .bindPopup("Lokasi saat ini!")
-                    .openPopup();
-
-                localStorage.setItem('geolocationPermission', 'granted');
-            }, function() {
-                localStorage.setItem('geolocationPermission', 'denied');
-                alert(
-                    "Unable to retrieve your location. Please refresh the page if you want to enable location services."
-                );
-            });
-        }
-
-        const geolocationPermission = localStorage.getItem('geolocationPermission');
-
-        if (geolocationPermission === 'granted') {
-            initializeGeolocation();
-        } else if (geolocationPermission !== 'denied') {
-            initializeGeolocation();
-        } else {
-            initializeMap([-1.6235792132201292, 103.57451818465776], 15);
-        }
-
-        addRentalMarkers(rentals);
-
-        function createButton(label, container) {
-            var btn = L.DomUtil.create('button', 'btn btn-primary btn-sm my-1', container);
-            btn.setAttribute('type', 'button');
-            btn.innerHTML = label;
-            return btn;
-        }
-
-        map.on('click', function(e) {
-            var container = L.DomUtil.create('div', 'd-flex flex-column'),
-                startBtn = createButton('Mulai dari lokasi ini', container),
-                destBtn = createButton('Pergi ke lokasi ini', container);
-
-            startBtn.onclick = function() {
-                control.spliceWaypoints(0, 1, e.latlng);
-                map.closePopup();
-            };
-
-            destBtn.onclick = function() {
-                control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);
-                map.closePopup();
-            };
-
-            L.popup()
-                .setContent(container)
-                .setLatLng(e.latlng)
-                .openOn(map);
-        });
-
-        document.getElementById('locateMeBtn').addEventListener('click', function() {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var lat = position.coords.latitude;
-                var lng = position.coords.longitude;
-                var currentLocation = L.latLng(lat, lng);
-
-                control.spliceWaypoints(0, 1, currentLocation);
-                map.setView(currentLocation, 15);
-
-                L.marker(currentLocation).addTo(map)
-                    .bindPopup("Lokasi saat ini!")
-                    .openPopup();
-            }, function() {
-                alert(
-                    "Unable to retrieve your location. Please check your location settings and try again."
-                );
-            });
-        });
-
-        // Assuming your map instance is in a variable called map
-        var hash = new L.Hash(map);
-    </script> --}}
-
-        <script>
-            let map;
-        let control;
-        let rentals = @json($rentals);
-
-        function initializeMap(center, zoom) {
-            map = L.map('map').setView(center, zoom);
-            L.tileLayer('http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}', {
-                maxZoom: 20,
-                subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-            }).addTo(map);
-
-            control = L.Routing.control({
-                waypoints: [
-                    L.latLng(null),
-                    L.latLng(null)
-                ],
-                routeWhileDragging: true,
-                geocoder: L.Control.Geocoder.nominatim()
-            }).addTo(map);
-        }
-
         function createButton(label, container) {
             var btn = L.DomUtil.create('button', 'btn btn-primary btn-sm my-1', container);
             btn.setAttribute('type', 'button');
@@ -520,7 +400,8 @@
             }, function() {
                 localStorage.setItem('geolocationPermission', 'denied');
                 alert(
-                    "Unable to retrieve your location. Please refresh the page if you want to enable location services.");
+                    "Unable to retrieve your location. Please refresh the page if you want to enable location services."
+                    );
             });
         }
 
@@ -571,13 +452,173 @@
                     .openPopup();
             }, function() {
                 alert(
-                    "Unable to retrieve your location. Please check your location settings and try again.");
+                    "Unable to retrieve your location. Please check your location settings and try again."
+                    );
             });
         });
 
         // Assuming your map instance is in a variable called map
         var hash = new L.Hash(map);
+    </script> --}}
+
+        <script>
+            let map;
+        let control;
+        let rentals = @json($rentals);
+
+        // Define rental icon using SVG
+        const rentalIcon = L.divIcon({
+            html: `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                     <circle cx="16" cy="16" r="16" fill="#1E90FF"/>
+                     <text x="16" y="21" font-size="16" font-family="Arial" fill="white" text-anchor="middle">R</text>
+                   </svg>`,
+            className: 'rental-icon', // Optional: Add a class for custom styling
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
+        });
+
+        // Define current location icon using SVG
+        const currentLocationIcon = L.divIcon({
+            html: `<svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#dd2c2c" d="M32,0C18.746,0,8,10.746,8,24c0,5.219,1.711,10.008,4.555,13.93c0.051,0.094,0.059,0.199,0.117,0.289l16,24 C29.414,63.332,30.664,64,32,64s2.586-0.668,3.328-1.781l16-24c0.059-0.09,0.066-0.195,0.117-0.289C54.289,34.008,56,29.219,56,24 C56,10.746,45.254,0,32,0z M32,32c-4.418,0-8-3.582-8-8s3.582-8,8-8s8,3.582,8,8S36.418,32,32,32z"></path> </g></svg>`,
+            className: 'current-location-icon', // Optional: Add a class for custom styling
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
+        });
+
+        function initializeMap(center, zoom) {
+            map = L.map('map').setView(center, zoom);
+            L.tileLayer('http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}', {
+                maxZoom: 20,
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+            }).addTo(map);
+
+            control = L.Routing.control({
+                waypoints: [
+                    L.latLng(null),
+                    L.latLng(null)
+                ],
+                routeWhileDragging: true,
+                geocoder: L.Control.Geocoder.nominatim()
+            }).addTo(map);
+        }
+
+        function createButton(label, container) {
+            var btn = L.DomUtil.create('button', 'btn btn-primary btn-sm my-1', container);
+            btn.setAttribute('type', 'button');
+            btn.innerHTML = label;
+            return btn;
+        }
+
+        function addRentalMarkers(rentals) {
+            rentals.forEach(rental => {
+                if (rental.latitude && rental.longitude) {
+                    let marker = L.marker([rental.latitude, rental.longitude], { icon: rentalIcon }).addTo(map);
+
+                    var container = L.DomUtil.create('div', 'd-flex flex-column');
+                    container.innerHTML = `<b>${rental.name}</b><br>${rental.address}`;
+
+                    var startBtn = createButton('Mulai dari lokasi ini', container);
+                    var destBtn = createButton('Pergi ke lokasi ini', container);
+
+                    startBtn.onclick = function() {
+                        control.spliceWaypoints(0, 1, L.latLng(rental.latitude, rental.longitude));
+                        map.closePopup();
+                    };
+
+                    destBtn.onclick = function() {
+                        control.spliceWaypoints(control.getWaypoints().length - 1, 1, L.latLng(rental.latitude, rental.longitude));
+                        map.closePopup();
+                    };
+
+                    marker.bindPopup(container);
+                }
+            });
+        }
+
+        function initializeGeolocation() {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+                var currentLocation = L.latLng(lat, lng);
+
+                if (map) {
+                    map.setView(currentLocation, 15);
+                    control.spliceWaypoints(0, 1, currentLocation);
+                } else {
+                    initializeMap(currentLocation, 15);
+                }
+
+                L.marker(currentLocation, { icon: currentLocationIcon }).addTo(map)
+                    .bindPopup("Lokasi saat ini!")
+                    .openPopup();
+
+                localStorage.setItem('geolocationPermission', 'granted');
+            }, function() {
+                localStorage.setItem('geolocationPermission', 'denied');
+                alert(
+                    "Unable to retrieve your location. Please refresh the page if you want to enable location services."
+                );
+            });
+        }
+
+        const geolocationPermission = localStorage.getItem('geolocationPermission');
+
+        if (geolocationPermission === 'granted') {
+            initializeGeolocation();
+        } else if (geolocationPermission !== 'denied') {
+            initializeGeolocation();
+        } else {
+            initializeMap([-1.6235792132201292, 103.57451818465776], 15);
+        }
+
+        addRentalMarkers(rentals);
+
+        map.on('click', function(e) {
+            var container = L.DomUtil.create('div', 'd-flex flex-column'),
+                startBtn = createButton('Mulai dari lokasi ini', container),
+                destBtn = createButton('Pergi ke lokasi ini', container);
+
+            startBtn.onclick = function() {
+                control.spliceWaypoints(0, 1, e.latlng);
+                map.closePopup();
+            };
+
+            destBtn.onclick = function() {
+                control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);
+                map.closePopup();
+            };
+
+            L.popup()
+                .setContent(container)
+                .setLatLng(e.latlng)
+                .openOn(map);
+        });
+
+        document.getElementById('locateMeBtn').addEventListener('click', function() {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+                var currentLocation = L.latLng(lat, lng);
+
+                control.spliceWaypoints(0, 1, currentLocation);
+                map.setView(currentLocation, 15);
+
+                L.marker(currentLocation, { icon: currentLocationIcon }).addTo(map)
+                    .bindPopup("Lokasi saat ini!")
+                    .openPopup();
+            }, function() {
+                alert(
+                    "Unable to retrieve your location. Please check your location settings and try again."
+                );
+            });
+        });
+
+        var hash = new L.Hash(map);
         </script>
+
+
 
 
     </body>

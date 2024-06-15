@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 Route::get('/test', function () {
     $rentals = Rental::all();
-    return view('index', compact('rentals'));
+    return view('map-leaflet.index', compact('rentals'));
 });
 
 Auth::routes();
