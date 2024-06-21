@@ -49,12 +49,12 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get all of the rentals for the Rental
+     * Get all of the transactions for the Car
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function rentals(): HasMany
+    public function transactions(): HasMany
     {
-        return $this->hasMany(Rental::class);
+        return $this->hasMany(Transaction::class);
     }
 }

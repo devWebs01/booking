@@ -8,17 +8,20 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     * 
+     *
      */
     public function up(): void
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('price');
-            $table->longText('description')->nullable();
             $table->string('capacity');
             $table->string('space');
+            $table->string('transmission');
+            $table->boolean('status')->default(1);
+            $table->longText('description')->nullable();
             $table->timestamps();
         });
     }

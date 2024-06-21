@@ -65,11 +65,13 @@ class CarSeeder extends Seeder
 
                 // Create car entry
                 $car = Car::create([
+                    'category_id' => $item['category_id'],
                     'name' => $item['name'],
                     'price' => $item['price'],
-                    'description' => Str::random(100),
                     'capacity' => $item['capacity'],
                     'space' => $item['space'],
+                    'transmission' => $item['transmission'],
+                    'description' => Str::random(100),
                 ]);
 
                 // Create car image entry

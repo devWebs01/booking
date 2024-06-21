@@ -1,22 +1,20 @@
 <?php
-use function Laravel\Folio\name;
+
 use function Livewire\Volt\{state};
 use App\Models\Rental;
 
-
-name('mapping');
 
 state([
     'firstRental' => fn() => Rental::first(),
 ]);
 
 ?>
-<x-guest-layout>
-    <x-slot name="title">Mapping Pages</x-slot>
 
-    @volt
-    @include('layouts.leaflet-rental')
+
+@volt
     <div>
+        @include('layouts.leaflet-rental')
+
         <div class="container-fluid pt-lg-5 mt-lg-5">
             <div id="map" class="rounded" style="width: 100%; height: 800px;"></div>
 
@@ -34,6 +32,4 @@ state([
             </div>
         </div>
     </div>
-    @endvolt
-
-</x-guest-layout>
+@endvolt

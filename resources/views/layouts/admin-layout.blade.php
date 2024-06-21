@@ -40,7 +40,7 @@
                         </ul>
                         <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                               
+
                                 <li class="nav-item dropdown">
                                     <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -86,6 +86,11 @@
         <script src="{{ asset('/back-end/assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
         <script src="{{ asset('/back-end/assets/libs/simplebar/dist/simplebar.js') }}"></script>
         <script src="{{ asset('/back-end/assets/js/dashboard.js') }}"></script>
+        <script>
+            window.addEventListener('refresh-page', event => {
+               window.location.reload(false);
+            })
+        </script>
         @stack('scripts')
         @livewireScripts
     </body>

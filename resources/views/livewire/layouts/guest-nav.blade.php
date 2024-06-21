@@ -14,14 +14,21 @@
                         <a class="nav-link fw-medium" aria-current="page" href="/">Beranda</a>
                     </li>
                     <li class="nav-item px-3 px-xl-4">
-                        <a class="nav-link fw-medium" aria-current="page" href="{{ route('mapping') }}">Rental Mobil</a>
+                        <a class="nav-link fw-medium" aria-current="page" href="{{ route('geolocation') }}">Rental
+                            Mobil</a>
                     </li>
-                    <li class="nav-item px-3 px-xl-4">
-                        <a class="nav-link fw-medium" aria-current="page" href="{{ route('login') }}">Login</a>
-                    </li>
-                    <li class="nav-item px-3 px-xl-4">
-                        <a class="nav-link fw-medium" aria-current="page" href="{{ route('register') }}">Register</a>
-                    </li>
+                    @auth
+                        <li class="nav-item px-3 px-xl-4">
+                            <a class="nav-link fw-medium" aria-current="page" href="{{ route('home') }}">Home</a>
+                        </li>
+                    @else
+                        <li class="nav-item px-3 px-xl-4">
+                            <a class="nav-link fw-medium" aria-current="page" href="{{ route('login') }}">Login</a>
+                        </li>
+                        <li class="nav-item px-3 px-xl-4">
+                            <a class="nav-link fw-medium" aria-current="page" href="{{ route('register') }}">Register</a>
+                        </li>
+                    @endauth
                 </ul>
 
             </div>
@@ -42,7 +49,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('mapping') }}" class="nav-link">
+                <a href="{{ route('geolocation') }}" class="nav-link">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor"
                         class="bi bi-map" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"

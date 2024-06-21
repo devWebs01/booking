@@ -6,7 +6,7 @@ use App\Models\Car;
 name('welcome');
 
 state([
-    'cars' => fn() => Car::with('carImages')->limit(6)->get(),
+    'cars' => fn() => Car::with('carImages')->inRandomOrder()->limit(6)->get(),
 ]);
 
 ?>
@@ -99,8 +99,8 @@ state([
                 <img src="{{ asset('/front-end/assets/img/dest/shape.svg') }}" alt="destination" />
             </div>
             <div class="mb-7 text-center">
-                <h5 class="text-secondary">Top Selling </h5>
-                <h3 class="fs-xl-10 fs-lg-8 fs-7 fw-bold font-cursive text-capitalize">Top Destinations</h3>
+                <h5 class="text-secondary">Mobil pilihan</h5>
+                <h3 class="fs-xl-10 fs-lg-8 fs-7 fw-bold font-cursive text-capitalize">Top Rental</h3>
             </div>
             @volt
             <div class="row">
@@ -112,54 +112,26 @@ state([
                                 alt="shape" />
                         </div>
                         <div class="card-body p-3">
-                            <img class="mb-4 mt-2 rounded-2 w-100"
-                                src="{{ Storage::url($car->carImages->first()->image_path) }}" alt="booking" />
+                            <img class="mb-4 mt-2 rounded-2 img object-fit-cover"
+                                src="{{ Storage::url($car->carImages->first()->image_path) }}" alt="booking"
+                                height="200px" width="100%" />
                             <div>
                                 <h5 class="fw-medium">{{ $car->name }}</h5>
-                                <p class="fs--1 mb-3 fw-medium">{{ $car->space }} | {{ $car->capacity }}</p>
-                                <div class="icon-group mb-4">
-                                    <span class="btn icon-item">
-                                        <img src="{{ asset('/front-end/assets/img/steps/leaf.svg') }}" alt="" />
-                                    </span>
-                                    <span class="btn icon-item">
-                                        <img src="{{ asset('/front-end/assets/img/steps/map.svg') }}" alt="" />
-                                    </span>
-                                    <span class="btn icon-item">
-                                        <img src="{{ asset('/front-end/assets/img/steps/send.svg') }}" alt="" />
-                                    </span>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center mt-n1">
-                                        <img class="me-3" src="{{ asset('/front-end/assets/img/steps/building.svg') }}"
-                                            width="18" alt="building" /><span class="fs--1 fw-medium">24 people
-                                            going</span>
-                                    </div>
-                                    <div class="show-onhover position-relative">
-                                        <div class="card hideEl shadow position-absolute end-0 start-xl-50 bottom-100 translate-xl-middle-x ms-3"
-                                            style="width: 260px;border-radius:18px;">
-                                            <div class="card-body py-3">
-                                                <div class="d-flex">
-                                                    <div style="margin-right: 10px">
-                                                        <img class="rounded-circle"
-                                                            src="{{ asset('/front-end/assets/img/steps/favorite-placeholder.png') }}"
-                                                            width="50" alt="favorite" />
-                                                    </div>
-                                                    <div>
-                                                        <p class="fs--1 mb-1 fw-medium">Ongoing </p>
-                                                        <h5 class="fw-medium mb-3">Trip to rome</h5>
-                                                        <h6 class="fs--1 fw-medium mb-2"><span>40%</span> completed
-                                                        </h6>
-                                                        <div class="progress" style="height: 6px;">
-                                                            <div class="progress-bar" role="progressbar"
-                                                                style="width: 40%;" aria-valuenow="25" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div><button class="btn">
-                                            <img src="{{ asset('/front-end/assets/img/steps/heart.svg') }}" width="20"
-                                                alt="step" /></button>
+                                <p class="fs--1 mb-3 fw-medium">{{ $car->transmission }}
+                                </p>
+                                <div class="show-onhover position-relative">
+                                    <div class="d-flex gap-3">
+                                        <!-- Tooltip untuk Koper -->
+                                        <button class="btn icon-item" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="{{ $car->space }} Koper">
+                                            <i class="fa-solid fa-car"></i>
+                                        </button>
+
+                                        <!-- Tooltip untuk Penumpang -->
+                                        <button class="btn icon-item" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="{{ $car->capacity }} Penumpang">
+                                            <i class="fa-solid fa-suitcase-rolling"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -169,6 +141,6 @@ state([
                 @endforeach
             </div>
             @endvolt
-    </section>
 
+    </section>
 </x-guest-layout>

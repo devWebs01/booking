@@ -6,15 +6,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Jadoo | Travel Agency Landing Page UI</title>
+        <title>{{ $title ?? '' }} | Rent Car Landing Page UI</title>
         <!-- PWA  -->
         <meta name="theme-color" content="#ffffff">
         <link rel="apple-touch-icon" sizes="180x180"
             href="{{ asset('/front-end/assets/img/favicons/apple-touch-icon.png') }}">
         <link rel="manifest" href="{{ asset('/manifest.json') }}">
-        {{-- <link rel="manifest" href="{{ asset('/front-end/assets/img/favicons/manifest.json') }}"> --}}
-
-
 
         <link rel="icon" type="image/png" sizes="32x32"
             href="{{ asset('/front-end/assets/img/favicons/favicon-32x32.png') }}">
@@ -24,7 +21,9 @@
         <meta name="msapplication-TileImage" content="{{ asset('/front-end/assets/img/favicons/mstile-150x150.png') }}">
 
         <link href="{{ asset('/front-end/assets/css/theme.min.css') }}" rel="stylesheet" />
+
         <script src="https://kit.fontawesome.com/21fb7efcbe.js" crossorigin="anonymous"></script>
+
         @livewireStyles
         @stack('styles')
         @vite([])
@@ -131,7 +130,6 @@
                 <p class="mb-0 text-secondary fs--1 fw-medium">All rights reserved@jadoo.co </p>
             </div>
 
-
             <script src="{{ asset('/front-end/vendors/@popperjs/popper.min.js') }}"></script>
             <script src="{{ asset('/front-end/vendors/bootstrap/bootstrap.min.js') }}"></script>
             <script src="{{ asset('/front-end/vendors/is/is.min.js') }}"></script>
@@ -143,8 +141,16 @@
                 rel="stylesheet">
 
             <script src="{{ asset('/sw.js') }}"></script>
+
             <script>
-                if ("serviceWorker" in navigator) {
+                document.addEventListener('DOMContentLoaded', function () {
+                    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                        return new bootstrap.Tooltip(tooltipTriggerEl)
+                    })
+                });
+
+            if ("serviceWorker" in navigator) {
                 // Register a service worker hosted at the root of the
                 // site using the default scope.
                 navigator.serviceWorker.register("/sw.js").then(
