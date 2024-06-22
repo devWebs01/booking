@@ -7,6 +7,9 @@
         <title>Modernize Free</title>
         <link rel="shortcut icon" type="image/png" href="{{ asset('/back-end/assets/images/logos/favicon.png') }}" />
         <link rel="stylesheet" href="{{ asset('/back-end/assets/css/styles.min.css') }}" />
+
+        <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
         @vite([])
     </head>
 
@@ -25,6 +28,27 @@
         </div>
         <script src="{{ asset('/back-end/assets/libs/jquery/dist/jquery.min.js') }}"></script>
         <script src="{{ asset('/back-end/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const passwordField = document.getElementById('password');
+                const togglePasswordButton = document.getElementById('togglePassword');
+                const toggleIcon = document.getElementById('toggleIcon');
+
+                togglePasswordButton.addEventListener('click', function() {
+                    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordField.setAttribute('type', type);
+
+                    // Toggle icon class
+                    if (type === 'text') {
+                        toggleIcon.classList.remove('bi-eye');
+                        toggleIcon.classList.add('bi-eye-slash');
+                    } else {
+                        toggleIcon.classList.remove('bi-eye-slash');
+                        toggleIcon.classList.add('bi-eye');
+                    }
+                });
+            });
+        </script>
     </body>
 
 </html>

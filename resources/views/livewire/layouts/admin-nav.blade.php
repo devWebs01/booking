@@ -25,7 +25,7 @@
                     <span class="hide-menu">Akun Pengguna</span>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('super-user.index') }}" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('admin.index') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-article"></i>
                         </span>

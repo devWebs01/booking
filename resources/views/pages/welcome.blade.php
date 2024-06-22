@@ -103,43 +103,43 @@ state([
                 <h3 class="fs-xl-10 fs-lg-8 fs-7 fw-bold font-cursive text-capitalize">Top Rental</h3>
             </div>
             @volt
-            <div class="row">
-                @foreach ($cars as $car)
-                <div class="col-md-4 mb-4">
-                    <div class="card position-relative shadow" style="max-width: 370px;">
-                        <div class="position-absolute z-index--1 me-10 me-xxl-0" style="right:-160px;top:-210px;">
-                            <img src="{{ asset('/front-end/assets/img/steps/bg.png') }}" style="max-width:550px;"
-                                alt="shape" />
-                        </div>
-                        <div class="card-body p-3">
-                            <img class="mb-4 mt-2 rounded-2 img object-fit-cover"
-                                src="{{ Storage::url($car->carImages->first()->image_path) }}" alt="booking"
-                                height="200px" width="100%" />
-                            <div>
-                                <h5 class="fw-medium">{{ $car->name }}</h5>
-                                <p class="fs--1 mb-3 fw-medium">{{ $car->transmission }}
-                                </p>
-                                <div class="show-onhover position-relative">
-                                    <div class="d-flex gap-3">
-                                        <!-- Tooltip untuk Koper -->
-                                        <button class="btn icon-item" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="{{ $car->space }} Koper">
-                                            <i class="fa-solid fa-car"></i>
-                                        </button>
+                <div class="row">
+                    @foreach ($cars as $car)
+                        <div class="col-md-6 mb-4">
+                            <div class="card position-relative shadow">
+                                <div class="position-absolute z-index--1 me-10 me-xxl-0" style="right:-160px;top:-210px;">
+                                    <img src="{{ asset('/front-end/assets/img/steps/bg.png') }}" style="max-width:550px;"
+                                        alt="shape" />
+                                </div>
+                                <div class="card-body p-3">
+                                    <img class="mb-4 mt-2 rounded-2 img"
+                                        src="{{ Storage::url($car->carImages->first()->image_path) }}" alt="booking"
+                                        height="300px" width="100%" style="object-fit: cover" />
+                                    <div>
+                                        <h5 class="fw-medium">{{ $car->name }}</h5>
+                                        <p class="fs--1 mb-3 fw-medium">{{ $car->transmission }}
+                                        </p>
+                                        <div class="show-onhover position-relative">
+                                            <div class="d-flex gap-3">
+                                                <!-- Tooltip untuk Koper -->
+                                                <button class="btn icon-item" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="{{ $car->space }} Koper">
+                                                    <i class="fa-solid fa-car"></i>
+                                                </button>
 
-                                        <!-- Tooltip untuk Penumpang -->
-                                        <button class="btn icon-item" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="{{ $car->capacity }} Penumpang">
-                                            <i class="fa-solid fa-suitcase-rolling"></i>
-                                        </button>
+                                                <!-- Tooltip untuk Penumpang -->
+                                                <button class="btn icon-item" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="{{ $car->capacity }} Penumpang">
+                                                    <i class="fa-solid fa-suitcase-rolling"></i>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-                @endforeach
-            </div>
             @endvolt
 
     </section>
