@@ -1,52 +1,53 @@
 <?php
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, computed, usesPagination};
-use App\Models\User;
+use App\Models\car;
 
-name('admin.index');
+name('cars.index');
 usesPagination(theme: 'bootstrap');
 
 state(['search'])->url();
 
-$users = computed(function () {
+$cars = computed(function () {
     if ($this->search == null) {
-        return User::query()->where('role', 'admin')->latest()->paginate(10);
+        return car::query()->latest()->paginate(10);
     } else {
-        return User::where(function ($query) {
+        return car::where(function ($query) {
             $query
                 ->where('name', 'LIKE', '%' . $this->search . '%')
-                ->orWhere('email', 'LIKE', '%' . $this->search . '%')
-                ->orWhere('phone_number', 'LIKE', '%' . $this->search . '%');
+                ->orWhere('category_id', 'LIKE', '%' . $this->search . '%')
+                ->orWhere('transmission', 'LIKE', '%' . $this->search . '%');
         })
-            ->where('role', 'admin')
             ->latest()
             ->paginate(10);
     }
 });
 
-$deleted = function (User $user) {
-    $user->delete();
+$deleted = function (car $car) {
+    $car->delete();
 
-    session()->flash('status', 'Akun Admin berhasil dihapus.');
+    $this->dispatch('status');
 };
 
 ?>
 <x-admin-layout>
-    <x-slot name="title">Data Admin</x-slot>
+    <x-slot name="title">Data Mobil</x-slot>
 
     @volt
         <div>
+            <x-alert on="status">
+            </x-alert>
             <div class="card">
                 <div class="card-header">
                     <div class="row justify-content-between gap-2">
                         <div class="col-md">
-                            <a wire:navigate class="btn btn-primary" href="{{ route('admin.create') }}" role="button">Tambah
-                                Admin</a>
-
+                            <a wire:navigate class="btn btn-primary" href="{{ route('cars.create') }}" role="button">Tambah
+                                Mobil</a>
+                            <span wire:loading class="spinner-border spinner-border-sm ms-3"></span>
                         </div>
                         <div class="col-md">
-                            <input wire:model.live="search" type="search" class="form-control" name="search" id="search"
-                                aria-describedby="helpId" placeholder="..." />
+                            <input wire:model.live="search" type="search" class="form-control" name="search"
+                                id="search" aria-describedby="helpId" placeholder="..." />
                         </div>
                     </div>
                 </div>
@@ -57,22 +58,27 @@ $deleted = function (User $user) {
                                 <tr>
                                     <th>No.</th>
                                     <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>Telp</th>
-                                    <th>Tombol</th>
+                                    <th>Transmisi</th>
+                                    <th>Status</th>
+                                    <th>Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($this->users as $no => $item)
+                                @foreach ($this->cars as $no => $item)
                                     <tr>
                                         <td>{{ ++$no }}.</td>
                                         <td>{{ $item->name }}</td>
-                                        <td>{{ $item->email }}</td>
-                                        <td>{{ $item->phone_number }}</td>
+                                        <td>{{ $item->transmission }}</td>
+                                        <td>
+                                            <span class="badge bg-{{ $item->status == 1 ? 'success' : 'warning' }}">
+                                                {{ $item->status == 1 ? 'AKTIF' : 'TIDAK AKTIF' }}
+                                            </span>
+
+                                        </td>
                                         <td>
                                             <div class="d-flex gap-2 justify-content-center">
                                                 <a type="button" class="btn btn-warning btn-sm"
-                                                    href="{{ route('admin.edit', ['user' => $item->id]) }}" wire:navigate>
+                                                    href="{{ route('cars.edit', ['car' => $item->id]) }}" wire:navigate>
                                                     Edit
                                                 </a>
                                                 <button type="button" class="btn btn-danger btn-sm"
@@ -88,7 +94,7 @@ $deleted = function (User $user) {
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $this->users->links() }}
+                        {{ $this->cars->links() }}
                     </div>
                 </div>
             </div>

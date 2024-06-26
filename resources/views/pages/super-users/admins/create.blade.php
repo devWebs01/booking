@@ -19,7 +19,7 @@ $store = function () {
     $validateData['role'] = 'admin';
     User::create($validateData);
 
-    session()->flash('status', 'Akun Admin ' . $this->name . 'berhasil dibuat.');
+    $this->dispatch('status');
 
     $this->reset('name', 'email', 'password', 'phone_number');
 
@@ -32,6 +32,8 @@ $store = function () {
 
     @volt
         <div>
+            <x-alert on="status">
+            </x-alert>
             <div class="card">
                 <div class="card-header">
                     <div class="alert alert-primary" role="alert">

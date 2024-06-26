@@ -10,6 +10,9 @@
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+
     @livewireStyles
     @stack('styles')
     @vite([])
@@ -85,10 +88,10 @@
             <!--  Header End -->
             <main class="container-fluid">
                 @if (session('status'))
-                    <div class="alert alert-primary d-flex align-items-center" role="alert">
-                        <i class="ti ti-bell-ringing fs-5 me-3"></i>
+                    <div class="alert alert-primary d-flex align-items-center alert-fixed" role="alert">
+                        <i class="bi bi-bell me-2"></i>
                         <div>
-                            {{ session('status') }}
+                            {{ session('status') ?? 'Proses Berhasil!' }}
                         </div>
                     </div>
                 @endif
@@ -103,6 +106,8 @@
     <script src="{{ asset('/back-end/assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ asset('/back-end/assets/libs/simplebar/dist/simplebar.js') }}"></script>
     <script src="{{ asset('/back-end/assets/js/dashboard.js') }}"></script>
+    {{-- <script src="//unpkg.com/alpinejs" defer></script> --}}
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const togglePasswordButtons = document.querySelectorAll('.toggle-password');
@@ -126,6 +131,10 @@
                     }
                 });
             });
+        });
+
+        window.addEventListener('show-toast', event => {
+            $('.toast').toast('show');
         });
     </script>
     @stack('scripts')
