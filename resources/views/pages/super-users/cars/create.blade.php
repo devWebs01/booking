@@ -10,7 +10,6 @@ usesFileUploads();
 
 state([
     'categories' => fn() => Category::get(),
-    'images' => [],
     'name',
     'price',
     'description',
@@ -21,42 +20,32 @@ state([
     'status',
 ]);
 
-$removeMe = fn($index) => array_splice($this->images, $index, 1);
-
 $store = function (car $cari) {
     $validate = $this->validate([
         'name' => 'required|string|max:255',
         'price' => 'required|numeric|min:0',
-        'description' => 'nullable|string|max:500',
+        'description' => 'nullable|string',
         'capacity' => 'required|string|max:50',
         'space' => 'required|string|max:50',
         'category_id' => 'required|exists:categories,id',
-        'transmission' => 'required|in:manual,automatic',
+        'transmission' => 'required|in:Manual,Automatic,Manual/Automatic',
         'status' => 'required|boolean',
-        'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg',
     ]);
 
     $car = Car::create($validate);
 
-    foreach ($this->images as $image) {
-        $imagePath = $image->store('car-images', 'public');
-
-        CarImage::create([
-            'car_id' => $car->id,
-            'path' => $imagePath,
-        ]);
-    }
-
     $this->reset('name', 'price', 'description', 'capacity', 'space', 'category_id', 'transmission', 'status');
+
+    $this->redirectRoute('cars.index', navigate: true);
 };
 
 ?>
 <x-admin-layout>
     <x-slot name="title">Tambah Mobil</x-slot>
+    @include('layouts.text-editor')
 
     @volt
         <div>
-            @include('layouts.text-editor')
             <x-alert on="status">
             </x-alert>
             <div class="card">
@@ -84,7 +73,7 @@ $store = function (car $cari) {
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama Mobil</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                wire:model="name" id="name" aria-describedby="nameId" placeholder="Enter car name"
+                                wire:model.lazy="name" id="name" aria-describedby="nameId" placeholder="Enter car name"
                                 autofocus autocomplete="name" />
                             @error('name')
                                 <small id="nameId" class="form-text text-danger">{{ $message }}</small>
@@ -95,7 +84,7 @@ $store = function (car $cari) {
                                 <div class="mb-3">
                                     <label for="status" class="form-label">Status</label>
                                     <select class="form-select @error('status') is-invalid @enderror"
-                                        wire:model="status" id="status">
+                                        wire:model.lazy="status" id="status">
                                         <option selected>Select one</option>
                                         <option value="1">Aktif</option>
                                         <option value="0">Tidak Aktif</option>
@@ -109,7 +98,7 @@ $store = function (car $cari) {
                                 <div class="mb-3">
                                     <label for="price" class="form-label">Harga</label>
                                     <input type="number" class="form-control @error('price') is-invalid @enderror"
-                                        wire:model="price" id="price" aria-describedby="priceId"
+                                        wire:model.lazy="price" id="price" aria-describedby="priceId"
                                         placeholder="Enter car price" />
                                     @error('price')
                                         <small id="priceId" class="form-text text-danger">{{ $message }}</small>
@@ -123,7 +112,7 @@ $store = function (car $cari) {
                                 <div class="mb-3">
                                     <label for="capacity" class="form-label">Kapasitas Kursi</label>
                                     <input type="number" class="form-control @error('capacity') is-invalid @enderror"
-                                        wire:model="capacity" id="capacity" aria-describedby="capacityId"
+                                        wire:model.lazy="capacity" id="capacity" aria-describedby="capacityId"
                                         placeholder="Enter car capacity" />
                                     @error('capacity')
                                         <small id="capacityId" class="form-text text-danger">{{ $message }}</small>
@@ -134,7 +123,7 @@ $store = function (car $cari) {
                                 <div class="mb-3">
                                     <label for="space" class="form-label">Bagasi</label>
                                     <input type="number" class="form-control @error('space') is-invalid @enderror"
-                                        wire:model="space" id="space" aria-describedby="spaceId"
+                                        wire:model.lazy="space" id="space" aria-describedby="spaceId"
                                         placeholder="Enter car space" />
                                     @error('space')
                                         <small id="spaceId" class="form-text text-danger">{{ $message }}</small>
@@ -148,7 +137,7 @@ $store = function (car $cari) {
                                 <div class="mb-3">
                                     <label for="transmission" class="form-label">Transmisi</label>
                                     <select class="form-select @error('transmission') is-invalid @enderror"
-                                        wire:model="transmission" id="transmission">
+                                        wire:model.lazy="transmission" id="transmission">
                                         <option selected>Select one</option>
                                         <option value="Manual/Automatic">Manual/Automatic</option>
                                         <option value="Manual">Manual</option>
@@ -163,7 +152,7 @@ $store = function (car $cari) {
                                 <div class="mb-3">
                                     <label for="category_id" class="form-label">Kategori</label>
                                     <select class="form-select @error('category_id') is-invalid @enderror"
-                                        wire:model="category_id" id="category_id">
+                                        wire:model.lazy="category_id" id="category_id">
                                         <option selected>Select one</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -176,35 +165,14 @@ $store = function (car $cari) {
                             </div>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3" wire:ignore>
                             <label for="description" class="form-label">Deksripsi Mobil</label>
-                            <textarea wire:ignore class="form-control @error('description') is-invalid @enderror" wire:model="description"
-                                id="editor" rows="3"></textarea>
+                            <textarea class="form-control @error('description') is-invalid @enderror" wire:model="description" id="editor"
+                                rows="3"></textarea>
 
                             @error('description')
                                 <small id="descriptionId" class="form-text text-danger">{{ $message }}</small>
                             @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="images" class="form-label">Upload Gambar</label>
-                            <input multiple type="file" class="form-control @error('images') is-invalid @enderror"
-                                wire:model="images" id="images" aria-describedby="imagesId"
-                                placeholder="Enter car images" autofocus autocomplete="images" />
-                            @error('images.*')
-                                <small id="imagesId" class="form-text text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            @foreach ($images as $image)
-                                @if ($image)
-                                    <img src="{{ $image->temporaryUrl() }}">
-                                    <div wire:key="{{ $loop->index }}">
-                                        <button wire:click="removeMe({{ $loop->index }})">Remove</button>
-                                    </div>
-                                @endif
-                            @endforeach
                         </div>
 
                         <div class="mb-3">
