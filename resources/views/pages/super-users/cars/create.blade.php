@@ -20,7 +20,7 @@ state([
     'status',
 ]);
 
-$store = function (car $cari) {
+$store = function () {
     $validate = $this->validate([
         'name' => 'required|string|max:255',
         'price' => 'required|numeric|min:0',
@@ -48,21 +48,13 @@ $store = function (car $cari) {
         <div>
             <x-alert on="status">
             </x-alert>
+
             <div class="card">
                 <div class="card-header">
                     <div class="alert alert-primary" role="alert">
                         <strong>Tambah Mobil</strong>
                         <p>Pada halaman tambah mobil, Anda dapat memasukkan informasi mobil baru, seperti merek, model,
                             tahun, warna, harga, dan spesifikasi lainnya.
-
-                            'name',
-                            'price',
-                            'description',
-                            'capacity',
-                            'space',
-                            'category_id',
-                            'transmission',
-                            'status'
                         </p>
                     </div>
                 </div>
@@ -79,6 +71,7 @@ $store = function (car $cari) {
                                 <small id="nameId" class="form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>
+
                         <div class="row">
                             <div class="col-md">
                                 <div class="mb-3">
@@ -167,8 +160,9 @@ $store = function (car $cari) {
 
                         <div class="mb-3" wire:ignore>
                             <label for="description" class="form-label">Deksripsi Mobil</label>
-                            <textarea class="form-control @error('description') is-invalid @enderror" wire:model="description" id="editor"
-                                rows="3"></textarea>
+                            <div class="border rounded" style="border-color: antiquewhite;">
+                                <livewire:quill-text-editor wire:model.live="description" theme="bubble" />
+                            </div>
 
                             @error('description')
                                 <small id="descriptionId" class="form-text text-danger">{{ $message }}</small>

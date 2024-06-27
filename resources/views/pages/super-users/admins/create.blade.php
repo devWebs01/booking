@@ -53,7 +53,7 @@ $store = function () {
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Nama</label>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                        wire:model.lazy="name" id="name" aria-describedby="nameId"
+                                        wire:model="name" id="name" aria-describedby="nameId"
                                         placeholder="Enter admin name" autofocus autocomplete="name" />
                                     @error('name')
                                         <small id="nameId" class="form-text text-danger">{{ $message }}</small>
@@ -64,7 +64,7 @@ $store = function () {
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        wire:model.lazy="email" id="email" aria-describedby="emailId"
+                                        wire:model="email" id="email" aria-describedby="emailId"
                                         placeholder="Enter admin email" />
                                     @error('email')
                                         <small id="emailId" class="form-text text-danger">{{ $message }}</small>
@@ -78,7 +78,7 @@ $store = function () {
                                 <div class="mb-3">
                                     <label for="phone_number" class="form-label">No. Telp</label>
                                     <input type="number" class="form-control @error('phone_number') is-invalid @enderror"
-                                        wire:model.lazy="phone_number" id="phone_number" aria-describedby="phone_numberId"
+                                        wire:model="phone_number" id="phone_number" aria-describedby="phone_numberId"
                                         placeholder="Enter admin phone_number" />
                                     @error('phone_number')
                                         <small id="phone_numberId" class="form-text text-danger">{{ $message }}</small>
@@ -90,7 +90,7 @@ $store = function () {
                                     <label for="password" class="form-label">Kata Sandi</label>
                                     <div class="input-group">
                                         <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                            wire:model.lazy="password" id="password" aria-describedby="passwordId"
+                                            wire:model="password" id="password" aria-describedby="passwordId"
                                             placeholder="Enter admin password" />
                                         <button type="button" class="btn btn-light border" id="togglePassword">
                                             <i class="bi bi-eye" id="toggleIcon"></i>
