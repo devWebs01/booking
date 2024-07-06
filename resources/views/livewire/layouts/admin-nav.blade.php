@@ -60,18 +60,21 @@
                         <span class="hide-menu">Mobil</span>
                     </a>
                 </li>
-              </ul>
-            <div class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded">
-                <div class="d-flex">
-                    <div class="unlimited-access-title me-3">
-                        <h6 class="fw-semibold fs-4 mb-6 text-dark w-85">Upgrade to pro</h6>
-                    </div>
-                    <div class="unlimited-access-img">
-                        <img src="{{ asset('/back-end/assets/images/backgrounds/rocket.png') }}" alt=""
-                            class="img-fluid">
-                    </div>
-                </div>
-            </div>
+                <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">Transaksi</span>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('transactions.index') }}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-article"></i>
+                        </span>
+                        <span class="hide-menu">Rental Mobil</span>
+                    </a>
+                </li>
+            </ul>
+
+
         </nav>
         <!-- End Sidebar navigation -->
     </div>

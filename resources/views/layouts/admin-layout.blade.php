@@ -16,7 +16,7 @@
     @stack('styles')
 
     @livewireStyles
-    @vite([])
+    @vite('resources/css/app.css')
 </head>
 
 <body>
@@ -74,7 +74,7 @@
                                         </a>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                            class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                                            class="btn btn-primary mx-3 mt-2 d-block">Logout</a>
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                             class="d-none">
                                             @csrf

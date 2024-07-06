@@ -44,6 +44,7 @@ $deleted = function (car $car) {
                             <a wire:navigate class="btn btn-primary" href="{{ route('cars.create') }}" role="button">Tambah
                                 Mobil</a>
                             <span wire:loading class="spinner-border spinner-border-sm ms-3"></span>
+
                         </div>
                         <div class="col-md">
                             <input wire:model.live="search" type="search" class="form-control" name="search"

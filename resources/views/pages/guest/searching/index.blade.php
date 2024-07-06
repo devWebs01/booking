@@ -10,7 +10,7 @@ name('geolocation');
 
 usesPagination(theme: 'bootstrap');
 
-state(['categoryId'])->url();
+state(['selectedDate', 'categoryId'])->url();
 state([
     'firstRental' => fn() => Rental::first(),
     'categories' => fn() => Category::get(),
@@ -19,19 +19,31 @@ state([
 ]);
 
 $search = computed(function () {
-    if (!$this->categoryId || $this->categoryId === 'all') {
-        return Car::paginate(10);
-    } else {
-        return Car::where('category_id', $this->categoryId)
-            ->latest()
-            ->paginate(10);
+    $selectedDate = $this->selectedDate;
+    $categoryId = $this->categoryId;
+
+    if (!$selectedDate) {
+        return null; // Return an empty collection if no date is selected
     }
+
+    return Car::when($categoryId !== 'all', function ($query) use ($categoryId) {
+        $query->whereHas('category', function ($query) use ($categoryId) {
+            $query->where('id', $categoryId);
+        });
+    })
+        ->whereDoesntHave('transactions', function ($query) use ($selectedDate) {
+            $query->where('rent_date', $selectedDate);
+        })
+        ->orWhereHas('transactions', function ($query) use ($selectedDate) {
+            $query->where('rent_date', '<', $selectedDate)->where('duration', '<=', now()->diffInDays($selectedDate));
+        })
+        ->paginate(6);
 });
 
 ?>
 <x-guest-layout>
     <x-slot name="title">Mapping Pages</x-slot>
-    @include('pages.guest.searching.geolocation')
+    {{-- @include('pages.guest.searching.geolocation') --}}
 
     @volt
         <div>
@@ -52,14 +64,26 @@ $search = computed(function () {
 
                         </div>
 
-                        <div class="my-3">
-                            <label for="categoryId" class="form-label">Pilih Kategori Mobilmu</label>
-                            <select class="form-select form-select-lg" wire:model.live="categoryId" id="categoryId">
-                                <option selected value="all">Select one</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
-                            </select>
+                        <div class="row">
+                            <div class="col-md">
+                                <div class="my-3">
+                                    <label for="selectedDate" class="form-label">Tanggal</label>
+                                    <input type="date" class="form-control form-control-lg"
+                                        wire:model.live="selectedDate" id="selectedDate" aria-describedby="helpId"
+                                        placeholder="selectedDate" wire:change="$set('categoryId', 'all')" />
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="my-3">
+                                    <label for="categoryId" class="form-label">Pilih Kategori Mobilmu</label>
+                                    <select class="form-select form-select-lg" wire:model.live="categoryId" id="categoryId">
+                                        <option selected value="all">Select one</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -88,7 +112,7 @@ $search = computed(function () {
                                             src="{{ Storage::url($car->carImages->first()->image_path) }}" alt="booking"
                                             height="300px" width="100%" style="object-fit: cover" />
                                         <div>
-                                            <a href="{{ route('car-detail', ['car' => $car->id]) }}" <a class="fw-medium">
+                                            <a href="{{ route('car-detail', ['car' => $car->id]) }}" class="fw-medium">
                                                 {{ $car->name }} {{ $this->search()->count() }}</a>
                                             <p class="fs--1 mb-3 fw-medium">{{ $car->transmission }}
                                             </p>

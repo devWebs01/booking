@@ -71,7 +71,7 @@ class CarSeeder extends Seeder
                     'capacity' => $item['capacity'],
                     'space' => $item['space'],
                     'transmission' => $item['transmission'],
-                    'description' => Str::random(100),
+                    'description' => '<p>Lorem ipsum dolor sit amet consectetur adipiscing elit donec ultricies porttitor natoque rutrum purus,' . Str::random(100) . ' sociis aliquet pellentesque sollicitudin pulvinar quam molestie porta fringilla elementum condimentum. Fermentum semper hac odio turpis sollicitudin tortor sem a facilisi tristique lacus primis, ligula aliquet pulvinar urna quam suscipit donec montes nulla dignissim.</p>',
                 ]);
 
                 // Create car image entry

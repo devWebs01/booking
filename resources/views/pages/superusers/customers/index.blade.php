@@ -34,6 +34,14 @@ $users = computed(function () {
             <x-alert on="status">
             </x-alert>
             <div class="card">
+                <div class="card-header">
+                    <div class="row justify-content-between gap-2">
+                        <div class="col-md">
+                            <input wire:model.live="search" type="search" class="form-control" name="search" id="search"
+                                aria-describedby="helpId" placeholder="..." />
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive rounded">
                         <table class="table table-hover display border  text-nowrap text-center">

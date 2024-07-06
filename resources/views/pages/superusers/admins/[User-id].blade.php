@@ -15,7 +15,6 @@ state([
 ]);
 
 $edit = function () {
-
     $validateData = $this->validate([
         'name' => 'required|min:5',
         'email' => 'required|min:5|' . Rule::unique(User::class)->ignore($this->user->id),

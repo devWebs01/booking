@@ -10,7 +10,17 @@ class Transaction extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id', 'car_id', 'rent_date', 'duration', 'penalty', 'with_driver', 'description',
+        'user_id',
+        'car_id',
+        'rent_date',
+        'duration',
+        'penalty',
+        'with_driver',
+        'description',
+        'status',
+        'price_car',
+        'price_driver',
+        'total',
     ];
 
     /**
