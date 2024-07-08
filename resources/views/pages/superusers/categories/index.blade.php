@@ -98,15 +98,19 @@ $destroy = function (Category $category) {
                                             <td>{{ ++$no }}</td>
                                             <td>{{ $category->name }}</td>
                                             <td>
-                                                <a wire:click='edit({{ $category->id }})'
-                                                    class="btn btn-sm btn-warning">Edit</a>
+                                                <div class="btn-group btn-group-sm" role="group"
+                                                    aria-label="Small button group">
 
-                                                <button
-                                                    wire:confirm.prompt="Yakin Ingin Menghapus?\n\nTulis 'hapus' untuk konfirmasi!|hapus"
-                                                    wire:loading.attr='disabled' wire:click='destroy({{ $category->id }})'
-                                                    class="btn btn-sm btn-danger">
-                                                    Hapus
-                                                </button>
+                                                    <a wire:click='edit({{ $category->id }})'
+                                                        class="btn  btn-warning">Edit</a>
+
+                                                    <button
+                                                        wire:confirm.prompt="Yakin Ingin Menghapus?\n\nTulis 'hapus' untuk konfirmasi!|hapus"
+                                                        wire:loading.attr='disabled'
+                                                        wire:click='destroy({{ $category->id }})' class="btn btn-danger">
+                                                        Hapus
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

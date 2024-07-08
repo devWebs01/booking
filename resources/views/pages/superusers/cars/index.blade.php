@@ -71,18 +71,19 @@ $deleted = function (car $car) {
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->transmission }}</td>
                                         <td>
-                                            <span class="badge bg-{{ $item->status == 1 ? 'success' : 'warning' }}">
+                                            <span class="badge bg-{{ $item->status == 1 ? 'success' : 'warning' }} py-2">
                                                 {{ $item->status == 1 ? 'AKTIF' : 'TIDAK AKTIF' }}
                                             </span>
 
                                         </td>
                                         <td>
-                                            <div class="d-flex gap-2 justify-content-center">
-                                                <a type="button" class="btn btn-warning btn-sm"
+                                            <div class="btn-group btn-group-sm" role="group"
+                                                aria-label="Small button group">
+                                                <a type="button" class="btn btn-warning "
                                                     href="{{ route('cars.edit', ['car' => $item->id]) }}" wire:navigate>
                                                     Edit
                                                 </a>
-                                                <button type="button" class="btn btn-danger btn-sm"
+                                                <button type="button" class="btn btn-danger "
                                                     wire:click='deleted({{ $item->id }})'
                                                     wire:confirm.prompt="Yakin Ingin Menghapus?\n\nTulis 'hapus' untuk konfirmasi!|hapus"
                                                     wire:loading.attr="disabled">

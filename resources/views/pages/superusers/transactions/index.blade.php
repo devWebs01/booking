@@ -53,7 +53,7 @@ $transactions = computed(function () {
                 </div>
                 <div class="card-body">
                     <div class="table-responsive rounded">
-                        <table class="table table-hover display border  text-nowrap text-center">
+                        <table class="table table-hover display border text-nowrap text-center">
                             <thead>
                                 <tr>
                                     <th>No.</th>

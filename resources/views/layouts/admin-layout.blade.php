@@ -16,7 +16,7 @@
     @stack('styles')
 
     @livewireStyles
-    @vite('resources/css/app.css')
+    @vite([])
 </head>
 
 <body>
