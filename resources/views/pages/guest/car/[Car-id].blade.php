@@ -83,6 +83,7 @@ $rentCar = function () {
 <x-guest-layout>
     <x-slot name="title">{{ $car->name }}</x-slot>
 
+
     @volt
         <div>
             <section class="pb-5">
@@ -94,6 +95,7 @@ $rentCar = function () {
                                 src="{{ Storage::url($car->carImages->first()->image_path) }}" />
                         </a>
                     </div>
+                    <input id="datepicker" wire:ignore width="276" />
                     <div class="row gx-5">
                         <div class="col-lg-6">
                             <div class="ps-lg-3 text-break">

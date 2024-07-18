@@ -1,6 +1,6 @@
 <?php
 use function Laravel\Folio\name;
-use function Livewire\Volt\{state, computed, rules, on};
+use function Livewire\Volt\{state, computed, rules, mount};
 use App\Models\Car;
 use App\Models\Rental;
 use App\Models\Transaction;
@@ -8,17 +8,21 @@ use App\Models\Transaction;
 name('transactions.create');
 
 state([
-    'cars' => fn() => Car::all(),
     'price_car' => 0,
     'car_id' => '',
     'duration' => 1,
     'with_driver' => false,
     'car' => '',
+    'cars',
     'user_id',
     'description',
     'rent_date',
     'total',
 ]);
+
+mount(function () {
+   
+});
 
 $getPriceCar = computed(function () {
     $car = Car::find($this->car_id);
@@ -30,23 +34,12 @@ $updatedCarId = function ($value) {
     $this->price_car = $car ? $car->price : null;
 };
 
-// $updatedCar = function ($value) {
-//     $car = Car::find($value);
-//     $this->car = $car ? $car : null;
-// };
-
 rules([
     'user_id' => ['required', 'exists:users,id'],
     'car_id' => ['required', 'exists:cars,id'],
     'rent_date' => ['required', 'date', 'after:today'],
     'duration' => ['required', 'integer', 'min:1', 'max:30'],
     'with_driver' => ['required', 'boolean'],
-]);
-
-on([
-    'toggleCondition' => function () {
-        $this->condition = $this->condition;
-    },
 ]);
 
 $increment = fn() => $this->duration++;
@@ -95,6 +88,17 @@ $rentCar = function () {
 
                 <div class="card">
                     <div class="card-body">
+
+                        <div class="mb-3">
+                            <label for="rent_date" class="form-label">Tanggal Rental</label>
+                            <input type="date" class="form-control @error('rent_date') is-invalid @enderror"
+                                wire:model="rent_date" value="{{ today() }}" id="rent_date" aria-describedby="helpId"
+                                placeholder="rent_date" />
+                            @error('rent_date')
+                                <small id="helpId" class="form-text text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
                         <div class="mb-3">
                             <label for="car_id" class="form-label">Mobil</label>
                             <div class="input-group">
@@ -109,21 +113,11 @@ $rentCar = function () {
                         </div>
 
                         <div class="mb-3">
-                            <label for="rent_date" class="form-label">Tanggal Rental</label>
-                            <input type="date" class="form-control @error('rent_date') is-invalid @enderror"
-                                wire:model="rent_date" value="{{ today() }}" id="rent_date" aria-describedby="helpId"
-                                placeholder="rent_date" />
-                            @error('rent_date')
-                                <small id="helpId" class="form-text text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
                             <label for="duration" class="form-label">Durasi</label>
-                            <div class="input-group input-group-sm justify-content-center">
+                            <div class="input-group justify-content-center">
                                 <input type="number" class="form-control @error('duration') is-invalid @enderror"
                                     wire:model="duration" id="duration" aria-describedby="helpId" placeholder="duration"
-                                    disabled />
+                                    readonly />
                                 <button type="button" class="btn btn-body btn-sm border rounded-start-pill"
                                     wire:loading.attr='disabled' wire:click="decrement">
                                     <i class="fa-solid fa-minus"></i>

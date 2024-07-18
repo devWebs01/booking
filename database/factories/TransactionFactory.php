@@ -19,15 +19,27 @@ class TransactionFactory extends Factory
      */
     public function definition(): array
     {
+
         $rentDate = Carbon::now()->subDays(rand(0, 30));
+        $duration = $this->faker->numberBetween(1, 14);
+        $withDriver = $this->faker->boolean;
+        $priceCar = $this->faker->randomFloat(2, 100, 1000);
+        $priceDriver = $withDriver ? $this->faker->randomFloat(2, 50, 200) : 0;
+        $penalty = $this->faker->randomFloat(2, 0, 100);
+        $total = ($priceCar * $duration) + ($priceDriver * $duration) + $penalty;
+
         return [
             'user_id' => User::inRandomOrder()->first()->id,
             'car_id' => Car::inRandomOrder()->first()->id,
             'rent_date' => $rentDate,
-            'duration' => $this->faker->numberBetween(1, 14),
-            'penalty' => $this->faker->randomFloat(2, 0, 100),
-            'with_driver' => $this->faker->boolean,
+            'duration' => $duration,
+            'penalty' => $penalty,
+            'with_driver' => $withDriver,
             'description' => $this->faker->sentence,
+            'status' => $this->faker->randomElement(['DIPESAN', 'DIGUNAKAN', 'SELESAI', 'TERLAMBAT', 'BATAL']),
+            'price_car' => $priceCar,
+            'price_driver' => $priceDriver,
+            'total' => $total,
         ];
     }
 }

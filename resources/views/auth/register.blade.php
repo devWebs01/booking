@@ -1,12 +1,14 @@
 <x-auth-layout>
+    <x-slot name="title">Regiter Account</x-slot>
     <section class="py-5">
         <div class="container">
             <div class="row align-items-lg-center mb-5">
                 <div class="col-md-6 mb-5 mb-md-0">
-                    <h1 class="display-3 fw-bolder">Design Faster and Smarter with <span
-                            class="text-primary">Bootstrap</span></h1>
-                    <p class="lead mt-3 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam feugiat erat
-                        quis pulvinar semper.</p>
+                    <h1 class="display-3 fw-bolder">Nikmati pengalaman sewa mobil yang mudah, <span class="text-primary">
+                            nyaman, dan
+                            terpercaya.</span></h1>
+                    <p class="lead fw-bold mt-3 mb-4">Daftarkan diri Anda sekarang juga untuk mendapatkan penawaran
+                        spesial!</p>
                 </div>
                 <div class="col-md-5 col-md-6">
                     <div class="card">
@@ -92,24 +94,6 @@
 
             </div>
         </div>
-        <div class="row d-lg-flex d-none text-center">
-            <div class="col p-3">
-                <img alt="Logo" src="https://freefrontend.dev/assets/logo1.svg">
-            </div>
-            <div class="col p-3">
-                <img alt="Logo" src="https://freefrontend.dev/assets/logo2.svg">
-            </div>
-            <div class="col p-3">
-                <img alt="Logo" src="https://freefrontend.dev/assets/logo3.svg">
-            </div>
-            <div class="col p-3">
-                <img alt="Logo" src="https://freefrontend.dev/assets/logo4.svg">
-            </div>
-            <div class="col p-3">
-                <img alt="Logo" src="https://freefrontend.dev/assets/logo5.svg">
-            </div>
-        </div>
-        
     </section>
 
 </x-auth-layout>

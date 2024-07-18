@@ -19,6 +19,7 @@
         href="{{ asset('/front-end/assets/img/favicons/favicon-16x16.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/front-end/assets/img/favicons/favicon.ico') }}">
     <meta name="msapplication-TileImage" content="{{ asset('/front-end/assets/img/favicons/mstile-150x150.png') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <link href="{{ asset('/front-end/assets/css/theme.min.css') }}" rel="stylesheet" />
 
@@ -169,6 +170,10 @@
 
         @stack('scripts')
         @livewireScripts
+
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <x-livewire-alert::scripts />
 </body>
 
 </html>

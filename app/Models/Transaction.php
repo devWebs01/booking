@@ -13,6 +13,7 @@ class Transaction extends Model
         'user_id',
         'car_id',
         'rent_date',
+        'return_date',
         'duration',
         'penalty',
         'with_driver',
@@ -23,22 +24,16 @@ class Transaction extends Model
         'total',
     ];
 
-    /**
-     * Get the user that owns the Transaction
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-    /**
-     * Get the car that owns the Transaction
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function car(): BelongsTo
     {
         return $this->belongsTo(car::class);
+    }
+    public function formatRupiah($amount)
+    {
+        return 'Rp ' . number_format($amount, 0, ',', '.');
     }
 }

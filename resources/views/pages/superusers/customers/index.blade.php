@@ -19,7 +19,7 @@ $users = computed(function () {
                 ->orWhere('email', 'LIKE', '%' . $this->search . '%')
                 ->orWhere('phone_number', 'LIKE', '%' . $this->search . '%');
         })
-            ->where('role', 'customers')
+            ->where('role', 'customer')
             ->latest()
             ->paginate(10);
     }
@@ -38,7 +38,7 @@ $users = computed(function () {
                     <div class="row justify-content-between gap-2">
                         <div class="col-md">
                             <input wire:model.live="search" type="search" class="form-control" name="search" id="search"
-                                aria-describedby="helpId" placeholder="..." />
+                                aria-describedby="helpId" placeholder="Identify Customer" />
                         </div>
                     </div>
                 </div>
@@ -60,16 +60,20 @@ $users = computed(function () {
                                     <tr>
                                         <td>{{ ++$no }}.</td>
                                         <td>
-                                            {{-- <img src="{{ Storage::url($item->identity) }}" class="rounded" alt="..."> --}}
-                                            <a href="{{ $item->identify }}" data-fancybox data-caption="Single image">
-                                                <img src="{{ $item->identify }}" class="img rounded-circle" width="30px"
-                                                    height="30px" alt="...">
-                                            </a>
+                                            @if ($item->identify)
+                                                <a href="{{ $item->identify }}" data-fancybox data-caption="Single image">
+                                                    <img src="{{ $item->identify }}" class="img rounded-circle"
+                                                        width="30px" height="30px" alt="Identify Customer">
+                                                </a>
+                                            @else
+                                                <div class="rounded-circle placeholder border"
+                                                    style="width: 30px; height: 30px;" alt="Identify Customer">
+                                            @endif
                                         </td>
-                                        <td>{{ $item->name }}</td>
-                                        <td>{{ $item->email }}</td>
-                                        <td>{{ $item->phone_number }}</td>
-                                        <td>{{ $item->address }}</td>
+                                        <td>{{ $item->name ?? '-' }}</td>
+                                        <td>{{ $item->email ?? '-' }}</td>
+                                        <td>{{ $item->phone_number ?? '-' }}</td>
+                                        <td>{{ $item->address ?? '-' }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

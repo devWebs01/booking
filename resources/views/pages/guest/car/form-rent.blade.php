@@ -16,7 +16,8 @@
 
             <div class="input-group input-group-sm justify-content-center">
                 <input type="number" class="form-control @error('duration') is-invalid @enderror" wire:model="duration"
-                    id="duration" aria-describedby="helpId" placeholder="duration" disabled />
+                    id="duration" aria-describedby="helpId" placeholder="duration" min="1" max="30"
+                    disabled />
                 <button type="button" class="btn btn-body btn-sm border rounded-start-pill"
                     wire:loading.attr='disabled' wire:click="decrement">
                     <i class="fa-solid fa-minus"></i>

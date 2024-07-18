@@ -1,49 +1,61 @@
 <?php
-use function Laravel\Folio\name;
-use function Livewire\Volt\{state, computed, usesPagination};
+use function Laravel\Folio\{name, middleware};
+use function Livewire\Volt\{state};
 use App\Models\Transaction;
 
-name('transaction.index');
-usesPagination(theme: 'bootstrap');
+name('transaction.guest');
+middleware(['auth']);
 
-$transactions = computed(function () {
-    return Transaction::where('user_id', Auth()->user()->id)->paginate(10);
-});
+state([
+    'transactions' => fn() => Transaction::where('user_id', auth()->user()->id)->get(),
+]);
+
 ?>
 
 <x-guest-layout>
     <x-slot name="title">Transaksi Rental Mobil</x-slot>
     @volt
         <div>
-            <div class="rounded border mt-5">
-                <div class="table-responsive">
+            <div class="container-fluid row mt-5 mb-3">
+                <div class="col-lg-6">
+                    <h1 id="font-custom" class="display-1 fw-bold">
+                        Transaksi Rental <br> Mobil
+                    </h1>
+                </div>
+                <div class="col-lg-6 mt-lg-0 align-content-center">
+                    <p>
+                        Temukan kemudahan dalam menyewa mobil dengan
+                        proses yang cepat dan aman. Pilih mobil sesuai kebutuhan Anda dan nikmati perjalanan tanpa kendala.
+                    </p>
+                </div>
+            </div>
+            <div class="rounded border">
+                <div class="table-responsive p-3">
                     <table class="table table-hover text-nowrap text-center">
                         <thead>
                             <tr>
-                                <th>No.</th>
+                                <th>No. </th>
                                 <th>Nama</th>
                                 <th>Transmisi</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($this->transactions as $no => $item)
+                            @foreach ($transactions as $no => $item)
                                 <tr>
                                     <td>{{ ++$no }}.</td>
-                                    <td>{{ $item }}</td>
-                                    <td>{{ $item->transmission }}</td>
+                                    <td>{{ $item->car->name }}</td>
+                                    <td>{{ $item->car->transmission }}</td>
                                     <td>
-                                        <span class="badge bg-{{ $item->status == 1 ? 'success' : 'warning' }}">
-                                            {{ $item->status == 1 ? 'AKTIF' : 'TIDAK AKTIF' }}
+                                        <span class="badge bg-warning">
+                                            {{ $item->status }}
                                         </span>
 
                                     </td>
-
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    {{ $this->transactions->links() }}
                 </div>
             </div>
         </div>
