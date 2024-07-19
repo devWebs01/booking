@@ -1,9 +1,9 @@
 <?php
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, computed, usesPagination};
-use App\Models\Rental;
+use App\Models\shop;
 use App\Models\Category;
-use App\Models\Car;
+use App\Models\product;
 use Carbon\Carbon;
 
 name('geolocation');
@@ -12,65 +12,76 @@ usesPagination(theme: 'bootstrap');
 
 state(['selectedDate', 'categoryId'])->url();
 state([
-    'firstRental' => fn() => Rental::first(),
+    'firstRental' => fn() => shop::first(),
     'categories' => fn() => Category::get(),
     'duration',
     'rent_date',
 ]);
 
 $search = computed(function () {
-    $selectedDate = $this->selectedDate;
+    $selectedDate = Carbon::parse($this->selectedDate);
     $categoryId = $this->categoryId;
+    $duration = $this->duration;
 
-    if (!$selectedDate) {
-        return null; // Return an empty collection if no date is selected
+    if (!$selectedDate || is_null($duration)) {
+        return null;
     }
 
-    return Car::when($categoryId !== 'all', function ($query) use ($categoryId) {
-        $query->whereHas('category', function ($query) use ($categoryId) {
-            $query->where('id', $categoryId);
+    $availableProducts = Product::whereDoesntHave('transactions', function ($query) use ($selectedDate, $duration) {
+        $query->where(function ($query) use ($selectedDate, $duration) {
+            $query->whereHas('datings', function ($query) use ($selectedDate, $duration) {
+                $query->whereIn('status', ['DALAM_PENGGUNAAN', 'TERLAMBAT'])->where(function ($query) use ($selectedDate, $duration) {
+                    $query->where('dateOfTransaction', '<=', $selectedDate)->orWhere('dateOfTransaction', '<', $selectedDate->copy()->addDays($duration));
+                });
+            });
         });
     })
-        ->whereDoesntHave('transactions', function ($query) use ($selectedDate) {
-            $query->where('rent_date', $selectedDate);
-        })
-        ->orWhereHas('transactions', function ($query) use ($selectedDate) {
-            $query->where('rent_date', '<', $selectedDate)->where('duration', '<=', now()->diffInDays($selectedDate));
+        ->when($categoryId !== 'all', function ($query) use ($categoryId) {
+            $query->whereHas('category', function ($query) use ($categoryId) {
+                $query->where('id', $categoryId);
+            });
         })
         ->paginate(6);
+
+    return $availableProducts;
 });
 
 ?>
 <x-guest-layout>
     <x-slot name="title">Mapping Pages</x-slot>
-    {{-- @include('pages.guest.searching.geolocation') --}}
-
     @volt
         <div>
-            <div class="container-fluid">
+            <div class="container-fluid mt-5">
                 <div class="rounded col-12 h-50 position-absolute top-0 start-0 bg-primary" style="z-index:-2;">
                 </div>
-
-                {{-- form search --}}
                 <div class="row">
                     <div class="col-12 mt-5">
                         <div class="bg-white p-5 shadow rounded">
-                            <h1 class="display-3 fw-bold mb-0">Jadwalkan <span class="text-primary">Sewa Mobil</span> mu
+                            <h1 class="display-4 fw-bold mb-0">Jadwalkan <span class="text-primary">Sewa Mobil</span> mu
                             </h1>
-                            <small>Kemanapun tujuannya, rental mobilnya tetap <span class="text-primary">
-                                    {{ $firstRental->name }}</span>
-                            </small>
+                            <p>Kemanapun tujuan Anda, rental mobil <span class="text-primary">
+                                    {{ $firstRental->name }}</span> adalah pilihan yang tepat.
+                            </p>
 
 
                         </div>
 
-                        <div class="row">
+                        <div class="row mt-5 mt-lg-0">
                             <div class="col-md">
                                 <div class="my-3">
                                     <label for="selectedDate" class="form-label">Tanggal</label>
                                     <input type="date" class="form-control form-control-lg"
                                         wire:model.live="selectedDate" id="selectedDate" aria-describedby="helpId"
-                                        placeholder="selectedDate" wire:change="$set('categoryId', 'all')" />
+                                        placeholder="Enter Selected Date Rent product"
+                                        wire:change="$set('categoryId', 'all')" />
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="my-3">
+                                    <label for="duration" class="form-label">Durasi Rental</label>
+                                    <input type="number" class="form-control form-control-lg" wire:model.live="duration"
+                                        id="duration" min="1" max="30" aria-describedby="helpId"
+                                        placeholder="Enter Duration Rent product" />
                                 </div>
                             </div>
                             <div class="col-md">
@@ -90,8 +101,8 @@ $search = computed(function () {
             </div>
 
             {{-- result search --}}
-            <div class="container-fluid mt-4">
-                <div class="row">
+            <section class="pt-5" id="destination">
+                <div class="container-fluid">
                     @if ($this->search() == null)
                         <div class="card">
                             <div class="card-body">
@@ -99,54 +110,75 @@ $search = computed(function () {
                             </div>
                         </div>
                     @else
-                        @foreach ($this->search() as $car)
-                            <div class="col-md-6 mb-4">
-                                <div class="card position-relative shadow">
-                                    <div class="position-absolute z-index--1 me-10 me-xxl-0"
-                                        style="right:-160px;top:-210px;">
-                                        <img src="{{ asset('/front-end/assets/img/steps/bg.png') }}"
-                                            style="max-width:550px;" alt="shape" />
-                                    </div>
-                                    <div class="card-body p-3">
-                                        <img class="mb-4 mt-2 rounded-2 img"
-                                            src="{{ Storage::url($car->carImages->first()->image_path) }}" alt="booking"
-                                            height="300px" width="100%" style="object-fit: cover" />
-                                        <div>
-                                            <a href="{{ route('car-detail', ['car' => $car->id]) }}" class="fw-medium">
-                                                {{ $car->name }} {{ $this->search()->count() }}</a>
-                                            <p class="fs--1 mb-3 fw-medium">{{ $car->transmission }}
-                                            </p>
-                                            <div class="show-onhover position-relative">
-                                                <div class="d-flex gap-3">
-                                                    <!-- Tooltip untuk Koper -->
-                                                    <button class="btn icon-item" data-bs-toggle="tooltip"
-                                                        data-bs-placement="top" title="{{ $car->space }} Koper">
-                                                        <i class="fa-solid fa-car"></i>
-                                                    </button>
+                        <div class="row">
+                            @foreach ($this->search() as $product)
+                                <div class="col-md-6 mb-4">
+                                    <a class="text-decoration-none"
+                                        href="{{ route('product-detail', ['product' => $product->id]) }}">
+                                        <div class="card position-relative shadow">
+                                            <div class="position-absolute z-index--1 me-10 me-xxl-0"
+                                                style="right:-160px;top:-210px;">
+                                                <img src="{{ asset('/front-end/assets/img/steps/bg.png') }}"
+                                                    style="max-width:550px;" alt="shape" />
+                                            </div>
+                                            <div class="card-body p-3">
+                                                <img class="mb-4 mt-2 rounded-2 img"
+                                                    src="{{ Storage::url($product->imageProducts->first()->image_path) }}"
+                                                    alt="booking" height="300px" width="100%"
+                                                    style="object-fit: cover" />
+                                                <div>
+                                                    <h5 class="fw-medium">{{ $product->name }}</h5>
+                                                    <p class="fs--1 mb-3 fw-medium text-primary">
+                                                        {{ $product->transmission }}
+                                                    </p>
+                                                    <div class="show-onhover position-relative">
+                                                        <div class="d-flex gap-3">
+                                                            <!-- Tooltip untuk Koper -->
+                                                            <button class="btn icon-item" data-bs-toggle="tooltip"
+                                                                data-bs-placement="top" title="{{ $product->space }} Koper">
+                                                                <i class="fa-solid fa-car"></i>
+                                                            </button>
 
-                                                    <!-- Tooltip untuk Penumpang -->
-                                                    <button class="btn icon-item" data-bs-toggle="tooltip"
-                                                        data-bs-placement="top" title="{{ $car->capacity }} Penumpang">
-                                                        <i class="fa-solid fa-suitcase-rolling"></i>
-                                                    </button>
+                                                            <!-- Tooltip untuk Penumpang -->
+                                                            <button class="btn icon-item" data-bs-toggle="tooltip"
+                                                                data-bs-placement="top"
+                                                                title="{{ $product->capacity }} Penumpang">
+                                                                <i class="fa-solid fa-suitcase-rolling"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
                     @endif
 
                     @if ($this->search())
-                        <div class="row text-center">
+                        <div class="text-center">
                             {{ $this->search->links() }}
                         </div>
                     @endif
                 </div>
-            </div>
-        </div>
+            </section>
         </div>
     @endvolt
+
+    <div class="container-fluid row pt-12 mb-3">
+        <div class="col-lg-6">
+            <h1 id="font-custom" class="display-1 fw-bold">
+                Cek Lokasimu <br> Sekarang
+            </h1>
+        </div>
+        <div class="col-lg-6 mt-lg-0 align-content-center">
+            <p>
+                Temukan jarak antara lokasi Anda dengan lokasi rental kami. Izinkan kami untuk mendeteksi lokasi Anda,
+                lalu kami akan menampilkan jarak ke lokasi rental kami.
+            </p>
+        </div>
+    </div>
+    @include('pages.guest.searching.geolocation')
 
 </x-guest-layout>

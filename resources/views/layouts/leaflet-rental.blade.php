@@ -285,7 +285,7 @@
 <script>
     let map;
     let control;
-    const rentalLocation = L.latLng({{ $firstRental->latitude }}, {{ $firstRental->longitude }}); // Lokasi rental pertama
+    const rentalLocation = L.latLng({{ $shop->latitude }}, {{ $shop->longitude }}); // Lokasi rental pertama
 
     function initializeMap(center, zoom) {
         map = L.map('map').setView(center, zoom);

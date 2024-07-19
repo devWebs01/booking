@@ -1,4 +1,4 @@
-<form wire:submit.prevent='rentCar' method="post">
+<form wire:submit.prevent='rentproduct' method="post">
     <div class="row mb-4">
         <label for="rent_date" class="col-sm-2 col-form-label">Tanggal Rental</label>
         <div class="col-sm-10">
@@ -16,7 +16,8 @@
 
             <div class="input-group input-group-sm justify-content-center">
                 <input type="number" class="form-control @error('duration') is-invalid @enderror" wire:model="duration"
-                    id="duration" aria-describedby="helpId" placeholder="duration" disabled />
+                    id="duration" aria-describedby="helpId" placeholder="duration" min="1" max="30"
+                    disabled />
                 <button type="button" class="btn btn-body btn-sm border rounded-start-pill"
                     wire:loading.attr='disabled' wire:click="decrement">
                     <i class="fa-solid fa-minus"></i>
@@ -59,8 +60,8 @@
                 Harga Mobil x Durasi
             </dt>
             <dd class="col-7 mb-2 text-end">
-                {{ 'Rp.' . Number::format($car->price * $duration, locale: 'id') }}
-                <input type="hidden" wire:model='price_car' value="{{ $car->price }}">
+                {{ 'Rp.' . Number::format($product->price * $duration, locale: 'id') }}
+                <input type="hidden" wire:model='price_product' value="{{ $product->price }}">
             </dd>
             <dt class="col-5 mb-2">
                 Layanan Pengemudi
@@ -73,8 +74,8 @@
                 Total
             </dt>
             <dd class="col-7 mb-2 text-end">
-                {{ 'Rp.' . Number::format($this->calculateTotal(), locale: 'id') }}
-                <input type="hidden" wire:model='total' value="{{ $this->calculateTotal() }}">
+                {{ 'Rp.' . Number::format($this->calculateSubTotal(), locale: 'id') }}
+                <input type="hidden" wire:model='total' value="{{ $this->calculateSubTotal() }}">
 
             </dd>
 

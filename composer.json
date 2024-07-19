@@ -9,6 +9,7 @@
         "dasundev/livewire-dropzone": "^1.2",
         "dasundev/livewire-quill-text-editor": "^1.0",
         "guzzlehttp/guzzle": "^7.2",
+        "jantinnerezo/livewire-alert": "^3.0",
         "laravel/folio": "^1.1",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",

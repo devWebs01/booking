@@ -2,27 +2,27 @@
 
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, on, rules};
-use App\Models\Rental;
+use App\Models\shop;
 use App\Models\Transaction;
 
-name('car-detail');
+name('product-detail');
 
 state([
     'user_id' => fn() => auth()->user()->id ?? null,
-    'car_id' => fn() => $this->car->id,
+    'product_id' => fn() => $this->product->id,
     'condition' => false, // ganti false
     'duration' => 1,
     'with_driver' => false,
     'description',
     'rent_date',
-    'car',
+    'product',
     'total',
-    'price_car',
+    'price_product',
 ]);
 
 rules([
     'user_id' => ['required', 'exists:users,id'],
-    'car_id' => ['required', 'exists:cars,id'],
+    'product_id' => ['required', 'exists:products,id'],
     'condition' => ['required', 'boolean'],
     'rent_date' => ['required', 'date', 'after:today'],
     'duration' => ['required', 'integer', 'min:1', 'max:30'],
@@ -48,7 +48,7 @@ $turnOffCondition = function () {
 $increment = fn() => $this->duration++;
 $decrement = fn() => $this->duration--;
 
-$calculateTotal = function () {
+$calculateSubTotal = function () {
     $total = 0;
 
     if ($this->with_driver == 1) {
@@ -57,19 +57,19 @@ $calculateTotal = function () {
         $driver = 0;
     }
 
-    $subTotal = $this->car->price * $this->duration;
+    $subTotal = $this->product->price * $this->duration;
     $total = $subTotal + $driver;
     return $total;
 };
 
-$rentCar = function () {
+$rentproduct = function () {
     if (Auth::check()) {
         $validate = $this->validate();
 
         $additionalData = [
-            'price_car' => $this->car->price,
+            'price_product' => $this->product->price,
             'price_driver' => $this->with_driver ? 200000 : 0,
-            'total' => $this->calculateTotal(),
+            'subtotal' => $this->calculateSubTotal(),
         ];
 
         Transaction::create(array_merge($validate, $additionalData));
@@ -81,7 +81,8 @@ $rentCar = function () {
 ?>
 
 <x-guest-layout>
-    <x-slot name="title">{{ $car->name }}</x-slot>
+    <x-slot name="title">{{ $product->name }}</x-slot>
+
 
     @volt
         <div>
@@ -89,22 +90,23 @@ $rentCar = function () {
                 <div class="container-fluid">
                     <div class="mb-3 d-flex justify-content-center">
                         <a data-fslightbox="mygalley" class="rounded-4" target="_blank" data-type="image"
-                            href="{{ Storage::url($car->carImages->first()->image_path) }}">
+                            href="{{ Storage::url($product->imageProducts->first()->image_path) }}">
                             <img style="max-width: 100%; max-height: 100vh; margin: auto;" class="img-fluid"
-                                src="{{ Storage::url($car->carImages->first()->image_path) }}" />
+                                src="{{ Storage::url($product->imageProducts->first()->image_path) }}" />
                         </a>
                     </div>
+
                     <div class="row gx-5">
                         <div class="col-lg-6">
                             <div class="ps-lg-3 text-break">
-                                <small class="fw-bold" style="color: #f35525;">{{ $car->category->name }}</small>
+                                <small class="fw-bold" style="color: #f35525;">{{ $product->category->name }}</small>
                                 <h1 class="title text-dark fw-bold">
-                                    {{ $car->name }}
+                                    {{ $product->name }}
                                 </h1>
 
                                 <div class="my-3">
                                     <span class="h5 fw-bold">
-                                        {{ 'Rp. ' . Number::format($car->price, locale: 'id') }}
+                                        {{ 'Rp. ' . Number::format($product->price, locale: 'id') }}
                                     </span>
                                 </div>
 
@@ -113,21 +115,21 @@ $rentCar = function () {
                                         Transmisi
                                     </dt>
                                     <dd class="col-7 mb-2">
-                                        {{ $car->transmission }}
+                                        {{ $product->transmission }}
                                     </dd>
 
                                     <dt class="col-5 mb-2">
                                         Kursi
                                     </dt>
                                     <dd class="col-7 mb-2">
-                                        {{ $car->capacity }}
+                                        {{ $product->capacity }}
                                     </dd>
 
                                     <dt class="col-5 mb-2">
                                         Bagasi
                                     </dt>
                                     <dd class="col-7 mb-2">
-                                        {{ $car->space }} Koper
+                                        {{ $product->space }} Koper
                                     </dd>
 
                                 </div>
@@ -136,7 +138,7 @@ $rentCar = function () {
 
                         <div class="col-lg-6">
                             <div class="mb-3" style="overflow-wrap: anywhere;">
-                                {!! $car->description !!}
+                                {!! $product->description !!}
                             </div>
                         </div>
 
@@ -156,7 +158,7 @@ $rentCar = function () {
                                     Batal Rental
                                 </button>
                             </div>
-                            @include('pages.guest.car.form-rent')
+                            @include('pages.guest.product.form-rent')
                         @endif
                     </section>
                 </div>

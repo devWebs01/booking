@@ -1,18 +1,18 @@
 <?php
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, computed, usesPagination};
-use App\Models\car;
+use App\Models\product;
 
-name('cars.index');
+name('products.index');
 usesPagination(theme: 'bootstrap');
 
 state(['search'])->url();
 
-$cars = computed(function () {
+$products = computed(function () {
     if ($this->search == null) {
-        return car::query()->latest()->paginate(10);
+        return product::query()->latest()->paginate(10);
     } else {
-        return car::where(function ($query) {
+        return product::where(function ($query) {
             $query
                 ->where('name', 'LIKE', '%' . $this->search . '%')
                 ->orWhere('category_id', 'LIKE', '%' . $this->search . '%')
@@ -23,8 +23,8 @@ $cars = computed(function () {
     }
 });
 
-$deleted = function (car $car) {
-    $car->delete();
+$deleted = function (product $product) {
+    $product->delete();
 
     $this->dispatch('status');
 };
@@ -41,7 +41,7 @@ $deleted = function (car $car) {
                 <div class="card-header">
                     <div class="row justify-content-between gap-2">
                         <div class="col-md">
-                            <a wire:navigate class="btn btn-primary" href="{{ route('cars.create') }}" role="button">Tambah
+                            <a wire:navigate class="btn btn-primary" href="{{ route('products.create') }}" role="button">Tambah
                                 Mobil</a>
                             <span wire:loading class="spinner-border spinner-border-sm ms-3"></span>
 
@@ -65,24 +65,25 @@ $deleted = function (car $car) {
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($this->cars as $no => $item)
+                                @foreach ($this->products as $no => $item)
                                     <tr>
                                         <td>{{ ++$no }}.</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->transmission }}</td>
                                         <td>
-                                            <span class="badge bg-{{ $item->status == 1 ? 'success' : 'warning' }}">
+                                            <span class="badge bg-{{ $item->status == 1 ? 'success' : 'warning' }} py-2">
                                                 {{ $item->status == 1 ? 'AKTIF' : 'TIDAK AKTIF' }}
                                             </span>
 
                                         </td>
                                         <td>
-                                            <div class="d-flex gap-2 justify-content-center">
-                                                <a type="button" class="btn btn-warning btn-sm"
-                                                    href="{{ route('cars.edit', ['car' => $item->id]) }}" wire:navigate>
+                                            <div class="btn-group btn-group-sm" role="group"
+                                                aria-label="Small button group">
+                                                <a type="button" class="btn btn-warning "
+                                                    href="{{ route('products.edit', ['product' => $item->id]) }}" wire:navigate>
                                                     Edit
                                                 </a>
-                                                <button type="button" class="btn btn-danger btn-sm"
+                                                <button type="button" class="btn btn-danger "
                                                     wire:click='deleted({{ $item->id }})'
                                                     wire:confirm.prompt="Yakin Ingin Menghapus?\n\nTulis 'hapus' untuk konfirmasi!|hapus"
                                                     wire:loading.attr="disabled">
@@ -95,7 +96,7 @@ $deleted = function (car $car) {
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $this->cars->links() }}
+                        {{ $this->products->links() }}
                     </div>
                 </div>
             </div>
