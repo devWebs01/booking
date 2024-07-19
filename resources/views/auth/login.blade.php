@@ -14,7 +14,7 @@
                 <div class="col-md-5 col-md-6">
                     <div class="card">
                         <a href="/" class="text-nowrap logo-img text-center d-block pt-5 w-100">
-                            <h5>Aquina Rental Jambi</h5>
+                            <h3 class="fw-bolder">Aquina Rental Jambi</h3>
                         </a>
                         <div class="card-body">
                             <form method="POST" action="{{ route('login') }}">

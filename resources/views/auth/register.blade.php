@@ -13,7 +13,7 @@
                 <div class="col-md-5 col-md-6">
                     <div class="card">
                         <a href="/" class="text-nowrap logo-img text-center d-block pt-5 w-100">
-                            <img src="/back-end/assets/images/logos/dark-logo.svg" width="180" alt="">
+                            <h3 class="fw-bolder">Aquina Rental Jambi</h3>
                         </a>
                         <div class="card-body">
                             <form method="POST" action="{{ route('register') }}">

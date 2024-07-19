@@ -12,13 +12,8 @@ class Category extends Model
 
     protected $fillable = ['name'];
 
-    /**
-     * Get all of the cars for the Category
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function cars(): HasMany
+    public function products(): HasMany
     {
-        return $this->hasMany(Car::class);
+        return $this->hasMany(Product::class);
     }
 }

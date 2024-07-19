@@ -2,15 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Category;
+use App\Models\Transaction;
 use Illuminate\Support\Str;
+use App\Models\ImageProduct;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Car extends Model
+class Product extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
         'price',
@@ -32,17 +36,17 @@ class Car extends Model
     }
 
     /**
-     * Get all of the carImages for the Car
+     * Get all of the imageProduct for the product
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function carImages(): HasMany
+    public function imageProducts(): HasMany
     {
-        return $this->hasMany(CarImage::class);
+        return $this->hasMany(imageProduct::class);
     }
 
     /**
-     * Get the category that owns the Car
+     * Get the category that owns the product
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -52,7 +56,7 @@ class Car extends Model
     }
 
     /**
-     * Get all of the transactions for the Car
+     * Get all of the transactions for the product
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

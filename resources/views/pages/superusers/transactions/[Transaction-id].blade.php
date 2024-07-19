@@ -1,30 +1,88 @@
 <?php
 use function Laravel\Folio\name;
-use function Livewire\Volt\{state};
+use function Livewire\Volt\{state, mount, on};
 use App\Models\Transaction;
-use App\Models\Car;
+use App\Models\product;
+use App\Models\Dating;
+use Carbon\Carbon;
 
 name('transactions.edit');
 
 state([
-    'car' => fn() => Car::find($this->transaction->car_id),
+    'product' => fn() => product::find($this->transaction->product_id),
+    'rentEndDate',
     'transaction',
+    'daysLate',
+    'lateFee',
+    'total',
+    'today',
 ]);
+
+on([
+    'eventName' => function () {
+        $transaction = Transaction::find($this->transaction->id);
+        $this->transaction = $transaction;
+    },
+]);
+
+mount(function () {
+    $this->rentEndDate = Carbon::parse($this->transaction->rent_date)->addDays($this->transaction->duration);
+    $this->today = Carbon::today();
+
+    // Perhitungan keterlambatan dan biaya keterlambatan
+    if ($this->today->greaterThan($this->rentEndDate)) {
+        $this->daysLate = $this->today->diffInDays($this->rentEndDate);
+        $this->lateFee = $this->daysLate * 100000; // Rp 100.000 per hari terlambat
+    } else {
+        $this->daysLate = 0;
+        $this->lateFee = 0;
+    }
+
+    // Perhitungan total biaya
+    $this->total = $this->transaction->price_product * $this->transaction->duration + $this->transaction->price_driver + $this->lateFee;
+});
 
 $confirm = function () {
     $this->transaction->update(['status' => 'DIKONFIRMASI']);
+    Dating::create([
+        'transaction_id' => $this->transaction->id,
+        'dateOfTransaction' => today(),
+        'status' => $this->transaction->status,
+    ]);
+};
+
+$reschedule = function () {
+    $this->transaction->update([
+        'rent_date' => today()->format('Y-m-d'),
+    ]);
+    $this->dispatch('eventName');
 };
 
 $inUse = function () {
     $this->transaction->update(['status' => 'DALAM_PENGGUNAAN']);
+    Dating::create([
+        'transaction_id' => $this->transaction->id,
+        'dateOfTransaction' => today(),
+        'status' => $this->transaction->status,
+    ]);
 };
 
-$returned = function () {
-    $this->transaction->update(['status' => 'DIKEMBALIKAN']);
+$finished = function () {
+    $this->transaction->update(['status' => 'SELESAI']);
+    Dating::create([
+        'transaction_id' => $this->transaction->id,
+        'dateOfTransaction' => today(),
+        'status' => $this->transaction->status,
+    ]);
 };
 
 $cancelled = function () {
     $this->transaction->update(['status' => 'BATAL']);
+    Dating::create([
+        'transaction_id' => $this->transaction->id,
+        'dateOfTransaction' => today(),
+        'status' => $this->transaction->status,
+    ]);
 };
 
 ?>
@@ -42,115 +100,71 @@ $cancelled = function () {
                 <div class="card-body d-grid gap-2 d-md-flex justify-content-md-end">
 
                     @if ($transaction->status === 'MENUNGGU_KONFIRMASI')
-                        <button wire:loading.attr='disabled' class="btn btn-primary" wire:click="confirm">TERIMA</button>
+                        @if ($today->greaterThan($rentEndDate))
+                            <button wire:loading.attr='disabled' class="btn btn-primary" wire:click="reschedule">
+                                JADWALKAN ULANG
+                            </button>
+                        @else
+                            <button wire:loading.attr='disabled' class="btn btn-primary" wire:click="confirm">
+                                KONFIRMASI
+                            </button>
+                        @endif
                     @elseif($transaction->status === 'DIKONFIRMASI')
-                        <button wire:loading.attr='disabled' class="btn btn-primary" wire:click="confirm">TERIMA</button>
+                        <button wire:loading.attr='disabled' class="btn btn-success" wire:click="inUse">
+                            DIGUNAKAN
+                        </button>
+                    @elseif($transaction->status === 'DALAM_PENGGUNAAN' || $transaction->status === 'TERLAMBAT')
+                        <button wire:loading.attr='disabled' class="btn btn-success" wire:click="finished">
+                            SELESAI
+                        </button>
                     @endif
 
-                    <button wire:loading.attr='disabled' class="btn btn-danger" wire:click="cancelled">BATAL</button>
+                    <button wire:loading.attr='disabled'
+                        class="btn btn-danger
+                        {{ $transaction->status === 'BATAL' ||
+                        $transaction->status === 'DALAM_PENGGUNAAN' ||
+                        $transaction->status === 'TERLAMBAT' ||
+                        $transaction->status === 'SELESAI'
+                            ? 'd-none'
+                            : '' }}"
+                        wire:click="cancelled">BATAL</button>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-body">
-                    <div id="invoice">
-                        <div class="invoice overflow-auto">
-                            <div style="min-width: 600px">
-                                <header>
-                                    <div class="row">
-                                        <div class="col">
-                                            <a href="javascript:;">
-                                                <img src="assets/images/logo-icon.png" width="80" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="col company-details">
-                                            <h2 class="name fw-bolder text-primary">
-                                                {{ $transaction->status }}
-                                            </h2>
-                                        </div>
-                                    </div>
-                                </header>
-                                <main>
-                                    <div class="row contacts">
-                                        <div class="col invoice-to">
-                                            <div class="text-gray-light">
-                                                FAKTUR KE:
-                                            </div>
-                                            <h2 class="to fw-bolder">
-                                                {{ $transaction->user->name }}
-                                            </h2>
-                                            <div class="address">
-                                                {{ $transaction->user->phone_number }}
-                                            </div>
-                                            <div class="email"><a href="mailto:{{ $transaction->user->email }}">
-                                                    {{ $transaction->user->email }}
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col invoice-details">
-                                            <h1 class="invoice-id">
-                                                {{ $transaction->invoice }}
-                                            </h1>
-                                            <div class="date">Tanggal Faktur: {{ $transaction->created_at }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="table-responsive border rounded-3">
-                                        <table class="table table-hover text-center table-borderless">
-                                            <thead class="border-bottom">
-                                                <tr>
-                                                    <th>MOBIL</th>
-                                                    <th>TANGGAL SEWA</th>
-                                                    <th>DURASI</th>
-                                                    <th>HARGA</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="border-bottom">
-                                                    <td>
-                                                        {{ $transaction->car->name }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $transaction->rent_date }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $transaction->duration }} Hari
-                                                    </td>
-                                                    <td>
-                                                        {{ $transaction->formatRupiah($transaction->car->price) }}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="3"></td>
-                                                    <td>
-                                                        {{ $transaction->formatRupiah($transaction->car->price * $transaction->duration) }}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="2"></td>
-                                                    <td>SOPIR</td>
-                                                    <td>
-                                                        {{ $transaction->with_driver == 0 ? '-' : 'Rp ' . number_format(200000, 0, ',', '.') }}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="2"></td>
-                                                    <td>TOTAL</td>
-                                                    <td>
-                                                        {{ $transaction->formatRupiah($transaction->total) }}
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
 
-                                </main>
+            <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+                        type="button" role="tab" aria-controls="pills-home" aria-selected="true">INVOICE</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-edit-tab" data-bs-toggle="pill" data-bs-target="#pills-edit"
+                        type="button" role="tab" aria-controls="pills-edit" aria-selected="false">EDIT</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-information-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-information" type="button" role="tab" aria-controls="pills-information"
+                        aria-selected="false">INFORMASI</button>
+                </li>
 
-                            </div>
-                            <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->
-                            <div></div>
-                        </div>
-                    </div>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
+                    tabindex="0">
+                    @include('pages.superusers.transactions.invoice')
                 </div>
+                <div class="tab-pane fade" id="pills-edit" role="tabpanel" aria-labelledby="pills-edit-tab" tabindex="0">
+                    @include('pages.superusers.transactions.edit')
+
+                </div>
+                <div class="tab-pane fade" id="pills-information" role="tabpanel" aria-labelledby="pills-information-tab"
+                    tabindex="0">
+                    @include('pages.superusers.transactions.information')
+
+                </div>
+
             </div>
+
+
         </div>
     @endvolt
     <style>

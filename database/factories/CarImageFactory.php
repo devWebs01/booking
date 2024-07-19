@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Car;
+use App\Models\product;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CarImage>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\productImage>
  */
 class CarImageFactory extends Factory
 {
@@ -19,7 +19,7 @@ class CarImageFactory extends Factory
     public function definition(): array
     {
         return [
-            'car_id' => Car::inRandomOrder()->first()->id,
+            'product_id' => product::inRandomOrder()->first()->id,
             'image_path' => "https://picsum.photos/200/300?rental" . Str::random(3),
         ];
     }

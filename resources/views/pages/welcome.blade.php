@@ -1,12 +1,14 @@
 <?php
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state};
-use App\Models\Car;
+use App\Models\Product;
+use App\Models\Shop;
 
 name('welcome');
 
 state([
-    'cars' => fn() => Car::with('carImages')->inRandomOrder()->limit(6)->get(),
+    'products' => fn() => product::with('imageProducts')->inRandomOrder()->limit(6)->get(),
+    'shop' => fn() => Shop::first(),
 ]);
 
 ?>
@@ -32,6 +34,58 @@ state([
                     </div>
                 </div>
             </section>
+
+            <section class="pt-5" id="destination">
+                <div class="container-fluid">
+                    <div class="position-absolute start-100 bottom-0 translate-middle-x d-none d-xl-block ms-xl-n4">
+                        <img src="{{ asset('/front-end/assets/img/dest/shape.svg') }}" alt="destination" />
+                    </div>
+                    <div class="mb-7 text-center">
+                        <h5 class="text-secondary">Mobil pilihan</h5>
+                        <h3 class="fs-xl-10 fs-lg-8 fs-7 fw-bold font-cursive text-capitalize">Top Rental</h3>
+                    </div>
+                    <div class="row">
+                        @foreach ($products as $product)
+                            <div class="col-md-6 mb-4">
+                                <a class="text-decoration-none" href="{{ route('product-detail', ['product' => $product->id]) }}">
+                                    <div class="card position-relative shadow">
+                                        <div class="position-absolute z-index--1 me-10 me-xxl-0"
+                                            style="right:-160px;top:-210px;">
+                                            <img src="{{ asset('/front-end/assets/img/steps/bg.png') }}"
+                                                style="max-width:550px;" alt="shape" />
+                                        </div>
+                                        <div class="card-body p-3">
+                                            <img class="mb-4 mt-2 rounded-2 img"
+                                                src="{{ Storage::url($product->imageProducts->first()->image_path) }}"
+                                                alt="booking" height="300px" width="100%" style="object-fit: cover" />
+                                            <div>
+                                                <h5 class="fw-medium">{{ $product->name }}</h5>
+                                                <p class="fs--1 mb-3 fw-medium text-primary">{{ $product->transmission }}
+                                                </p>
+                                                <div class="show-onhover position-relative">
+                                                    <div class="d-flex gap-3">
+                                                        <!-- Tooltip untuk Koper -->
+                                                        <button class="btn icon-item" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" title="{{ $product->space }} Koper">
+                                                            <i class="fa-solid fa-car"></i>
+                                                        </button>
+
+                                                        <!-- Tooltip untuk Penumpang -->
+                                                        <button class="btn icon-item" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" title="{{ $product->capacity }} Penumpang">
+                                                            <i class="fa-solid fa-suitcase-rolling"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+            </section>
+
             <section class="pt-5 pt-md-9" id="service">
                 <div class="container-fluid">
                     <div class="position-absolute z-index--1 end-0 d-none d-lg-block">
@@ -98,56 +152,6 @@ state([
                 </div>
             </section>
 
-            <section class="pt-5" id="destination">
-                <div class="container-fluid">
-                    <div class="position-absolute start-100 bottom-0 translate-middle-x d-none d-xl-block ms-xl-n4">
-                        <img src="{{ asset('/front-end/assets/img/dest/shape.svg') }}" alt="destination" />
-                    </div>
-                    <div class="mb-7 text-center">
-                        <h5 class="text-secondary">Mobil pilihan</h5>
-                        <h3 class="fs-xl-10 fs-lg-8 fs-7 fw-bold font-cursive text-capitalize">Top Rental</h3>
-                    </div>
-                    <div class="row">
-                        @foreach ($cars as $car)
-                            <div class="col-md-6 mb-4">
-                                <a class="text-decoration-none" href="{{ route('car-detail', ['car' => $car->id]) }}">
-                                    <div class="card position-relative shadow">
-                                        <div class="position-absolute z-index--1 me-10 me-xxl-0"
-                                            style="right:-160px;top:-210px;">
-                                            <img src="{{ asset('/front-end/assets/img/steps/bg.png') }}"
-                                                style="max-width:550px;" alt="shape" />
-                                        </div>
-                                        <div class="card-body p-3">
-                                            <img class="mb-4 mt-2 rounded-2 img"
-                                                src="{{ Storage::url($car->carImages->first()->image_path) }}"
-                                                alt="booking" height="300px" width="100%" style="object-fit: cover" />
-                                            <div>
-                                                <h5 class="fw-medium">{{ $car->name }}</h5>
-                                                <p class="fs--1 mb-3 fw-medium text-primary">{{ $car->transmission }}
-                                                </p>
-                                                <div class="show-onhover position-relative">
-                                                    <div class="d-flex gap-3">
-                                                        <!-- Tooltip untuk Koper -->
-                                                        <button class="btn icon-item" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" title="{{ $car->space }} Koper">
-                                                            <i class="fa-solid fa-car"></i>
-                                                        </button>
-
-                                                        <!-- Tooltip untuk Penumpang -->
-                                                        <button class="btn icon-item" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" title="{{ $car->capacity }} Penumpang">
-                                                            <i class="fa-solid fa-suitcase-rolling"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        @endforeach
-                    </div>
-            </section>
         </div>
     @endvolt
 

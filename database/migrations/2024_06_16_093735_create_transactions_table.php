@@ -8,19 +8,23 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *'user_id', 'car_id', 'rent_date', 'duration', 'penalty', 'with_driver', 'description',
+     *'user_id', 'product_id', 'rent_date', 'duration', 'penalty', 'with_driver', 'description',
+     'dateOfConfirmation',
+        'dateOfUse',
+        'dateOfFinished',
+        'dateOfCancelled',
      */
     public function up(): void
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('car_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->date('rent_date');
-            $table->date('return_date')->nullable();
-            $table->string('price_car');
+            $table->string('price_product');
             $table->string('price_driver');
-            $table->string('total');
+            $table->string('subtotal')->nullable();
+            $table->string('total')->nullable();
             $table->integer('duration');
             $table->string('penalty')->nullable();
             $table->boolean('with_driver');

@@ -3,7 +3,13 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
+use App\Models\Dating;
+use App\Models\Transaction;
 use Illuminate\Database\Seeder;
+use Database\Seeders\RentalSeeder;
+use Database\Seeders\ProductSeeder;
+use Database\Seeders\CategorySeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,12 +22,22 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             CategorySeeder::class,
-            CarSeeder::class,
+            ProductSeeder::class,
             RentalSeeder::class,
         ]);
 
+        Transaction::factory()
+        ->count(10)
+        ->create()
+        ->each(function ($transaction) {
+            // Untuk setiap transaksi, buat data dating terkait
+            Dating::factory()
+                ->count(1)
+                ->create(['transaction_id' => $transaction->id]);
+        });
 
-        \App\Models\User::factory()->create([
+
+        User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
             'role' => 'owner'

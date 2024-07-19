@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Rental;
+use App\Models\Shop;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;
@@ -52,7 +52,7 @@ class ManyLocationRentalSeeder extends Seeder
             $address = isset($rental['full_address']) ? $rental['full_address'] : 'No Address Provided';
             $description = isset($rental['description']) ? $rental['description'] : Str::random(20);
 
-            Rental::create([
+            Shop::create([
                 'name' => $rental['name'],
                 'thumbnail' => $rental['photos'],
                 'url_maps' => $rental['place_link'],

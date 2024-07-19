@@ -44,8 +44,8 @@ state([
                             @foreach ($transactions as $no => $item)
                                 <tr>
                                     <td>{{ ++$no }}.</td>
-                                    <td>{{ $item->car->name }}</td>
-                                    <td>{{ $item->car->transmission }}</td>
+                                    <td>{{ $item->product->name }}</td>
+                                    <td>{{ $item->product->transmission }}</td>
                                     <td>
                                         <span class="badge bg-warning">
                                             {{ $item->status }}

@@ -15,12 +15,12 @@ $transactions = computed(function () {
     } else {
         return Transaction::query()
             ->join('users', 'transactions.user_id', '=', 'users.id')
-            ->join('cars', 'transactions.car_id', '=', 'cars.id')
+            ->join('products', 'transactions.product_id', '=', 'products.id')
             ->where(function ($query) {
                 $query
                     ->where('transactions.rent_date', 'LIKE', '%' . $this->search . '%')
                     ->orWhere('users.name', 'LIKE', '%' . $this->search . '%')
-                    ->orWhere('cars.name', 'LIKE', '%' . $this->search . '%')
+                    ->orWhere('products.name', 'LIKE', '%' . $this->search . '%')
                     ->orWhere('transactions.status', 'LIKE', '%' . $this->search . '%');
             })
             ->select('transactions.*')
@@ -69,7 +69,7 @@ $transactions = computed(function () {
                                     <tr>
                                         <td>{{ ++$no }}.</td>
                                         <td>{{ $item->user->name }}</td>
-                                        <td>{{ $item->car->name }}</td>
+                                        <td>{{ $item->product->name }}</td>
                                         <td>{{ $item->rent_date }}</td>
                                         <td>
                                             <span class="badge bg-primary py-2">

@@ -1,19 +1,19 @@
 <?php
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, computed, rules, mount};
-use App\Models\Car;
-use App\Models\Rental;
+use App\Models\product;
+use App\Models\shop;
 use App\Models\Transaction;
 
 name('transactions.create');
 
 state([
-    'price_car' => 0,
-    'car_id' => '',
+    'price_product' => 0,
+    'product_id' => '',
     'duration' => 1,
     'with_driver' => false,
-    'car' => '',
-    'cars',
+    'product' => '',
+    'products',
     'user_id',
     'description',
     'rent_date',
@@ -21,22 +21,22 @@ state([
 ]);
 
 mount(function () {
-   
+
 });
 
-$getPriceCar = computed(function () {
-    $car = Car::find($this->car_id);
-    return $car ? $car->price : 0;
+$getPriceproduct = computed(function () {
+    $product = product::find($this->product_id);
+    return $product ? $product->price : 0;
 });
 
-$updatedCarId = function ($value) {
-    $car = Car::find($value);
-    $this->price_car = $car ? $car->price : null;
+$updatedproductId = function ($value) {
+    $product = product::find($value);
+    $this->price_product = $product ? $product->price : null;
 };
 
 rules([
     'user_id' => ['required', 'exists:users,id'],
-    'car_id' => ['required', 'exists:cars,id'],
+    'product_id' => ['required', 'exists:products,id'],
     'rent_date' => ['required', 'date', 'after:today'],
     'duration' => ['required', 'integer', 'min:1', 'max:30'],
     'with_driver' => ['required', 'boolean'],
@@ -54,17 +54,17 @@ $calculateTotal = function () {
         $driver = 0;
     }
 
-    $subTotal = $this->price_car * $this->duration;
+    $subTotal = $this->price_product * $this->duration;
     $total = $subTotal + $driver;
     return $total;
 };
 
-$rentCar = function () {
+$rentproduct = function () {
     if (Auth::check()) {
         $validate = $this->validate();
 
         $additionalData = [
-            'price_car' => $this->price_car,
+            'price_product' => $this->price_product,
             'price_driver' => $this->with_driver ? 200000 : 0,
             'total' => $this->calculateTotal(),
         ];
@@ -84,7 +84,7 @@ $rentCar = function () {
         <div>
             <x-alert on="status">
             </x-alert>
-            <form wire:submit.prevent='rentCar' method="post">
+            <form wire:submit.prevent='rentproduct' method="post">
 
                 <div class="card">
                     <div class="card-body">
@@ -100,15 +100,15 @@ $rentCar = function () {
                         </div>
 
                         <div class="mb-3">
-                            <label for="car_id" class="form-label">Mobil</label>
+                            <label for="product_id" class="form-label">Mobil</label>
                             <div class="input-group">
-                                <select class="form-select w-75" wire:model.live="car_id" id="car_id">
+                                <select class="form-select w-75" wire:model.live="product_id" id="product_id">
                                     <option selected>Select one</option>
-                                    @foreach ($cars as $item)
+                                    @foreach ($products as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
-                                <input type="text" wire:model.live='price_car' class="form-control" readonly>
+                                <input type="text" wire:model.live='price_product' class="form-control" readonly>
                             </div>
                         </div>
 
@@ -159,8 +159,8 @@ $rentCar = function () {
                                     Harga Mobil x Durasi
                                 </dt>
                                 <dd class="col-7 mb-2 text-end">
-                                    {{ 'Rp.' . Number::format($price_car * $duration, locale: 'id') }}
-                                    <input type="hidden" wire:model='price_car' value="{{ $price_car }}">
+                                    {{ 'Rp.' . Number::format($price_product * $duration, locale: 'id') }}
+                                    <input type="hidden" wire:model='price_product' value="{{ $price_product }}">
                                 </dd>
                                 <dt class="col-5 mb-2">
                                     Layanan Pengemudi

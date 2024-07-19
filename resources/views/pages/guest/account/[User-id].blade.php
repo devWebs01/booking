@@ -2,7 +2,7 @@
 
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, on, rules};
-use App\Models\Rental;
+use App\Models\Shop;
 use App\Models\Transaction;
 
 name('user.account');
@@ -32,7 +32,7 @@ state([
                 </div>
                 <div class="col-lg-6 mt-lg-0 align-content-center">
                     <p>
-                        Kelola informasi pribadi dan riwayat transaksi rental mobil Anda dengan mudah. Pastikan semua data
+                        Kelola informasi pribadi dan riwayat transaksi Shop mobil Anda dengan mudah. Pastikan semua data
                         Anda selalu terupdate untuk memaksimalkan layanan kami.
                         <br>
                         'name',
@@ -126,7 +126,7 @@ state([
                                 </div>
                                 <!-- /Account -->
                             </div>
-                          
+
                         </div>
                     </div>
                 </div>

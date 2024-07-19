@@ -5,22 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Transaction extends Model
 {
     use HasFactory;
     protected $fillable = [
         'user_id',
-        'car_id',
+        'product_id',
         'rent_date',
-        'return_date',
         'duration',
         'penalty',
         'with_driver',
         'description',
         'status',
-        'price_car',
+        'price_product',
         'price_driver',
+        'subtotal',
         'total',
     ];
 
@@ -28,9 +29,14 @@ class Transaction extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function car(): BelongsTo
+    public function product(): BelongsTo
     {
-        return $this->belongsTo(car::class);
+        return $this->belongsTo(Product::class);
+    }
+
+    public function datings(): HasMany
+    {
+        return $this->hasMany(Dating::class);
     }
     public function formatRupiah($amount)
     {

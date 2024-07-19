@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Car;
-use App\Models\CarImage;
+use App\Models\product;
+use App\Models\ImageProduct;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Client;
 use Exception;
 
-class CarSeeder extends Seeder
+class ProductSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -63,8 +63,8 @@ class CarSeeder extends Seeder
                 // Save the image to storage
                 Storage::put($imagePath, $imageData);
 
-                // Create car entry
-                $car = Car::create([
+                // Create product entry
+                $product = product::create([
                     'category_id' => $item['category_id'],
                     'name' => $item['name'],
                     'price' => $item['price'],
@@ -74,13 +74,13 @@ class CarSeeder extends Seeder
                     'description' => '<p>Lorem ipsum dolor sit amet consectetur adipiscing elit donec ultricies porttitor natoque rutrum purus,' . Str::random(100) . ' sociis aliquet pellentesque sollicitudin pulvinar quam molestie porta fringilla elementum condimentum. Fermentum semper hac odio turpis sollicitudin tortor sem a facilisi tristique lacus primis, ligula aliquet pulvinar urna quam suscipit donec montes nulla dignissim.</p>',
                 ]);
 
-                // Create car image entry
-                CarImage::create([
-                    'car_id' => $car->id,
+                // Create product image entry
+                imageProduct::create([
+                    'product_id' => $product->id,
                     'image_path' => 'images/' . $imageName, // Path without 'public/'
                 ]);
 
-                $this->command->info('Tambah Mobil ' . $car->name);
+                $this->command->info('Tambah Mobil ' . $product->name);
             } catch (Exception $e) {
                 Log::error("Error processing item: " . $e->getMessage());
             }

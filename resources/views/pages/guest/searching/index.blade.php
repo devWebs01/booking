@@ -1,9 +1,9 @@
 <?php
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, computed, usesPagination};
-use App\Models\Rental;
+use App\Models\shop;
 use App\Models\Category;
-use App\Models\Car;
+use App\Models\product;
 use Carbon\Carbon;
 
 name('geolocation');
@@ -12,7 +12,7 @@ usesPagination(theme: 'bootstrap');
 
 state(['selectedDate', 'categoryId'])->url();
 state([
-    'firstRental' => fn() => Rental::first(),
+    'firstRental' => fn() => shop::first(),
     'categories' => fn() => Category::get(),
     'duration',
     'rent_date',
@@ -27,27 +27,14 @@ $search = computed(function () {
         return null;
     }
 
-    $availableCars = Car::whereNotExists(function ($query) use ($selectedDate, $duration, $categoryId) {
-        $query
-            ->select('id')
-            ->from('transactions')
-            ->where('car_id', '=', 'cars.id')
-            ->where(function ($query) use ($selectedDate, $duration) {
-                $query
-                    ->where(function ($query) use ($selectedDate) {
-                        $query->where('rent_date', '<=', $selectedDate)->where(function ($query) use ($selectedDate) {
-                            $query->whereNull('return_date')->orWhere('return_date', '>', $selectedDate);
-                        });
-                    })
-                    ->orWhere(function ($query) use ($selectedDate, $duration) {
-                        $query->where('rent_date', '<', $selectedDate->addDays($duration))->where(function ($query) use ($selectedDate) {
-                            $query->whereNull('return_date')->orWhere('return_date', '>=', $selectedDate);
-                        });
-                    })
-                    ->orWhere(function ($query) use ($selectedDate, $duration) {
-                        $query->where('rent_date', '>=', $selectedDate)->where('return_date', '<=', $selectedDate->addDays($duration));
-                    });
+    $availableProducts = Product::whereDoesntHave('transactions', function ($query) use ($selectedDate, $duration) {
+        $query->where(function ($query) use ($selectedDate, $duration) {
+            $query->whereHas('datings', function ($query) use ($selectedDate, $duration) {
+                $query->whereIn('status', ['DALAM_PENGGUNAAN', 'TERLAMBAT'])->where(function ($query) use ($selectedDate, $duration) {
+                    $query->where('dateOfTransaction', '<=', $selectedDate)->orWhere('dateOfTransaction', '<', $selectedDate->copy()->addDays($duration));
+                });
             });
+        });
     })
         ->when($categoryId !== 'all', function ($query) use ($categoryId) {
             $query->whereHas('category', function ($query) use ($categoryId) {
@@ -56,7 +43,7 @@ $search = computed(function () {
         })
         ->paginate(6);
 
-    return $availableCars;
+    return $availableProducts;
 });
 
 ?>
@@ -70,26 +57,22 @@ $search = computed(function () {
                 <div class="row">
                     <div class="col-12 mt-5">
                         <div class="bg-white p-5 shadow rounded">
-                            <h1 class="display-3 fw-bold mb-0">Jadwalkan <span class="text-primary">Sewa Mobil</span> mu
+                            <h1 class="display-4 fw-bold mb-0">Jadwalkan <span class="text-primary">Sewa Mobil</span> mu
                             </h1>
                             <p>Kemanapun tujuan Anda, rental mobil <span class="text-primary">
-                                    {{ $firstRental->name }}</span> adalah pilihan yang tepat. Dengan
-                                armada mobil yang beragam, mulai dari mobil keluarga hingga mobil mewah, <span
-                                    class="text-primary">
-                                    {{ $firstRental->name }}</span>
-                                siap memenuhi kebutuhan transportasi Anda.
+                                    {{ $firstRental->name }}</span> adalah pilihan yang tepat.
                             </p>
 
 
                         </div>
 
-                        <div class="row">
+                        <div class="row mt-5 mt-lg-0">
                             <div class="col-md">
                                 <div class="my-3">
                                     <label for="selectedDate" class="form-label">Tanggal</label>
                                     <input type="date" class="form-control form-control-lg"
                                         wire:model.live="selectedDate" id="selectedDate" aria-describedby="helpId"
-                                        placeholder="Enter Selected Date Rent Car"
+                                        placeholder="Enter Selected Date Rent product"
                                         wire:change="$set('categoryId', 'all')" />
                                 </div>
                             </div>
@@ -98,7 +81,7 @@ $search = computed(function () {
                                     <label for="duration" class="form-label">Durasi Rental</label>
                                     <input type="number" class="form-control form-control-lg" wire:model.live="duration"
                                         id="duration" min="1" max="30" aria-describedby="helpId"
-                                        placeholder="Enter Duration Rent Car" />
+                                        placeholder="Enter Duration Rent product" />
                                 </div>
                             </div>
                             <div class="col-md">
@@ -128,9 +111,10 @@ $search = computed(function () {
                         </div>
                     @else
                         <div class="row">
-                            @foreach ($this->search() as $car)
+                            @foreach ($this->search() as $product)
                                 <div class="col-md-6 mb-4">
-                                    <a class="text-decoration-none" href="{{ route('car-detail', ['car' => $car->id]) }}">
+                                    <a class="text-decoration-none"
+                                        href="{{ route('product-detail', ['product' => $product->id]) }}">
                                         <div class="card position-relative shadow">
                                             <div class="position-absolute z-index--1 me-10 me-xxl-0"
                                                 style="right:-160px;top:-210px;">
@@ -139,25 +123,26 @@ $search = computed(function () {
                                             </div>
                                             <div class="card-body p-3">
                                                 <img class="mb-4 mt-2 rounded-2 img"
-                                                    src="{{ Storage::url($car->carImages->first()->image_path) }}"
+                                                    src="{{ Storage::url($product->imageProducts->first()->image_path) }}"
                                                     alt="booking" height="300px" width="100%"
                                                     style="object-fit: cover" />
                                                 <div>
-                                                    <h5 class="fw-medium">{{ $car->name }}</h5>
-                                                    <p class="fs--1 mb-3 fw-medium text-primary">{{ $car->transmission }}
+                                                    <h5 class="fw-medium">{{ $product->name }}</h5>
+                                                    <p class="fs--1 mb-3 fw-medium text-primary">
+                                                        {{ $product->transmission }}
                                                     </p>
                                                     <div class="show-onhover position-relative">
                                                         <div class="d-flex gap-3">
                                                             <!-- Tooltip untuk Koper -->
                                                             <button class="btn icon-item" data-bs-toggle="tooltip"
-                                                                data-bs-placement="top" title="{{ $car->space }} Koper">
+                                                                data-bs-placement="top" title="{{ $product->space }} Koper">
                                                                 <i class="fa-solid fa-car"></i>
                                                             </button>
 
                                                             <!-- Tooltip untuk Penumpang -->
                                                             <button class="btn icon-item" data-bs-toggle="tooltip"
                                                                 data-bs-placement="top"
-                                                                title="{{ $car->capacity }} Penumpang">
+                                                                title="{{ $product->capacity }} Penumpang">
                                                                 <i class="fa-solid fa-suitcase-rolling"></i>
                                                             </button>
                                                         </div>

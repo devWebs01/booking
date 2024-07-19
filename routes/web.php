@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Rental;
+use App\Models\shop;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,8 +20,8 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    $rentals = Rental::all();
-    return view('map-leaflet.index', compact('rentals'));
+    $rentals = shop::all();
+    return view('pages.map-leaflet.index', compact('rentals'));
 });
 
 Auth::routes();

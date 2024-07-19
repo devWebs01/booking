@@ -2,10 +2,10 @@
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, usesFileUploads};
 use App\Models\Category;
-use App\Models\Car;
-use App\Models\CarImage;
+use App\Models\product;
+use App\Models\imageProduct;
 
-name('cars.create');
+name('products.create');
 
 usesFileUploads();
 
@@ -37,18 +37,18 @@ $store = function () {
         'images.*' => 'required|image',
     ]);
 
-    $car = Car::create($validate);
+    $product = product::create($validate);
 
     foreach ($this->images as $image) {
-        CarImage::create([
-            'car_id' => $car->id,
+        imageProduct::create([
+            'product_id' => $product->id,
             'path' => $image->store('images'), // Pastikan $image adalah objek UploadedFile
         ]);
     }
 
     $this->reset('name', 'price', 'description', 'capacity', 'space', 'category_id', 'transmission', 'status');
 
-    $this->redirectRoute('cars.index', navigate: true);
+    $this->redirectRoute('products.index', navigate: true);
 };
 
 ?>
@@ -109,7 +109,7 @@ $store = function () {
                                     <label for="price" class="form-label">Harga</label>
                                     <input type="number" class="form-control @error('price') is-invalid @enderror"
                                         wire:model="price" id="price" aria-describedby="priceId"
-                                        placeholder="Enter car price" />
+                                        placeholder="Enter product price" />
                                     @error('price')
                                         <small id="priceId" class="form-text text-danger">{{ $message }}</small>
                                     @enderror
@@ -123,7 +123,7 @@ $store = function () {
                                     <label for="capacity" class="form-label">Kapasitas Kursi</label>
                                     <input type="number" class="form-control @error('capacity') is-invalid @enderror"
                                         wire:model="capacity" id="capacity" aria-describedby="capacityId"
-                                        placeholder="Enter car capacity" />
+                                        placeholder="Enter product capacity" />
                                     @error('capacity')
                                         <small id="capacityId" class="form-text text-danger">{{ $message }}</small>
                                     @enderror
@@ -134,7 +134,7 @@ $store = function () {
                                     <label for="space" class="form-label">Bagasi</label>
                                     <input type="number" class="form-control @error('space') is-invalid @enderror"
                                         wire:model="space" id="space" aria-describedby="spaceId"
-                                        placeholder="Enter car space" />
+                                        placeholder="Enter product space" />
                                     @error('space')
                                         <small id="spaceId" class="form-text text-danger">{{ $message }}</small>
                                     @enderror

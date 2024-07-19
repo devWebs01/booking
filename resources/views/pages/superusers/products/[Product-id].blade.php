@@ -3,26 +3,26 @@
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, usesFileUploads};
 use App\Models\Category;
-use App\Models\Car;
+use App\Models\product;
 
-name('cars.edit');
+name('products.edit');
 
 usesFileUploads();
 
 state([
     'categories' => fn() => Category::get(),
-    'car',
-    'name' => fn() => $this->car->name ?? null,
-    'price' => fn() => $this->car->price ?? null,
-    'description' => fn() => $this->car->description ?? null,
-    'capacity' => fn() => $this->car->capacity ?? null,
-    'space' => fn() => $this->car->space ?? null,
-    'category_id' => fn() => $this->car->category_id ?? null,
-    'transmission' => fn() => $this->car->transmission ?? null,
-    'status' => fn() => $this->car->status ?? null,
+    'product',
+    'name' => fn() => $this->product->name ?? null,
+    'price' => fn() => $this->product->price ?? null,
+    'description' => fn() => $this->product->description ?? null,
+    'capacity' => fn() => $this->product->capacity ?? null,
+    'space' => fn() => $this->product->space ?? null,
+    'category_id' => fn() => $this->product->category_id ?? null,
+    'transmission' => fn() => $this->product->transmission ?? null,
+    'status' => fn() => $this->product->status ?? null,
 ]);
 
-$store = function (car $car) {
+$store = function (product $product) {
     $validate = $this->validate([
         'name' => 'required|string|max:255',
         'price' => 'required|numeric|min:0',
@@ -34,16 +34,16 @@ $store = function (car $car) {
         'status' => 'required|boolean',
     ]);
 
-    $car = Car::findOrFail($this->car->id)->update($validate);
+    $product = product::findOrFail($this->product->id)->update($validate);
 
     $this->reset('name', 'price', 'description', 'capacity', 'space', 'category_id', 'transmission', 'status');
 
-    $this->redirectRoute('cars.index', navigate: true);
+    $this->redirectRoute('products.index', navigate: true);
 };
 
 ?>
 <x-admin-layout>
-    <x-slot name="title">{{ $car->name }}</x-slot>
+    <x-slot name="title">{{ $product->name }}</x-slot>
     @include('layouts.text-editor')
 
     @volt
@@ -67,7 +67,7 @@ $store = function (car $car) {
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama Mobil</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name"
-                                id="name" aria-describedby="nameId" placeholder="Enter car name" autofocus
+                                id="name" aria-describedby="nameId" placeholder="Enter product name" autofocus
                                 autocomplete="name" />
                             @error('name')
                                 <small id="nameId" class="form-text text-danger">{{ $message }}</small>
@@ -94,7 +94,7 @@ $store = function (car $car) {
                                     <label for="price" class="form-label">Harga</label>
                                     <input type="number" class="form-control @error('price') is-invalid @enderror"
                                         wire:model="price" id="price" aria-describedby="priceId"
-                                        placeholder="Enter car price" />
+                                        placeholder="Enter product price" />
                                     @error('price')
                                         <small id="priceId" class="form-text text-danger">{{ $message }}</small>
                                     @enderror
@@ -108,7 +108,7 @@ $store = function (car $car) {
                                     <label for="capacity" class="form-label">Kapasitas Kursi</label>
                                     <input type="number" class="form-control @error('capacity') is-invalid @enderror"
                                         wire:model="capacity" id="capacity" aria-describedby="capacityId"
-                                        placeholder="Enter car capacity" />
+                                        placeholder="Enter product capacity" />
                                     @error('capacity')
                                         <small id="capacityId" class="form-text text-danger">{{ $message }}</small>
                                     @enderror
@@ -119,7 +119,7 @@ $store = function (car $car) {
                                     <label for="space" class="form-label">Bagasi</label>
                                     <input type="number" class="form-control @error('space') is-invalid @enderror"
                                         wire:model="space" id="space" aria-describedby="spaceId"
-                                        placeholder="Enter car space" />
+                                        placeholder="Enter product space" />
                                     @error('space')
                                         <small id="spaceId" class="form-text text-danger">{{ $message }}</small>
                                     @enderror

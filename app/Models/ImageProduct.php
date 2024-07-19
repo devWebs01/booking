@@ -6,21 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class CarImage extends Model
+class ImageProduct extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'car_id', 'image_path'
+        'product_id', 'image_path'
     ];
 
     /**
-     * Get the car that owns the CarImage
+     * Get the product that owns the imageProduct
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function car(): BelongsTo
+    public function product(): BelongsTo
     {
-        return $this->belongsTo(car::class);
+        return $this->belongsTo(Product::class);
     }
 }

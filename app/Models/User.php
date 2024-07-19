@@ -49,7 +49,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get all of the transactions for the Car
+     * Get all of the transactions for the product
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
