@@ -1,15 +1,19 @@
 <?php
 use function Laravel\Folio\name;
-use function Livewire\Volt\{state, mount, on};
+use function Livewire\Volt\{state, mount, uses};
 use App\Models\Transaction;
 use App\Models\product;
 use App\Models\Dating;
 use Carbon\Carbon;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+
+uses([LivewireAlert::class]);
 
 name('transactions.edit');
 
 state([
     'product' => fn() => product::find($this->transaction->product_id),
+    'subtotal',
     'rentEndDate',
     'transaction',
     'daysLate',
@@ -18,19 +22,12 @@ state([
     'today',
 ]);
 
-on([
-    'eventName' => function () {
-        $transaction = Transaction::find($this->transaction->id);
-        $this->transaction = $transaction;
-    },
-]);
-
 mount(function () {
     $this->rentEndDate = Carbon::parse($this->transaction->rent_date)->addDays($this->transaction->duration);
     $this->today = Carbon::today();
 
     // Perhitungan keterlambatan dan biaya keterlambatan
-    if ($this->today->greaterThan($this->rentEndDate)) {
+    if ($this->today->greaterThan($this->rentEndDate) == true && $this->transaction->status == 'DALAM_PENGGUNAAN') {
         $this->daysLate = $this->today->diffInDays($this->rentEndDate);
         $this->lateFee = $this->daysLate * 100000; // Rp 100.000 per hari terlambat
     } else {
@@ -39,6 +36,7 @@ mount(function () {
     }
 
     // Perhitungan total biaya
+    $this->subtotal = $this->transaction->price_product * $this->transaction->duration + $this->transaction->price_driver;
     $this->total = $this->transaction->price_product * $this->transaction->duration + $this->transaction->price_driver + $this->lateFee;
 });
 
@@ -55,7 +53,7 @@ $reschedule = function () {
     $this->transaction->update([
         'rent_date' => today()->format('Y-m-d'),
     ]);
-    $this->dispatch('eventName');
+    $this->flash('success', 'Telah Dijadwalkan Ulang', [], '/superusers/transactions/' . $this->transaction->id);
 };
 
 $inUse = function () {
@@ -73,6 +71,8 @@ $finished = function () {
         'transaction_id' => $this->transaction->id,
         'dateOfTransaction' => today(),
         'status' => $this->transaction->status,
+        'penalty' => $this->lateFee,
+        'total' => $this->total,
     ]);
 };
 
@@ -136,10 +136,10 @@ $cancelled = function () {
                     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
                         type="button" role="tab" aria-controls="pills-home" aria-selected="true">INVOICE</button>
                 </li>
-                <li class="nav-item" role="presentation">
+                {{-- <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-edit-tab" data-bs-toggle="pill" data-bs-target="#pills-edit"
                         type="button" role="tab" aria-controls="pills-edit" aria-selected="false">EDIT</button>
-                </li>
+                </li> --}}
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-information-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-information" type="button" role="tab" aria-controls="pills-information"
@@ -163,8 +163,6 @@ $cancelled = function () {
                 </div>
 
             </div>
-
-
         </div>
     @endvolt
     <style>

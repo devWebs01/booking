@@ -109,38 +109,13 @@
     <script src="{{ asset('/back-end/assets/js/dashboard.js') }}"></script>
     {{-- <script src="//unpkg.com/alpinejs" defer></script> --}}
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const togglePasswordButtons = document.querySelectorAll('.toggle-password');
-
-            togglePasswordButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const passwordField = this.previousElementSibling;
-                    const toggleIcon = this.querySelector('.toggle-icon');
-
-                    const type = passwordField.getAttribute('type') === 'password' ? 'text' :
-                        'password';
-                    passwordField.setAttribute('type', type);
-
-                    // Toggle icon class
-                    if (type === 'text') {
-                        toggleIcon.classList.remove('bi-eye');
-                        toggleIcon.classList.add('bi-eye-slash');
-                    } else {
-                        toggleIcon.classList.remove('bi-eye-slash');
-                        toggleIcon.classList.add('bi-eye');
-                    }
-                });
-            });
-        });
-
-        window.addEventListener('show-toast', event => {
-            $('.toast').toast('show');
-        });
-    </script>
     @livewireScripts
 
     @stack('scripts')
+
+    {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <x-livewire-alert::scripts /> --}}
 </body>
 
 </html>
