@@ -1,90 +1,47 @@
-<aside class="left-sidebar">
-    <!-- Sidebar scroll-->
-    <div>
-        <div class="brand-logo d-flex align-items-center justify-content-between">
-            <a href="#" class="text-nowrap logo-img">
-                <img src="{{ asset('/back-end/assets/images/logos/dark-logo.svg') }}" width="180" alt="" />
-            </a>
-            <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
-                <i class="ti ti-x fs-8"></i>
-            </div>
-        </div>
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
-            <ul id="sidebarnav">
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="/home" wire:navigate aria-expanded="false">
-                        <span>
-                            <i class="ti ti-layout-dashboard"></i>
-                        </span>
-                        <span class="hide-menu">Beranda</span>
-                    </a>
-                </li>
-                <li class="nav-small-cap">
-                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                    <span class="hide-menu">Akun Pengguna</span>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('admin.index') }}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-article"></i>
-                        </span>
-                        <span class="hide-menu">Admin</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('customers.index') }}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-article"></i>
-                        </span>
-                        <span class="hide-menu">Pelanggan</span>
-                    </a>
-                </li>
-                <li class="nav-small-cap">
-                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                    <span class="hide-menu">Mobil</span>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('categories.index') }}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-article"></i>
-                        </span>
-                        <span class="hide-menu">Kategori</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('products.index') }}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-article"></i>
-                        </span>
-                        <span class="hide-menu">Mobil</span>
-                    </a>
-                </li>
-                <li class="nav-small-cap">
-                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                    <span class="hide-menu">Transaksi</span>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('transactions.index') }}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-article"></i>
-                        </span>
-                        <span class="hide-menu">Rental Mobil</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('reports.transactions') }}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-article"></i>
-                        </span>
-                        <span class="hide-menu">Laporan Transaksi</span>
-                    </a>
-                </li>
-            </ul>
-
-
-        </nav>
-        <!-- End Sidebar navigation -->
-    </div>
-    <!-- End Sidebar scroll-->
-</aside>
+<ul class="menu-inner py-1">
+    <li class="menu-item {{ request()->is('home') ? 'active' : '' }}">
+        <a href="/home" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+            <div data-i18n="home">Beranda</div>
+        </a>
+    </li>
+    <li class="menu-header small fw-medium">User</li>
+    <li class="menu-item {{ request()->is('superusers/admins') ? 'active' : '' }}">
+        <a href="{{ route('admin.index') }}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-user"></i>
+            <div data-i18n="home">Admin</div>
+        </a>
+    </li>
+    <li class="menu-item {{ request()->is('superusers/customers') ? 'active' : '' }}">
+        <a href="{{ route('customers.index') }}" class="menu-link">
+            <i class="menu-icon tf-icons bx bxs-user-account"></i>
+            <div data-i18n="home">Pelanggan</div>
+        </a>
+    </li>
+    <li class="menu-header small fw-medium">Mobil</li>
+    <li class="menu-item {{ request()->is('superusers/categories') ? 'active' : '' }}">
+        <a href="{{ route('categories.index') }}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-briefcase"></i>
+            <div data-i18n="home">Kategori</div>
+        </a>
+    </li>
+    <li class="menu-item {{ request()->is('superusers/products') ? 'active' : '' }}">
+        <a href="{{ route('products.index') }}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-car"></i>
+            <div data-i18n="home">Mobil</div>
+        </a>
+    </li>
+    <li class="menu-header small fw-medium">Transaksi</li>
+    <li class="menu-item {{ request()->is('superusers/transactions') ? 'active' : '' }}">
+        <a href="{{ route('transactions.index') }}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-up-arrow-circle"></i>
+            <div data-i18n="home">Transaksi Mobil</div>
+        </a>
+    </li>
+    <li class="menu-item {{ request()->is('superusers/reports/transactions') ? 'active' : '' }}">
+        <a href="{{ route('reports.transactions') }}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-book"></i>
+            <div data-i18n="home">Laporan Transaksi</div>
+        </a>
+    </li>
+</ul>

@@ -76,17 +76,20 @@
                                         <input id="password-confirm" type="password" class="form-control"
                                             name="password_confirmation" required autocomplete="new-password">
 
-                                        <button type="button" class="btn btn-light border" id="togglePassword">
+                                        <button type="button" class="btn btn-light border"
+                                            id="togglePassword">
                                             <i class="bi bi-eye" id="toggleIcon"></i>
                                         </button>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100 py-8 fs-4 rounded-2">Sign
-                                    In</button>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">Sign
+                                        In</button>
+                                </div>
                             </form>
                         </div>
                         <div class="d-flex align-items-center justify-content-center mb-3">
-                            <p class="fs-4 mb-0 fw-bold">Udah punya akun?</p>
+                            <p class="mb-0 fw-bold">Udah punya akun?</p>
                             <a class="text-primary fw-bold ms-2" href="{{ route('login') }}">Login sekarang</a>
                         </div>
                     </div>

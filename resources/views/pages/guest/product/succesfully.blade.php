@@ -16,7 +16,7 @@ name('succesfully');
                             Kami mohon kesabaran sementara kami menunggu konfirmasi dari pihak admin. Pihak admin akan
                             segera meninjau dan memverifikasi detail rental mobil Anda. </p>
                         <div class="mx-auto d-flex justify-content-center">
-                            <a class="btn btn-primary rounded" wire:navigate href="{{ route('transaction.guest') }}"
+                            <a class="btn btn-primary rounded" href="{{ route('transaction.guest') }}"
                                 role="button">Ke Transaksi</a>
                         </div>
                     </div>

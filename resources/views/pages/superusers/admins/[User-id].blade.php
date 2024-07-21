@@ -1,8 +1,11 @@
 <?php
 use function Laravel\Folio\name;
-use function Livewire\Volt\{state, rules};
+use function Livewire\Volt\{state, rules, uses};
 use Illuminate\Validation\Rule;
 use App\Models\User;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+
+uses([LivewireAlert::class]);
 
 name('admin.edit');
 
@@ -25,13 +28,22 @@ $edit = function () {
     $validateData['role'] = 'admin';
 
     $validateData['password'] = $this->user->password;
-    User::whereId($this->user->id)->update($validateData);
 
-    session()->flash('status', 'Akun Admin ' . $this->name . 'berhasil dibuat.');
+    User::whereId($this->user->id)->update($validateData);
 
     $this->reset('name', 'email', 'password', 'phone_number');
 
-    $this->redirectRoute('admin.index', navigate: true);
+    $this->flash(
+        'success',
+        'Proses Berhasil',
+        [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => '',
+        ],
+        '/superusers/admins',
+    );
 };
 
 ?>
@@ -40,6 +52,18 @@ $edit = function () {
 
     @volt
         <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Beranda</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Data Admin</a>
+                    </li>
+                    <li class="breadcrumb-item active">Edit Data Admin</li>
+                </ol>
+            </nav>
+
             <div class="card">
                 <div class="card-header">
                     <div class="alert alert-primary" role="alert">

@@ -1,8 +1,11 @@
 <?php
 
-use function Livewire\Volt\{state, rules, computed, usesPagination};
+use function Livewire\Volt\{state, rules, computed, usesPagination, uses};
 use App\Models\Category;
 use function Laravel\Folio\name;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+
+uses([LivewireAlert::class]);
 
 name('categories.index');
 
@@ -23,19 +26,39 @@ $save = function (Category $category) {
         $categoryUpdate->update($validate);
     }
     $this->reset('name');
+    $this->flash(
+        'success',
+        'Proses Berhasil',
+        [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => '',
+        ],
+        '/superusers/categories',
+    );
 };
 
 $edit = function (Category $category) {
     $category = Category::find($category->id);
     $this->categoryId = $category->id;
     $this->name = $category->name;
-    $this->dispatch('save');
 };
 
 $destroy = function (Category $category) {
     $category->delete();
     $this->reset('name');
-    $this->dispatch('save');
+    $this->flash(
+        'success',
+        'Proses Berhasil',
+        [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => '',
+        ],
+        '/superusers/categories',
+    );
 };
 ?>
 
@@ -46,8 +69,15 @@ $destroy = function (Category $category) {
 
         @volt
             <div>
-                <x-alert on="save">
-                </x-alert>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="#">Beranda</a>
+                        </li>
+                        <li class="breadcrumb-item active">Data Kategori</li>
+                    </ol>
+                </nav>
+
                 <div class="card">
                     <div class="card-header">
                         <form wire:submit="save">
@@ -61,17 +91,14 @@ $destroy = function (Category $category) {
                                 @error('name')
                                     <small id="helpId" class="form-text text-danger">{{ $message }}</small>
                                 @enderror
-                                <div class="row justift-content-between">
-                                    <div class="col-md mt-3">
+                                <div class="row justify-content-between">
+                                    <div class="col mt-3">
                                         <button type="reset" class="btn btn-danger">
                                             Reset
                                         </button>
 
                                     </div>
-                                    <div class="col align-self-center text-center">
-                                        <span wire:loading class="spinner-border spinner-border-sm"></span>
-                                    </div>
-                                    <div class="col-md mt-3 text-end">
+                                    <div class="col mt-3 text-end">
                                         <button type="submit" class="btn btn-primary">
                                             Submit
                                         </button>
@@ -98,19 +125,13 @@ $destroy = function (Category $category) {
                                             <td>{{ ++$no }}</td>
                                             <td>{{ $category->name }}</td>
                                             <td>
-                                                <div class="btn-group btn-group-sm" role="group"
-                                                    aria-label="Small button group">
+                                                <a wire:click='edit({{ $category->id }})'
+                                                    class="btn btn-sm btn-warning text-white ">Edit</a>
 
-                                                    <a wire:click='edit({{ $category->id }})'
-                                                        class="btn  btn-warning">Edit</a>
-
-                                                    <button
-                                                        wire:confirm.prompt="Yakin Ingin Menghapus?\n\nTulis 'hapus' untuk konfirmasi!|hapus"
-                                                        wire:loading.attr='disabled'
-                                                        wire:click='destroy({{ $category->id }})' class="btn btn-danger">
-                                                        Hapus
-                                                    </button>
-                                                </div>
+                                                <button wire:loading.attr='disabled'
+                                                    wire:click='destroy({{ $category->id }})' class="btn btn-sm btn-danger">
+                                                    Hapus
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach

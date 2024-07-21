@@ -1,60 +1,62 @@
 <?php
 use function Laravel\Folio\name;
-use function Livewire\Volt\{state, computed, usesPagination};
+use function Livewire\Volt\{state, computed, usesPagination, uses};
 use App\Models\User;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+
+uses([LivewireAlert::class]);
 
 name('admin.index');
 usesPagination(theme: 'bootstrap');
 
 state(['search'])->url();
 
-$users = computed(function () {
-    if ($this->search == null) {
-        return User::query()->where('role', 'admin')->latest()->paginate(10);
-    } else {
-        return User::where(function ($query) {
-            $query
-                ->where('name', 'LIKE', '%' . $this->search . '%')
-                ->orWhere('email', 'LIKE', '%' . $this->search . '%')
-                ->orWhere('phone_number', 'LIKE', '%' . $this->search . '%');
-        })
-            ->where('role', 'admin')
-            ->latest()
-            ->paginate(10);
-    }
-});
+state(['admin' => fn() => User::where('role', 'admin')->latest()->get()]);
 
 $deleted = function (User $user) {
     $user->delete();
 
-    $this->dispatch('status');
+    $this->flash(
+        'success',
+        'Proses Berhasil',
+        [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => '',
+        ],
+        '/superusers/admins',
+    );
 };
 
 ?>
 <x-admin-layout>
     <x-slot name="title">Data Admin</x-slot>
+    @include('layouts.responsive')
 
     @volt
         <div>
-            <x-alert on="status">
-            </x-alert>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Beranda</a>
+                    </li>
+                    <li class="breadcrumb-item active">Data Admin</li>
+                </ol>
+            </nav>
             <div class="card">
                 <div class="card-header">
-                    <div class="row justify-content-between gap-2">
-                        <div class="col-md">
-                            <a wire:navigate class="btn btn-primary" href="{{ route('admin.create') }}" role="button">Tambah
+                    <div class="row justify-content-between text-center text-lg-start gap-2">
+                        <div class="col">
+                            <a class="btn btn-primary" href="{{ route('admin.create') }}" role="button">Tambah
                                 Admin</a>
                             <span wire:loading class="spinner-border spinner-border-sm ms-3"></span>
-                        </div>
-                        <div class="col-md">
-                            <input wire:model.live="search" type="search" class="form-control" name="search"
-                                id="search" aria-describedby="helpId" placeholder="..." />
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive rounded">
-                        <table class="table table-hover display border  text-nowrap text-center">
+                        <table wire:ignore id="example" class="table table-hover display border" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -65,32 +67,31 @@ $deleted = function (User $user) {
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($this->users as $no => $item)
+                                @foreach ($admin as $no => $item)
                                     <tr>
                                         <td>{{ ++$no }}.</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->email }}</td>
                                         <td>{{ $item->phone_number }}</td>
                                         <td>
-                                            <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                                                <a type="button" class="btn btn-warning "
-                                                    href="{{ route('admin.edit', ['user' => $item->id]) }}" wire:navigate>
-                                                    Edit
-                                                </a>
-                                                <button type="button" class="btn btn-danger "
-                                                    wire:click='deleted({{ $item->id }})'
-                                                    wire:confirm.prompt="Yakin Ingin Menghapus?\n\nTulis 'hapus' untuk konfirmasi!|hapus"
-                                                    wire:loading.attr="disabled">
-                                                    Hapus
-                                                </button>
+                                            <div class="btn-group btn-group-sm" role="group"
+                                                aria-label="Small button group">
 
                                             </div>
+                                            <a type="button" class="btn btn-sm btn-warning "
+                                                href="{{ route('admin.edit', ['user' => $item->id]) }}">
+                                                Edit
+                                            </a>
+                                            <button type="button" class="btn btn-sm btn-danger "
+                                                wire:click='deleted({{ $item->id }})' wire:loading.attr="disabled">
+                                                Hapus
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $this->users->links() }}
+                        {{-- {{ $this->users->links() }} --}}
                     </div>
                 </div>
             </div>

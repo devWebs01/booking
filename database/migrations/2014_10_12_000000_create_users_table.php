@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('phone_number')->unique()->nullable();
             $table->enum('role', [
                 'admin',
-                'owner',
                 'customer'
             ]);
             $table->text('address')->nullable();

@@ -14,6 +14,7 @@ state([
 
 <x-guest-layout>
     <x-slot name="title">Transaksi Rental Mobil</x-slot>
+    @include('layouts.table')
     @volt
         <div>
             <div class="container-fluid row mt-5 mb-3">
@@ -31,13 +32,14 @@ state([
             </div>
             <div class="rounded border">
                 <div class="table-responsive p-3">
-                    <table class="table table-hover text-nowrap text-center">
+                    <table class="display" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No. </th>
                                 <th>Nama</th>
                                 <th>Transmisi</th>
                                 <th>Status</th>
+                                <th>#</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,10 +49,14 @@ state([
                                     <td>{{ $item->product->name }}</td>
                                     <td>{{ $item->product->transmission }}</td>
                                     <td>
-                                        <span class="badge bg-warning">
-                                            {{ $item->status }}
-                                        </span>
 
+                                        <button class="btn btn-primary">
+                                            {{ $item->status }}
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('invoice.guest', ['transaction' => $item->id]) }}"
+                                            class="btn btn-primary">Detail</a>
                                     </td>
                                 </tr>
                             @endforeach

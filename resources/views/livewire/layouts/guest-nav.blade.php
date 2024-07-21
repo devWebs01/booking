@@ -18,7 +18,7 @@
                             Mobil</a>
                     </li>
                     @auth
-                        @if (auth()->user()->role === 'admin' || auth()->user()->role === 'owner')
+                        @if (auth()->user()->role === 'admin')
                             <li class="nav-item px-3 px-xl-4">
                                 <a class="nav-link fw-medium" aria-current="page" href="{{ route('home') }}">Beranda</a>
                             </li>
@@ -69,7 +69,7 @@
                 </a>
             </li>
             @auth
-                @if (auth()->user()->role === 'admin' || auth()->user()->role === 'owner')
+                @if (auth()->user()->role === 'admin')
                     <li class="nav-item">
                         <a href="{{ route('home') }}" class="nav-link">
                             <i class="bi bi-person-workspace fs-3"></i>

@@ -1,9 +1,13 @@
 <?php
 
 use function Laravel\Folio\name;
-use function Livewire\Volt\{state, on, rules};
+use function Livewire\Volt\{state, on, rules, uses, usesFileUploads};
 use App\Models\Shop;
 use App\Models\Transaction;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+
+uses([LivewireAlert::class]);
+usesFileUploads();
 
 name('user.account');
 
@@ -12,10 +16,46 @@ state([
     'email' => fn() => $this->user->email,
     'phone_number' => fn() => $this->user->phone_number,
     'address' => fn() => $this->user->address,
-    'identify' => fn() => $this->user->identify,
-    'password',
+    'password' => '',
+    'identify',
     'user',
 ]);
+
+$save = function () {
+    $user = Auth::user();
+
+    $validated = $this->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $this->user->id,
+        'phone_number' => 'required|string|unique:users,phone_number,' . $this->user->id,
+        'address' => 'required|string|max:255',
+        'password' => 'nullable|string|min:8',
+        'identify' => 'nullable|file|max:2048', // validasi file maksimal 2MB
+    ]);
+
+    if (!empty($this->password)) {
+        $validated['password'] = bcrypt($this->password);
+    }
+
+    if ($this->identify) {
+        $identifyfile = $this->identify->store('public/identify');
+        $validated['identify'] = $identifyfile;
+    }
+
+    $user->update($validated);
+
+    $this->flash(
+        'success',
+        'Proses Berhasil',
+        [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => '',
+        ],
+        '/guest/account/' . $this->user->id,
+    );
+};
 
 ?>
 
@@ -34,14 +74,6 @@ state([
                     <p>
                         Kelola informasi pribadi dan riwayat transaksi Shop mobil Anda dengan mudah. Pastikan semua data
                         Anda selalu terupdate untuk memaksimalkan layanan kami.
-                        <br>
-                        'name',
-                        'email',
-                        'password',
-                        'phone_number',
-                        'role',
-                        'address',
-                        'identify',
                     </p>
                 </div>
             </div>
@@ -54,35 +86,21 @@ state([
                                 <div class="card-body">
                                     <div class="d-flex align-items-start align-items-sm-center gap-4">
                                         @if ($identify)
-                                            <img src="{{ $identify }}" alt="{{ $name }}" class="d-block rounded"
-                                                height="100" width="100" id="uploadedAvatar">
-                                        @else
-                                            <div style="height: 100px;width: 100px"
-                                                class="bg-secondary rounded border placeholder">
-                                            </div>
+                                            <img src="{{ $identify->temporaryUrl() }}" class="img rounded" ;
+                                                style="object-fit: cover" alt="identify" height="490px" width="100%" />
+                                        @elseif ($user->identify)
+                                            <img src="{{ Storage::url($user->identify) }}" class="img rounded"
+                                                style="object-fit: cover;" alt="identify" height="490px" width="100%" />
                                         @endif
-                                        <div class="button-wrapper">
-                                            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-                                                <span class="d-none d-sm-block">Upload new photo</span>
-                                                <i class="bx bx-upload d-block d-sm-none"></i>
-                                                <input type="file" id="upload" class="account-file-input"
-                                                    hidden="" accept="image/png, image/jpeg">
-                                            </label>
-                                            <button type="button"
-                                                class="btn btn-outline-secondary account-image-reset mb-4">
-                                                <i class="bx bx-reset d-block d-sm-none"></i>
-                                                <span class="d-none d-sm-block">Reset</span>
-                                            </button>
 
-                                            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
-                                        </div>
                                     </div>
                                 </div>
                                 <hr class="my-0">
                                 <div class="card-body">
-                                    <form id="formAccountSettings" method="POST" onsubmit="return false">
+                                    <form id="formAccountSettings" wire:submit.prevent='save'>
+                                        @csrf
                                         <div class="row">
-                                            <div class="mb-3 col-md-12">
+                                            <div class="mb-3 col-md-6">
                                                 <label for="firstName" class="form-label">Nama Lengkap</label>
                                                 <input wire:model='name' class="form-control" type="text" id="firstName"
                                                     name="firstName" value="John" autofocus="">
@@ -92,6 +110,18 @@ state([
                                                     </small>
                                                 @enderror
                                             </div>
+
+                                            <div class="mb-3 col-md-6">
+                                                <label for="identify" class="form-label">KTP</label>
+                                                <input wire:model='identify' class="form-control" type="file"
+                                                    id="identify" name="identify" accept="image/png, image/jpeg">
+                                                @error('name')
+                                                    <small class="text-danger fw-bold">
+                                                        {{ $message }}
+                                                    </small>
+                                                @enderror
+                                            </div>
+
                                             <div class="mb-3 col-md-6">
                                                 <label for="email" class="form-label">E-mail</label>
                                                 <input wire:model='email' class="form-control" type="email" id="email"
@@ -117,10 +147,23 @@ state([
                                                 @enderror
                                             </div>
 
+                                            <div class="mb-3">
+                                                <label for="address" class="form-label">Alamat</label>
+                                                <textarea class="form-control" wire:model='address' name="address" id="address" rows="3">
+                                                    {{ $address }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, iure.
+                                                </textarea>
+                                            </div>
+
+                                            @error('address')
+                                                <small class="text-danger fw-bold">
+                                                    {{ $message }}
+                                                </small>
+                                            @enderror
                                         </div>
+
                                         <div class="mt-2">
-                                            <button type="submit" class="btn btn-primary me-2">Save changes</button>
-                                            <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                                            <button type="submit" class="btn btn-primary me-2">SUBMIT</button>
+
                                         </div>
                                     </form>
                                 </div>

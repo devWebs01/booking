@@ -15,9 +15,9 @@
         <div class="col-sm-10">
 
             <div class="input-group input-group-sm justify-content-center">
-                <input type="number" class="form-control @error('duration') is-invalid @enderror" wire:model="duration"
-                    id="duration" aria-describedby="helpId" placeholder="duration" min="1" max="30"
-                    disabled />
+                <input type="number" class="form-control form-control-lg @error('duration') is-invalid @enderror"
+                    wire:model="duration" id="duration" aria-describedby="helpId" placeholder="duration" min="1"
+                    max="30" disabled />
                 <button type="button" class="btn btn-body btn-sm border rounded-start-pill"
                     wire:loading.attr='disabled' wire:click="decrement">
                     <i class="fa-solid fa-minus"></i>
@@ -81,7 +81,12 @@
 
             <hr>
         </div>
-        <div class="d-grid mb-3 ">
-            <button type="submit" class="btn btn-primary rounded" href="#" role="button">Submit</button>
+        <div class="d-grid mb-3">
+            @if (!auth()->user()->identify && !auth()->user()->phone_number)
+                <a class="btn btn-primary" href="{{ route('user.account', ['user' => auth()->user()->id]) }}"
+                    role="button">Lengkapi Data</a>
+            @else
+                <button type="submit" class="btn btn-primary" role="button">Submit</button>
+            @endif
         </div>
 </form>
