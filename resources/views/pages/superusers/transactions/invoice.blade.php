@@ -29,7 +29,8 @@
                                 <div class="address">
                                     {{ $transaction->user->phone_number }}
                                 </div>
-                                <div class="email"><a href="mailto:{{ $transaction->user->email }}">
+                                <div class="email">
+                                    <a href="mailto:{{ $transaction->user->email }}">
                                         {{ $transaction->user->email }}
                                     </a>
                                 </div>
@@ -56,8 +57,9 @@
                                     <tr>
                                         <th>MOBIL</th>
                                         <th>TANGGAL SEWA</th>
-                                        <th>TERLAMBAT</th>
                                         <th>DURASI</th>
+                                        <th>AKHIR SEWA</th>
+                                        <th>TERLAMBAT</th>
                                         <th>HARGA</th>
                                     </tr>
                                 </thead>
@@ -70,61 +72,57 @@
                                             {{ $transaction->rent_date }}
                                         </td>
                                         <td>
-                                            {{ $rentEndDate }}
-                                            ({{ $daysLate >= 0 ? $daysLate : '0' }} Hari)
+                                            {{ $transaction->duration }} Hari
                                         </td>
                                         <td>
-                                            {{ $transaction->duration }} Hari
+                                            {{ $rentEndDate->format('Y-M-d') }}
+                                        </td>
+                                        <td>
+                                            {{ $daysLate }} HARI
                                         </td>
                                         <td>
                                             {{ $transaction->formatRupiah($transaction->price_product) }}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"></td>
+                                        <td colspan="3"></td>
                                         <td>HARGA SEWA</td>
                                         <td>
                                             {{ $transaction->formatRupiah($transaction->price_product * $transaction->duration) }}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"></td>
+                                        <td colspan="3"></td>
                                         <td>SOPIR</td>
                                         <td>
                                             {{ $transaction->with_driver == 0 ? '-' : $transaction->formatRupiah(200000) }}
                                         </td>
                                     </tr>
                                     <tr class="border-bottom">
-                                        <td colspan="2"></td>
+                                        <td colspan="3"></td>
                                         <td>SUBTOTAL</td>
                                         <td>
-                                            {{ $transaction->formatRupiah($transaction->subtotal) }}
+                                            {{ $transaction->formatRupiah($subtotal) }}
                                         </td>
-                                    </tr>
-                                    @if ($today->greaterThan($rentEndDate))
-                                        <tr>
-                                            <td colspan="2"></td>
-                                            <td>DENDA</td>
-                                            <td>
-                                                {{ $transaction->formatRupiah($lateFee) }}
 
+                                        @if ($today->greaterThan($rentEndDate) == true && $transaction->status == 'DALAM_PENGGUNAAN')
+                                            <td> + {{ $transaction->formatRupiah($lateFee) }}
+                                                (DENDA)
                                             </td>
-                                        </tr>
-                                    @endif
+                                        @endif
 
+                                    </tr>
                                     <tr>
-                                        <td colspan="2"></td>
+                                        <td colspan="3"></td>
                                         <td>TOTAL</td>
                                         <td>
-                                            {{ $transaction->formatRupiah($transaction->subtotal + $lateFee) }}
+                                            {{ $transaction->formatRupiah($total) }}
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-
                     </main>
-
                 </div>
 
             </div>
