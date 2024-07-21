@@ -48,7 +48,7 @@ $store = function () {
 
     $this->reset('name', 'price', 'description', 'capacity', 'space', 'category_id', 'transmission', 'status');
 
-    $this->redirectRoute('products.index', navigate: true);
+    $this->redirectRoute('products.index');
 };
 
 ?>
@@ -58,8 +58,17 @@ $store = function () {
 
     @volt
         <div>
-            <x-alert on="status">
-            </x-alert>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Beranda</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Data Admin</a>
+                    </li>
+                    <li class="breadcrumb-item active">Tambah Data Admin</li>
+                </ol>
+            </nav>
 
             <div class="card">
                 <div class="card-header">

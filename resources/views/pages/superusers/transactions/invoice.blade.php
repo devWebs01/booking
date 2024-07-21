@@ -39,7 +39,7 @@
                                 <h1 class="invoice-id">
                                     {{ $transaction->invoice }}
                                 </h1>
-                                <ul class="date">
+                                <ul class="list-unstyled">
                                     <li>
                                         Tanggal Faktur:
                                     </li>
@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <div class="table-responsive border rounded-3">
-                            <table class="table table-hover text-center table-borderless">
+                            <table class="table table-hover text-center table-borderless text-nowrap">
                                 <thead class="border-bottom">
                                     <tr>
                                         <th>MOBIL</th>

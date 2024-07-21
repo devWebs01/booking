@@ -32,9 +32,7 @@ class LoginController extends Controller
             return '/';
         } elseif (auth()->user()->role === 'admin') {
             return '/home';
-        } elseif (auth()->user()->role === 'owner') {
-            return '/home';
-        }
+        } 
     }
 
     /**

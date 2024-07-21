@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row align-items-lg-center mb-5">
                 <div class="col-md-6 mb-5 mb-md-0">
-                    <h1 class="display-3 fw-bolder">Nikmati perjalanan yang mudah <span class="text-primary">dan
+                    <h1 class="display-1 fw-bolder">Nikmati perjalanan yang mudah <span class="text-primary">dan
                             nyaman dengan mobil kami.</span></h1>
                     <p class="lead fw-bold mt-3 mb-4">Masuk ke akun Anda untuk memulai perjalanan Anda dengan mobil
                         impian.
@@ -13,7 +13,8 @@
                 </div>
                 <div class="col-md-5 col-md-6">
                     <div class="card">
-                        <a href="/" class="text-nowrap logo-img text-center d-block pt-5 w-100">
+                        <a href="/"
+                            class="text-nowrap logo-img text-center d-block pt-5 w-100 text-decoration-none">
                             <h3 class="fw-bolder">Aquina Rental Jambi</h3>
                         </a>
                         <div class="card-body">
@@ -71,12 +72,14 @@
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">
-                                    Masuk
-                                </button>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">
+                                        Masuk
+                                    </button>
+                                </div>
                             </form>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <p class="fs-4 mb-0 fw-bold">Baru disini?</p>
+                            <div class="d-flex align-items-center justify-content-center my-3">
+                                <p class="mb-0 fw-bold">Baru disini?</p>
                                 <a class="text-primary fw-bold ms-2" href="{{ route('register') }}">Buat sebuah akun</a>
                             </div>
                         </div>

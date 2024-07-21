@@ -27,22 +27,20 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Transaction::factory()
-        ->count(10)
-        ->create()
-        ->each(function ($transaction) {
-            // Untuk setiap transaksi, buat data dating terkait
-            Dating::factory()
-                ->count(1)
-                ->create(['transaction_id' => $transaction->id]);
-        });
+            ->count(10)
+            ->create()
+            ->each(function ($transaction) {
+                // Untuk setiap transaksi, buat data dating terkait
+                Dating::factory()
+                    ->count(1)
+                    ->create(['transaction_id' => $transaction->id]);
+            });
 
 
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'role' => 'owner'
+            'role' => 'admin'
         ]);
-
-
     }
 }

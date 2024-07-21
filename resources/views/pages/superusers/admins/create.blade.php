@@ -1,7 +1,10 @@
 <?php
 use function Laravel\Folio\name;
-use function Livewire\Volt\{state, rules};
+use function Livewire\Volt\{state, rules, uses};
 use App\Models\User;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+
+uses([LivewireAlert::class]);
 
 name('admin.create');
 
@@ -19,11 +22,21 @@ $store = function () {
     $validateData['role'] = 'admin';
     User::create($validateData);
 
-    $this->dispatch('status');
-
     $this->reset('name', 'email', 'password', 'phone_number');
 
-    $this->redirectRoute('admin.index', navigate: true);
+    $this->redirectRoute('admin.index');
+
+    $this->flash(
+        'success',
+        'Proses Berhasil',
+        [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => '',
+        ],
+        '/superusers/admins',
+    );
 };
 
 ?>
@@ -32,8 +45,18 @@ $store = function () {
 
     @volt
         <div>
-            <x-alert on="status">
-            </x-alert>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Beranda</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Data Admin</a>
+                    </li>
+                    <li class="breadcrumb-item active">Tambah Data Admin</li>
+                </ol>
+            </nav>
+
             <div class="card">
                 <div class="card-header">
                     <div class="alert alert-primary" role="alert">
@@ -92,7 +115,7 @@ $store = function () {
                                         <input type="password" class="form-control @error('password') is-invalid @enderror"
                                             wire:model="password" id="password" aria-describedby="passwordId"
                                             placeholder="Enter admin password" />
-                                        <button type="button" class="btn btn-light border" id="togglePassword">
+                                        <button type="button" class="btn btn-light border">
                                             <i class="bi bi-eye" id="toggleIcon"></i>
                                         </button>
                                     </div>

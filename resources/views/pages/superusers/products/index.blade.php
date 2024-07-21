@@ -1,63 +1,65 @@
 <?php
 use function Laravel\Folio\name;
-use function Livewire\Volt\{state, computed, usesPagination};
+use function Livewire\Volt\{state, computed, usesPagination, uses};
 use App\Models\product;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+
+uses([LivewireAlert::class]);
 
 name('products.index');
 usesPagination(theme: 'bootstrap');
 
-state(['search'])->url();
-
-$products = computed(function () {
-    if ($this->search == null) {
-        return product::query()->latest()->paginate(10);
-    } else {
-        return product::where(function ($query) {
-            $query
-                ->where('name', 'LIKE', '%' . $this->search . '%')
-                ->orWhere('category_id', 'LIKE', '%' . $this->search . '%')
-                ->orWhere('transmission', 'LIKE', '%' . $this->search . '%');
-        })
-            ->latest()
-            ->paginate(10);
-    }
-});
+state(['products' => fn() => product::query()->latest()->get()]);
 
 $deleted = function (product $product) {
     $product->delete();
 
     $this->dispatch('status');
+
+    $this->flash(
+        'success',
+        'Proses Berhasil',
+        [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => '',
+        ],
+        '/superusers/products',
+    );
 };
 
 ?>
 <x-admin-layout>
     <x-slot name="title">Data Mobil</x-slot>
+    @include('layouts.responsive')
 
     @volt
         <div>
-            <x-alert on="status">
-            </x-alert>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Beranda</a>
+                    </li>
+                    <li class="breadcrumb-item active">Data Mobil</li>
+                </ol>
+            </nav>
+
             <div class="card">
                 <div class="card-header">
-                    <div class="row justify-content-between gap-2">
-                        <div class="col-md">
-                            <a wire:navigate class="btn btn-primary" href="{{ route('products.create') }}" role="button">Tambah
+                    <div class="row justify-content-between text-center text-lg-start gap-2">
+                        <div class="col">
+                            <a class="btn btn-primary" href="{{ route('products.create') }}" role="button">Tambah
                                 Mobil</a>
                             <span wire:loading class="spinner-border spinner-border-sm ms-3"></span>
-
-                        </div>
-                        <div class="col-md">
-                            <input wire:model.live="search" type="search" class="form-control" name="search"
-                                id="search" aria-describedby="helpId" placeholder="..." />
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive rounded">
-                        <table class="table table-hover display border  text-nowrap text-center">
+                        <table wire:ignore id="example" class="table table-hover display border" style="width: 100%">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
                                     <th>Nama</th>
                                     <th>Transmisi</th>
                                     <th>Status</th>
@@ -65,9 +67,8 @@ $deleted = function (product $product) {
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($this->products as $no => $item)
+                                @foreach ($products as $no => $item)
                                     <tr>
-                                        <td>{{ ++$no }}.</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->transmission }}</td>
                                         <td>
@@ -77,26 +78,19 @@ $deleted = function (product $product) {
 
                                         </td>
                                         <td>
-                                            <div class="btn-group btn-group-sm" role="group"
-                                                aria-label="Small button group">
-                                                <a type="button" class="btn btn-warning "
-                                                    href="{{ route('products.edit', ['product' => $item->id]) }}" wire:navigate>
-                                                    Edit
-                                                </a>
-                                                <button type="button" class="btn btn-danger "
-                                                    wire:click='deleted({{ $item->id }})'
-                                                    wire:confirm.prompt="Yakin Ingin Menghapus?\n\nTulis 'hapus' untuk konfirmasi!|hapus"
-                                                    wire:loading.attr="disabled">
-                                                    Hapus
-                                                </button>
-
-                                            </div>
+                                            <a type="button" class="btn btn-sm btn-warning "
+                                                href="{{ route('products.edit', ['product' => $item->id]) }}">
+                                                Edit
+                                            </a>
+                                            <button type="button" class="btn btn-sm btn-danger "
+                                                wire:click='deleted({{ $item->id }})' wire:loading.attr="disabled">
+                                                Hapus
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $this->products->links() }}
                     </div>
                 </div>
             </div>

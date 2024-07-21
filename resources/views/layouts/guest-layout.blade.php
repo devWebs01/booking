@@ -24,12 +24,14 @@
     <link href="{{ asset('/front-end/assets/css/theme.min.css') }}" rel="stylesheet" />
 
     <script src="https://kit.fontawesome.com/21fb7efcbe.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 
     @vite([])
 
     @livewireStyles
 
-    @stack('styles')
+    @stack('css')
 
     <style>
         .nav-bottom {
@@ -39,6 +41,14 @@
             -webkit-backdrop-filter: blur(4px);
             border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .form-control {
+            border-radius: 10px;
+        }
+
+        .btn {
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -91,7 +101,6 @@
         @stack('scripts')
 
         @livewireScripts
-
 
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

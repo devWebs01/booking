@@ -38,7 +38,7 @@ $store = function (product $product) {
 
     $this->reset('name', 'price', 'description', 'capacity', 'space', 'category_id', 'transmission', 'status');
 
-    $this->redirectRoute('products.index', navigate: true);
+    $this->redirectRoute('products.index');
 };
 
 ?>

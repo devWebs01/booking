@@ -89,7 +89,7 @@ $rentproduct = function () {
             <section class="pb-5">
                 <div class="container-fluid">
                     <div class="mb-3 d-flex justify-content-center">
-                        <a data-fslightbox="mygalley" class="rounded-4" target="_blank" data-type="image"
+                        <a data-fslightbox="mygalley" target="_blank" data-type="image"
                             href="{{ Storage::url($product->imageProducts->first()->image_path) }}">
                             <img style="max-width: 100%; max-height: 100vh; margin: auto;" class="img-fluid"
                                 src="{{ Storage::url($product->imageProducts->first()->image_path) }}" />
@@ -148,13 +148,13 @@ $rentproduct = function () {
                         @if ($condition == false)
                             <!-- Tombol untuk mengaktifkan status -->
                             <div class="d-grid mb-5">
-                                <button wire:click="turnOnCondition" class="btn btn-primary rounded">
+                                <button wire:click="turnOnCondition" class="btn btn-primary ">
                                     Rental Mobil Ini
                                 </button>
                             </div>
                         @else
                             <div class="d-grid mb-5">
-                                <button wire:click="turnOffCondition" class="btn btn-danger rounded">
+                                <button wire:click="turnOffCondition" class="btn btn-danger ">
                                     Batal Rental
                                 </button>
                             </div>

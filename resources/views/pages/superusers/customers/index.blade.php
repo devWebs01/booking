@@ -7,47 +7,31 @@ name('customers.index');
 
 usesPagination(theme: 'bootstrap');
 
-state(['search'])->url();
-
-$users = computed(function () {
-    if ($this->search == null) {
-        return User::query()->where('role', 'customer')->latest()->paginate(10);
-    } else {
-        return User::where(function ($query) {
-            $query
-                ->where('name', 'LIKE', '%' . $this->search . '%')
-                ->orWhere('email', 'LIKE', '%' . $this->search . '%')
-                ->orWhere('phone_number', 'LIKE', '%' . $this->search . '%');
-        })
-            ->where('role', 'customer')
-            ->latest()
-            ->paginate(10);
-    }
-});
+state(['users' => fn() => User::query()->where('role', 'customer')->latest()->get()])->url();
 
 ?>
 <x-admin-layout>
     <x-slot name="title">Data Admin</x-slot>
+    @include('layouts.responsive')
 
     @volt
         <div>
-            <x-alert on="status">
-            </x-alert>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Beranda</a>
+                    </li>
+                    <li class="breadcrumb-item active">Data Pelanggan</li>
+                </ol>
+            </nav>
+
+
             <div class="card">
-                <div class="card-header">
-                    <div class="row justify-content-between gap-2">
-                        <div class="col-md">
-                            <input wire:model.live="search" type="search" class="form-control" name="search" id="search"
-                                aria-describedby="helpId" placeholder="Identify Customer" />
-                        </div>
-                    </div>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive rounded">
-                        <table class="table table-hover display border  text-nowrap text-center">
+                        <table wire:ignore id="example" class="table table-hover display border" style="width: 100%">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
                                     <th>Identitas</th>
                                     <th>Nama</th>
                                     <th>Email</th>
@@ -56,14 +40,14 @@ $users = computed(function () {
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($this->users as $no => $item)
+                                @foreach ($users as $no => $item)
                                     <tr>
-                                        <td>{{ ++$no }}.</td>
                                         <td>
                                             @if ($item->identify)
                                                 <a href="{{ $item->identify }}" data-fancybox data-caption="Single image">
-                                                    <img src="{{ $item->identify }}" class="img rounded-circle"
-                                                        width="30px" height="30px" alt="Identify Customer">
+                                                    <img src="{{ Storage::url($item->identify) }}"
+                                                        class="img rounded-circle" style="object-fit: cover;" width="30px"
+                                                        height="30px" alt="Identify Customer">
                                                 </a>
                                             @else
                                                 <div class="rounded-circle placeholder border"
@@ -78,7 +62,6 @@ $users = computed(function () {
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $this->users->links() }}
                     </div>
                 </div>
             </div>

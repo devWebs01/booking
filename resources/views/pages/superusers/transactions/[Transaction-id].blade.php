@@ -47,13 +47,35 @@ $confirm = function () {
         'dateOfTransaction' => today(),
         'status' => $this->transaction->status,
     ]);
+    $this->flash(
+        'success',
+        'Proses Berhasil',
+        [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => '',
+        ],
+        '/superusers/transactions/' . $this->transaction->id,
+    );
 };
 
 $reschedule = function () {
     $this->transaction->update([
         'rent_date' => today()->format('Y-m-d'),
     ]);
-    $this->flash('success', 'Telah Dijadwalkan Ulang', [], '/superusers/transactions/' . $this->transaction->id);
+
+    $this->flash(
+        'success',
+        'Telah Dijadwalkan Ulang',
+        [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => '',
+        ],
+        '/superusers/transactions/' . $this->transaction->id,
+    );
 };
 
 $inUse = function () {
@@ -63,6 +85,18 @@ $inUse = function () {
         'dateOfTransaction' => today(),
         'status' => $this->transaction->status,
     ]);
+
+    $this->flash(
+        'success',
+        'Proses Berhasil',
+        [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => '',
+        ],
+        '/superusers/transactions/' . $this->transaction->id,
+    );
 };
 
 $finished = function () {
@@ -74,6 +108,17 @@ $finished = function () {
         'penalty' => $this->lateFee,
         'total' => $this->total,
     ]);
+    $this->flash(
+        'success',
+        'Proses Berhasil',
+        [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => '',
+        ],
+        '/superusers/transactions/' . $this->transaction->id,
+    );
 };
 
 $cancelled = function () {
@@ -83,6 +128,17 @@ $cancelled = function () {
         'dateOfTransaction' => today(),
         'status' => $this->transaction->status,
     ]);
+    $this->flash(
+        'success',
+        'Proses Berhasil',
+        [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => '',
+        ],
+        '/superusers/transactions/' . $this->transaction->id,
+    );
 };
 
 ?>
@@ -91,9 +147,18 @@ $cancelled = function () {
 
     @volt
         <div>
-            <x-alert on="status">
-            </x-alert>
-            <div class="card">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Beranda</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Data Transaksi</a>
+                    </li>
+                    <li class="breadcrumb-item active">{{ $transaction->user->name }}</li>
+                </ol>
+            </nav>
+            <div class="card {{ $transaction->status == 'SELESAI' || $transaction->status == 'BATAL' ? 'd-none' : '' }}">
                 <div class="card-header">
                     Tentukan tindakan selanjutnya:
                 </div>
@@ -131,7 +196,8 @@ $cancelled = function () {
                 </div>
             </div>
 
-            <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
+
+            <ul class="nav nav-pills mt-3 justify-content-center" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
                         type="button" role="tab" aria-controls="pills-home" aria-selected="true">INVOICE</button>
@@ -161,7 +227,6 @@ $cancelled = function () {
                     @include('pages.superusers.transactions.information')
 
                 </div>
-
             </div>
         </div>
     @endvolt
@@ -173,7 +238,6 @@ $cancelled = function () {
         .invoice {
             position: relative;
             background-color: #FFF;
-            min-height: 680px;
             padding: 15px
         }
 
