@@ -123,9 +123,11 @@ $search = computed(function () {
                                             </div>
                                             <div class="card-body p-3">
                                                 <img class="mb-4 mt-2 rounded-2 img"
-                                                    src="{{ Storage::url($product->imageProducts->first()->image_path) }}"
+                                                    @if ($product->imageProducts->isNotEmpty()) src="{{ Storage::url($product->imageProducts->first()->image_path) }}"
+                                                @else src="https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg" @endif
                                                     alt="booking" height="300px" width="100%"
                                                     style="object-fit: cover" />
+
                                                 <div>
                                                     <h5 class="fw-medium">{{ $product->name }}</h5>
                                                     <p class="fs--1 mb-3 fw-medium text-primary">

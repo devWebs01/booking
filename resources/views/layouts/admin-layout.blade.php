@@ -10,6 +10,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/x-icon" href="{{ asset('/back-end/img/favicon/favicon.ico') }}" />
 
+    <title>{{ $title ?? '' }} | Aquina Jambi</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="{{ asset('/back-end/vendor/fonts/boxicons.css') }}" />
@@ -17,15 +19,15 @@
     <link rel="stylesheet" href="{{ asset('/back-end/css/demo.css') }}" />
     <link rel="stylesheet" href="{{ asset('/back-end/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
     <link rel="stylesheet" href="{{ asset('/back-end/vendor/css/theme-default.css') }}"
-    class="template-customizer-theme-css" />
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
-    <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
-
+        class="template-customizer-theme-css" />
     <script src="{{ asset('/back-end/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('/back-end/js/config.js') }}"></script>
+
+    <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,700;1,500;1,700&display=swap');

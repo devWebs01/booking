@@ -1,9 +1,11 @@
 <?php
 use function Laravel\Folio\name;
-use function Livewire\Volt\{state, usesFileUploads};
+use function Livewire\Volt\{state, usesFileUploads, uses, rules};
 use App\Models\Category;
 use App\Models\product;
 use App\Models\imageProduct;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+uses(LivewireAlert::class); // Tambahkan trait LivewireAlert
 
 name('products.create');
 
@@ -19,36 +21,65 @@ state([
     'category_id',
     'transmission',
     'status',
-    'images' => [],
+    'image' => [],
+    'prevImage' => null,
 ]);
 
-$store = function () {
-    // dd($this->all());
+rules([
+    'name' => 'required|string|max:255',
+    'price' => 'required|numeric|min:0',
+    'description' => 'required|string',
+    'capacity' => 'required|string|max:50',
+    'space' => 'required|string|max:50',
+    'category_id' => 'required|exists:categories,id',
+    'transmission' => 'required|in:Manual,Automatic,Manual/Automatic',
+    'status' => 'required|boolean',
+    'image.*' => 'required|image|mimes:jpg,jpeg',
+]);
 
-    $validate = $this->validate([
-        'name' => 'required|string|max:255',
-        'price' => 'required|numeric|min:0',
-        'description' => 'required|string',
-        'capacity' => 'required|string|max:50',
-        'space' => 'required|string|max:50',
-        'category_id' => 'required|exists:categories,id',
-        'transmission' => 'required|in:Manual,Automatic,Manual/Automatic',
-        'status' => 'required|boolean',
-        'images.*' => 'required|image',
-    ]);
+$updatingImage = function ($value) {
+    $this->prevImage = $this->image;
+};
+
+$updatedImage = function ($value) {
+    $this->image = array_merge($this->prevImage, $value);
+};
+
+$removeItem = function ($key) {
+    if (isset($this->image[$key])) {
+        $file = $this->image[$key];
+        $file->delete();
+        unset($this->image[$key]);
+    }
+
+    $this->image = array_values($this->image);
+};
+
+$store = function () {
+    $validate = $this->validate();
 
     $product = product::create($validate);
 
-    foreach ($this->images as $image) {
+    foreach ($this->image as $item) {
         imageProduct::create([
             'product_id' => $product->id,
-            'path' => $image->store('images'), // Pastikan $image adalah objek UploadedFile
+            'image_path' => $item->store('public/images'), // Pastikan $image adalah objek UploadedFile
         ]);
     }
 
     $this->reset('name', 'price', 'description', 'capacity', 'space', 'category_id', 'transmission', 'status');
 
-    $this->redirectRoute('products.index');
+    $this->flash(
+        'success',
+        'Proses Berhasil',
+        [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => '',
+        ],
+        '/superusers/products',
+    );
 };
 
 ?>
@@ -64,9 +95,9 @@ $store = function () {
                         <a href="#">Beranda</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="#">Data Admin</a>
+                        <a href="#">Data Mobil</a>
                     </li>
-                    <li class="breadcrumb-item active">Tambah Data Admin</li>
+                    <li class="breadcrumb-item active">Tambah Data Mobil</li>
                 </ol>
             </nav>
 
@@ -195,8 +226,58 @@ $store = function () {
                             @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <livewire:dropzone wire:model="images" :rules="['image', 'mimes:png,jpeg']" :multiple="true" />
+                        <div class="card my-3 border-0">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="imageInput" class="form-label">
+                                        Gambar Mobil
+                                        <div wire:loading wire:target='image, removeItem'
+                                            class="spinner-border spinner-border-sm" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </label>
+                                    <label for="imageInput"
+                                        class="{{ $image ? (count($image) >= 5 ? 'd-none' : '') : '' }} w-100 zoom-in">
+                                        <div id="dropZone"
+                                            class="d-flex align-items-center justify-content-center flex-column">
+                                            <p> <i class="bi bi-cloud-arrow-down"></i>
+                                            </p>
+                                            <small style="font-size: 17px;">Drop file here or click to upload</small>
+                                            <input type="file" class="d-none" id="imageInput" wire:model.live="image"
+                                                accept=".jpg,.jpeg" multiple>
+                                        </div>
+                                    </label>
+
+                                    <!-- Error follow sosmed -->
+                                    @error('image.*')
+                                        <small id="imageId" class="form-text color-custom"> {{ $message }}
+                                        </small>
+                                    @enderror
+                                </div>
+
+                                @if (!empty($image))
+                                    @foreach ($image as $key => $item)
+                                        <div class="card my-2 zoom-in">
+                                            <div class="card-body text-dark">
+                                                <div class="hstack justify-content-between align-items-center">
+                                                    <div class="me-2" style="font-size: 2rem; color: #777;">
+                                                        <i class='bx bx-box fs-3'></i>
+                                                    </div>
+                                                    {{ Str::limit($item->getClientOriginalName(), 15, '...') }}
+                                                    <a type="button"
+                                                        wire:click.prevent='removeItem({{ json_encode($key) }})'>
+                                                        <i class='bx bx-task-x fs-3'></i> </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+
+                                <small class="form-text text-muted m-0">
+                                    <strong>Upload File Maks 5 MB</strong> (format .jpg atau
+                                    .jpeg)
+                                </small>
+                            </div>
                         </div>
 
                         <div class="mb-3">
@@ -207,5 +288,51 @@ $store = function () {
             </div>
         </div>
     @endvolt
+
+    <style>
+        #dropZone {
+            border: 2px dashed #bbb;
+            border-radius: 5px;
+            padding: 50px;
+            text-align: center;
+            font-size: 21pt;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            color: #bbb;
+        }
+
+
+        @keyframes zoomIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomOut {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+
+        .zoom-in {
+            animation: zoomIn 0.3s forwards;
+        }
+
+        .zoom-out {
+            animation: zoomOut 0.3s forwards;
+        }
+    </style>
 
 </x-admin-layout>

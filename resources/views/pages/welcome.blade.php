@@ -7,7 +7,7 @@ use App\Models\Shop;
 name('welcome');
 
 state([
-    'products' => fn() => product::with('imageProducts')->inRandomOrder()->limit(6)->get(),
+    'products' => fn() => Product::has('imageProducts')->with('imageProducts')->inRandomOrder()->limit(6)->get(),
     'shop' => fn() => Shop::first(),
 ]);
 
@@ -47,7 +47,8 @@ state([
                     <div class="row">
                         @foreach ($products as $product)
                             <div class="col-md-6 mb-4">
-                                <a class="text-decoration-none" href="{{ route('product-detail', ['product' => $product->id]) }}">
+                                <a class="text-decoration-none"
+                                    href="{{ route('product-detail', ['product' => $product->id]) }}">
                                     <div class="card position-relative shadow">
                                         <div class="position-absolute z-index--1 me-10 me-xxl-0"
                                             style="right:-160px;top:-210px;">
@@ -72,7 +73,8 @@ state([
 
                                                         <!-- Tooltip untuk Penumpang -->
                                                         <button class="btn icon-item" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" title="{{ $product->capacity }} Penumpang">
+                                                            data-bs-placement="top"
+                                                            title="{{ $product->capacity }} Penumpang">
                                                             <i class="fa-solid fa-suitcase-rolling"></i>
                                                         </button>
                                                     </div>

@@ -82,7 +82,7 @@
             <hr>
         </div>
         <div class="d-grid mb-3">
-            @if (!auth()->user()->identify && !auth()->user()->phone_number)
+            @if (Auth::check() && !auth()->user()->identify && !auth()->user()->phone_number)
                 <a class="btn btn-primary" href="{{ route('user.account', ['user' => auth()->user()->id]) }}"
                     role="button">Lengkapi Data</a>
             @else
