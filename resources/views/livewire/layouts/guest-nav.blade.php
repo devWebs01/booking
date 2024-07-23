@@ -1,29 +1,30 @@
 <div>
-    <nav class="navbar navbar-expand navbar-light fixed-top py-5 d-none d-lg-block"
-        data-navbar-on-scroll="data-navbar-on-scroll">
+    <nav class="navbar navbar-expand fixed-top py-0 py-lg-5" data-navbar-on-scroll="data-navbar-on-scroll">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="{{ asset('/front-end/assets/img/logo.svg') }}" height="34" alt="logo" /></a><button
-                class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                <span class="fw-bolder text-primary small">Aquina Rental</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
                     class="navbar-toggler-icon">
                 </span></button>
-            <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto pt-2 pt-lg-0 font-base align-items-lg-center align-items-start">
-                    <li class="nav-item px-3 px-xl-4">
+                    <li class="nav-item px-3 px-xl-4 d-none d-lg-block">
                         <a class="nav-link fw-medium" aria-current="page" href="/">Beranda</a>
                     </li>
-                    <li class="nav-item px-3 px-xl-4">
-                        <a class="nav-link fw-medium" aria-current="page" href="{{ route('geolocation') }}">Rental
-                            Mobil</a>
+                    <li class="nav-item px-3 px-xl-4 d-none d-lg-block">
+                        <a class="nav-link fw-medium" aria-current="page" href="{{ route('geolocation') }}">
+                            Rental Mobil
+                        </a>
                     </li>
                     @auth
                         @if (auth()->user()->role === 'admin')
-                            <li class="nav-item px-3 px-xl-4">
+                            <li class="nav-item px-3 px-xl-4 d-none d-lg-block">
                                 <a class="nav-link fw-medium" aria-current="page" href="{{ route('home') }}">Beranda</a>
                             </li>
                         @else
-                            <li class="nav-item px-3 px-xl-4">
+                            <li class="nav-item px-3 px-xl-4 d-none d-lg-block">
                                 <a class="nav-link fw-medium" aria-current="page" href="{{ route('transaction.guest') }}">
                                     Transaksi Mobil
                                 </a>
@@ -31,14 +32,20 @@
                             <li class="nav-item px-3 px-xl-4">
                                 <a class="nav-link fw-medium" aria-current="page"
                                     href="{{ route('user.account', ['user' => auth()->user()->id]) }}">
-                                    Akun Profil
+                                    <span class="d-none d-lg-block">
+                                        Akun Profil
+                                    </span>
+                                    <i class="bi bi-person-circle fs-1 d-block d-lg-none"></i>
                                 </a>
                             </li>
                             <li class="nav-item px-3 px-xl-4">
                                 <a class="nav-link fw-medium" aria-current="page" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
-                                    Logout
+                                    <span class="d-none d-lg-block">
+                                        Logout
+                                    </span>
+                                    <i class="bi bi-box-arrow-right fs-1 d-block d-lg-none"></i>
                                 </a>
                             </li>
                         @endif
@@ -56,7 +63,7 @@
         </div>
     </nav>
 
-    <nav class="navbar navbar-light text-dark navbar-expand fixed-bottom d-lg-none d-xl-none rounded nav-bottom m-4">
+    <nav class="navbar navbar-light text-dark navbar-expand fixed-bottom d-lg-none d-xl-none rounded nav-bottom mx-4 mb-2 p-0">
         <ul class="navbar-nav nav-justified w-100">
             <li class="nav-item">
                 <a href="/" class="nav-link">
@@ -79,14 +86,6 @@
                     <li class="nav-item">
                         <a href="{{ route('transaction.guest') }}" class="nav-link">
                             <i class="bi bi-car-front-fill fs-3"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();"
-                            class="nav-link">
-                            <i class="bi bi-box-arrow-right fs-3"></i>
                         </a>
                     </li>
                 @endif

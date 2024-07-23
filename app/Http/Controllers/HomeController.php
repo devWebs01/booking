@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $transactions = Transaction::whereIn('status', [
+            'MENUNGGU_KONFIRMASI',
+            'DIKONFIRMASI',
+            'TERLAMBAT'
+        ])->get();
+
+        return view('pages.home', compact('transactions'));
     }
 }

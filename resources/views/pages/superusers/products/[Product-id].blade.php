@@ -1,9 +1,12 @@
 <?php
 
 use function Laravel\Folio\name;
-use function Livewire\Volt\{state, usesFileUploads};
+use function Livewire\Volt\{state, usesFileUploads, rules, uses};
 use App\Models\Category;
 use App\Models\product;
+use App\Models\ImageProduct;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+uses(LivewireAlert::class); // Tambahkan trait LivewireAlert
 
 name('products.edit');
 
@@ -20,25 +23,72 @@ state([
     'category_id' => fn() => $this->product->category_id ?? null,
     'transmission' => fn() => $this->product->transmission ?? null,
     'status' => fn() => $this->product->status ?? null,
+    'image' => [],
+    'prevImage' => null,
 ]);
 
-$store = function (product $product) {
-    $validate = $this->validate([
-        'name' => 'required|string|max:255',
-        'price' => 'required|numeric|min:0',
-        'description' => 'nullable|string',
-        'capacity' => 'required|string|max:50',
-        'space' => 'required|string|max:50',
-        'category_id' => 'required|exists:categories,id',
-        'transmission' => 'required|in:Manual,Automatic,Manual/Automatic',
-        'status' => 'required|boolean',
-    ]);
+rules([
+    'name' => 'required|string|max:255',
+    'price' => 'required|numeric|min:0',
+    'description' => 'nullable|string',
+    'capacity' => 'required|string|max:50',
+    'space' => 'required|string|max:50',
+    'category_id' => 'required|exists:categories,id',
+    'transmission' => 'required|in:Manual,Automatic,Manual/Automatic',
+    'status' => 'required|boolean',
+]);
 
-    $product = product::findOrFail($this->product->id)->update($validate);
+$updatingImage = function ($value) {
+    $this->prevImage = $this->image;
+};
+
+$updatedImage = function ($value) {
+    $this->image = array_merge($this->prevImage, $value);
+};
+
+$removeItem = function ($key) {
+    if (isset($this->image[$key])) {
+        $file = $this->image[$key];
+        $file->delete();
+        unset($this->image[$key]);
+    }
+
+    $this->image = array_values($this->image);
+};
+
+$update = function (product $product) {
+    $validated = $this->validate();
+
+    $this->product->update($validated);
+
+    if ($this->image) {
+        $imagesProduct = ImageProduct::where('product_id', $this->product->id)->get();
+
+        foreach ($imagesProduct as $image) {
+            $image->delete();
+        }
+
+        foreach ($this->image as $item) {
+            ImageProduct::create([
+                'product_id' => $this->product->id,
+                'image_path' => $item->store('public/images'), // Pastikan $image adalah objek UploadedFile
+            ]);
+        }
+    }
 
     $this->reset('name', 'price', 'description', 'capacity', 'space', 'category_id', 'transmission', 'status');
 
-    $this->redirectRoute('products.index');
+    $this->flash(
+        'success',
+        'Proses Berhasil',
+        [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => '',
+        ],
+        '/superusers/products',
+    );
 };
 
 ?>
@@ -48,13 +98,23 @@ $store = function (product $product) {
 
     @volt
         <div>
-            <x-alert on="status">
-            </x-alert>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Beranda</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Data Mobil</a>
+                    </li>
+                    <li class="breadcrumb-item active">Mobil {{ $product->name }}</li>
+                </ol>
+            </nav>
+
 
             <div class="card">
                 <div class="card-header">
                     <div class="alert alert-primary" role="alert">
-                        <strong>Tambah Mobil</strong>
+                        <strong>Edit Mobil</strong>
                         <p>Pada halaman tambah mobil, Anda dapat memasukkan informasi mobil baru, seperti merek, model,
                             tahun, warna, harga, dan spesifikasi lainnya.
                         </p>
@@ -62,7 +122,7 @@ $store = function (product $product) {
                 </div>
 
                 <div class="card-body">
-                    <form wire:submit="store">
+                    <form wire:submit="update">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama Mobil</label>
@@ -171,6 +231,81 @@ $store = function (product $product) {
                             @enderror
                         </div>
 
+                        <p class="text-center">Preview Gambar Mobil</p>
+                        <div class="d-flex overflow-auto gap-3 card-header">
+                            @foreach ($product->imageProducts as $item)
+                                <a href="{{ Storage::url($item->image_path) }}" data-fancybox="gallery"
+                                    data-caption="Car images">
+
+                                    <img src="{{ Storage::url($item->image_path) }}" class="img-fluid rounded"
+                                        style="object-fit: cover; width: 250px; height: 250px;" alt="" />
+                                </a>
+                            @endforeach
+                        </div>
+
+                        <div class="card mb-3 border-0">
+
+                            <div class="card-header">
+                                <div class="alert alert-primary" role="alert">
+                                    <strong>Informasi</strong>
+                                    <p>
+                                        Tolong jangan menambahkan gambar lagi jika tidak ingin mengubah gambar mobil. </p>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="imageInput" class="form-label">
+                                        Gambar Mobil
+                                        <div wire:loading wire:target='image, removeItem'
+                                            class="spinner-border spinner-border-sm" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </label>
+                                    <label for="imageInput"
+                                        class="{{ $image ? (count($image) >= 5 ? 'd-none' : '') : '' }} w-100 zoom-in">
+                                        <div id="dropZone"
+                                            class="d-flex align-items-center justify-content-center flex-column">
+                                            <p> <i class="bi bi-cloud-arrow-down"></i>
+                                            </p>
+                                            <small style="font-size: 17px;">Drop file here or click to upload</small>
+                                            <input type="file" class="d-none" id="imageInput" wire:model.live="image"
+                                                accept=".jpg,.jpeg" multiple>
+                                        </div>
+                                    </label>
+
+                                    <!-- Error follow sosmed -->
+                                    @error('image.*')
+                                        <small id="imageId" class="form-text color-custom"> {{ $message }}
+                                        </small>
+                                    @enderror
+                                </div>
+
+                                @if (!empty($image))
+                                    @foreach ($image as $key => $item)
+                                        <div class="card my-2 zoom-in">
+                                            <div class="card-body text-dark">
+                                                <div class="hstack justify-content-between align-items-center">
+                                                    <div class="me-2" style="font-size: 2rem; color: #777;">
+                                                        <i class='bx bx-box fs-3'></i>
+                                                    </div>
+                                                    {{ Str::limit($item->getClientOriginalName(), 15, '...') }}
+                                                    <a type="button"
+                                                        wire:click.prevent='removeItem({{ json_encode($key) }})'>
+                                                        <i class='bx bx-task-x fs-3'></i> </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+
+                                <small class="form-text text-muted m-0">
+                                    <strong>Upload File Maks 5 MB</strong> (format .jpg atau
+                                    .jpeg)
+                                </small>
+                            </div>
+                        </div>
+
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
@@ -179,5 +314,59 @@ $store = function (product $product) {
             </div>
         </div>
     @endvolt
+
+    @push('scripts')
+        <script>
+            Fancybox.bind('[data-fancybox]', {
+                // Your custom options
+            });
+        </script>
+    @endpush
+
+    <style>
+        #dropZone {
+            border: 2px dashed #bbb;
+            border-radius: 5px;
+            padding: 50px;
+            text-align: center;
+            font-size: 21pt;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            color: #bbb;
+        }
+
+
+        @keyframes zoomIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomOut {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+
+        .zoom-in {
+            animation: zoomIn 0.3s forwards;
+        }
+
+        .zoom-out {
+            animation: zoomOut 0.3s forwards;
+        }
+    </style>
 
 </x-admin-layout>

@@ -9,6 +9,8 @@
     <title>{{ $title ?? '' }} | Rent Car Landing Page UI</title>
     <!-- PWA  -->
     <meta name="theme-color" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{{ asset('/front-end/assets/img/favicons/mstile-150x150.png') }}">
+
     <link rel="apple-touch-icon" sizes="180x180"
         href="{{ asset('/front-end/assets/img/favicons/apple-touch-icon.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
@@ -18,14 +20,13 @@
     <link rel="icon" type="image/png" sizes="16x16"
         href="{{ asset('/front-end/assets/img/favicons/favicon-16x16.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/front-end/assets/img/favicons/favicon.ico') }}">
-    <meta name="msapplication-TileImage" content="{{ asset('/front-end/assets/img/favicons/mstile-150x150.png') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 
     <link href="{{ asset('/front-end/assets/css/theme.min.css') }}" rel="stylesheet" />
-
-    <script src="https://kit.fontawesome.com/21fb7efcbe.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
+    <script src="https://kit.fontawesome.com/21fb7efcbe.js" crossorigin="anonymous"></script>
 
     @vite([])
 

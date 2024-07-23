@@ -4,6 +4,7 @@ use function Laravel\Folio\name;
 use function Livewire\Volt\{state, on, rules};
 use App\Models\shop;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 
 name('product-detail');
 
@@ -88,12 +89,28 @@ $rentproduct = function () {
         <div>
             <section class="pb-5">
                 <div class="container-fluid">
-                    <div class="mb-3 d-flex justify-content-center">
-                        <a data-fslightbox="mygalley" target="_blank" data-type="image"
-                            href="{{ Storage::url($product->imageProducts->first()->image_path) }}">
-                            <img style="max-width: 100%; max-height: 100vh; margin: auto;" class="img-fluid"
-                                src="{{ Storage::url($product->imageProducts->first()->image_path) }}" />
-                        </a>
+                    <div class="mb-3 justify-content-center text-center">
+                        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                @foreach ($product->imageProducts as $no => $item)
+                                    <div class="carousel-item {{ ++$no == 1 ? 'active' : '' }}">
+                                        <img style="width: 100%; height: auto; margin: auto;"
+                                            src="{{ Storage::url($item->image_path) }}" />
+                                    </div>
+                                @endforeach
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+
                     </div>
 
                     <div class="row gx-5">
@@ -145,20 +162,22 @@ $rentproduct = function () {
                     </div>
 
                     <section>
-                        @if ($condition == false)
-                            <!-- Tombol untuk mengaktifkan status -->
-                            <div class="d-grid mb-5">
-                                <button wire:click="turnOnCondition" class="btn btn-primary ">
-                                    Rental Mobil Ini
-                                </button>
-                            </div>
-                        @else
-                            <div class="d-grid mb-5">
-                                <button wire:click="turnOffCondition" class="btn btn-danger ">
-                                    Batal Rental
-                                </button>
-                            </div>
-                            @include('pages.guest.product.form-rent')
+                        @if (auth()->user()->role == 'customer')
+                            @if ($condition == false)
+                                <!-- Tombol untuk mengaktifkan status -->
+                                <div class="d-grid mb-5">
+                                    <button wire:click="turnOnCondition" class="btn btn-primary ">
+                                        Rental Mobil Ini
+                                    </button>
+                                </div>
+                            @else
+                                <div class="d-grid mb-5">
+                                    <button wire:click="turnOffCondition" class="btn btn-danger ">
+                                        Batal Rental
+                                    </button>
+                                </div>
+                                @include('pages.guest.product.form-rent')
+                            @endif
                         @endif
                     </section>
                 </div>

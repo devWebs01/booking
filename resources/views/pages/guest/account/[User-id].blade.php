@@ -64,7 +64,7 @@ $save = function () {
 
     @volt
         <div>
-            <div class="container-fluid row mt-5 mb-3">
+            <div class="container-fluid row mt-5">
                 <div class="col-lg-6">
                     <h1 id="font-custom" class="display-1 fw-bold">
                         Profile Akun <br> Anda
@@ -76,7 +76,17 @@ $save = function () {
                         Anda selalu terupdate untuk memaksimalkan layanan kami.
                     </p>
                 </div>
+
+                <div class="alert alert-primary {{ $user->identify == null && $user->address == null ?: 'd-none' }}"
+                    role="alert">
+                    <strong>Pemberitahuan</strong>
+                    <ul class="list-unstyled">
+                        <li class="{{ $user->identify == null ?: 'd-none' }}">Lengkapi Data KTP</li>
+                        <li class="{{ $user->address == null ?: 'd-none' }}">Lengkapi Alamat Lengkap</li>
+                    </ul>
+                </div>
             </div>
+
             <div class="card">
                 <div class="card-body">
                     <div class="row">
