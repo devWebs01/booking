@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Rental;
 use App\Models\Shop;
 use Illuminate\Database\Seeder;
 
