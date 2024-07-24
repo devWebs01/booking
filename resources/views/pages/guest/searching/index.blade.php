@@ -1,9 +1,9 @@
 <?php
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, computed, usesPagination};
-use App\Models\shop;
+use App\Models\Shop;
 use App\Models\Category;
-use App\Models\product;
+use App\Models\Product;
 use Carbon\Carbon;
 
 name('geolocation');

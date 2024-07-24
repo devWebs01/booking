@@ -1,7 +1,7 @@
 <?php
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, computed, usesPagination, uses};
-use App\Models\product;
+use App\Models\Product;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 uses([LivewireAlert::class]);

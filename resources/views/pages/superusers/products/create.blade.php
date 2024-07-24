@@ -2,7 +2,7 @@
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, usesFileUploads, uses, rules};
 use App\Models\Category;
-use App\Models\product;
+use App\Models\Product;
 use App\Models\imageProduct;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 uses(LivewireAlert::class); // Tambahkan trait LivewireAlert

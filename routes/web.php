@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\shop;
+use App\Models\Shop;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
