@@ -1,8 +1,8 @@
 <?php
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, computed, rules, mount};
-use App\Models\product;
-use App\Models\shop;
+use App\Models\Product;
+use App\Models\Shop;
 use App\Models\Transaction;
 
 name('transactions.create');
@@ -20,9 +20,7 @@ state([
     'total',
 ]);
 
-mount(function () {
-
-});
+mount(function () {});
 
 $getPriceproduct = computed(function () {
     $product = product::find($this->product_id);

@@ -2,7 +2,7 @@
 
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, on, rules};
-use App\Models\shop;
+use App\Models\Shop;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 
@@ -165,27 +165,29 @@ $rentproduct = function () {
 
                     </div>
 
-                    <section>
-                        @if (auth()->user()->role == 'customer')
-                            @if ($condition == false)
-                                <!-- Tombol untuk mengaktifkan status -->
-                                <div class="d-grid mb-5">
-                                    <button wire:click="turnOnCondition" class="btn btn-primary ">
-                                        Rental Mobil Ini
-                                    </button>
-                                </div>
-                            @else
-                                <div class="d-grid mb-5">
-                                    <button wire:click="turnOffCondition" class="btn btn-danger ">
-                                        Batal Rental
-                                    </button>
-                                </div>
-                                @include('pages.guest.product.form-rent')
+                    @auth
+                        <section>
+                            @if (auth()->user()->role == 'customer')
+                                @if ($condition == false)
+                                    <!-- Tombol untuk mengaktifkan status -->
+                                    <div class="d-grid mb-5">
+                                        <button wire:click="turnOnCondition" class="btn btn-primary ">
+                                            Rental Mobil Ini
+                                        </button>
+                                    </div>
+                                @else
+                                    <div class="d-grid mb-5">
+                                        <button wire:click="turnOffCondition" class="btn btn-danger ">
+                                            Batal Rental
+                                        </button>
+                                    </div>
+                                    @include('pages.guest.product.form-rent')
+                                @endif
                             @endif
-                        @endif
-                    </section>
-                </div>
-            </section>
+                        </section>
+                    </div>
+                </section>
+            @endauth
 
         </div>
     @endvolt

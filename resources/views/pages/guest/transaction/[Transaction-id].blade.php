@@ -2,7 +2,7 @@
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, mount, uses};
 use App\Models\Transaction;
-use App\Models\product;
+use App\Models\Product;
 use App\Models\Dating;
 use Carbon\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;

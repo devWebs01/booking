@@ -2,7 +2,7 @@
 
 use function Livewire\Volt\{state, computed, usesPagination, rules};
 use function Laravel\Folio\name;
-use App\Models\transaction;
+use App\Models\Transaction;
 
 name('reports.transactions');
 
