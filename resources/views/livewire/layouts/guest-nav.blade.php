@@ -95,25 +95,25 @@
         <ul class="navbar-nav nav-justified w-100">
             <li class="nav-item">
                 <a href="/" class="nav-link">
-                    <i class="bi bi-house-door fs-3"></i>
+                    <i class="bi bi-house-door fs-5"></i>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('geolocation') }}" class="nav-link">
-                    <i class="bi bi-map-fill fs-3"></i>
+                    <i class="bi bi-map-fill fs-5"></i>
                 </a>
             </li>
             @auth
                 @if (auth()->user()->role === 'admin')
                     <li class="nav-item">
                         <a href="{{ route('home') }}" class="nav-link">
-                            <i class="bi bi-person-workspace fs-3"></i>
+                            <i class="bi bi-person-workspace fs-5"></i>
                         </a>
                     </li>
                 @else
                     <li class="nav-item">
                         <a href="{{ route('transaction.guest') }}" class="nav-link">
-                            <i class="bi bi-car-front-fill fs-3"></i>
+                            <i class="bi bi-car-front-fill fs-5"></i>
                         </a>
                     </li>
                 @endif
