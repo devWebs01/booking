@@ -9,18 +9,17 @@
     <title>{{ $title ?? '' }} | Rent Car Landing Page UI</title>
     <!-- PWA  -->
     <meta name="theme-color" content="#ffffff">
-    <meta name="msapplication-TileImage" content="{{ asset('/front-end/assets/img/favicons/mstile-150x150.png') }}">
 
+    <meta name="msapplication-TileImage" content="{{ asset('/front-end/assets/img/favicons/aquina-logo-150x150.jpg') }}">
     <link rel="apple-touch-icon" sizes="180x180"
-        href="{{ asset('/front-end/assets/img/favicons/apple-touch-icon.png') }}">
-    <link rel="manifest" href="{{ asset('/manifest.json') }}">
-
+        href="{{ asset('/front-end/assets/img/favicons/aquina-apple-icon.jpg') }}">
     <link rel="icon" type="image/png" sizes="32x32"
-        href="{{ asset('/front-end/assets/img/favicons/favicon-32x32.png') }}">
+        href="{{ asset('/front-end/assets/img/favicons/aquina-logo-32x32.jpg') }}">
     <link rel="icon" type="image/png" sizes="16x16"
-        href="{{ asset('/front-end/assets/img/favicons/favicon-16x16.png') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/front-end/assets/img/favicons/favicon.ico') }}">
+        href="{{ asset('/front-end/assets/img/favicons/aquina-logo-16x16.jpg') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/front-end/assets/img/favicons/aquina-logo.ico') }}">
 
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
 
     <link href="{{ asset('/front-end/assets/css/theme.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -35,15 +34,6 @@
     @stack('css')
 
     <style>
-        .nav-bottom {
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-
         .form-control {
             border-radius: 10px;
         }
@@ -55,6 +45,7 @@
 </head>
 
 <body>
+    @include('layouts.loading')
     <main class="main" id="top">
 
         @livewire('layouts.guest-nav')

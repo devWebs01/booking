@@ -78,7 +78,7 @@ $search = computed(function () {
                             </div>
                             <div class="col-md">
                                 <div class="my-3">
-                                    <label for="duration" class="form-label">Durasi Rental</label>
+                                    <label for="duration" class="form-label">Durasi/Hari</label>
                                     <input type="number" class="form-control form-control-lg" wire:model.live="duration"
                                         id="duration" min="1" max="30" aria-describedby="helpId"
                                         placeholder="Enter Duration Rent product" />
@@ -176,8 +176,8 @@ $search = computed(function () {
         </div>
         <div class="col-lg-6 mt-lg-0 align-content-center">
             <p>
-                Temukan jarak antara lokasi Anda dengan lokasi rental kami. Izinkan kami untuk mendeteksi lokasi Anda,
-                lalu kami akan menampilkan jarak ke lokasi rental kami.
+                Temukan jarak antara lokasi Anda dengan lokasi rental kami.
+                Lalu kami akan mengarahkan anda jarak ke lokasi rental kami.
             </p>
         </div>
     </div>
