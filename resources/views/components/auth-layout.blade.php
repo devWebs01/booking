@@ -9,16 +9,17 @@
     <title>{{ $title ?? '' }} | Rent Car Landing Page UI</title>
     <!-- PWA  -->
     <meta name="theme-color" content="#ffffff">
-    <link rel="apple-touch-icon" sizes="180x180"
-        href="{{ asset('/front-end/assets/img/favicons/apple-touch-icon.png') }}">
-    <link rel="manifest" href="{{ asset('/manifest.json') }}">
 
+    <meta name="msapplication-TileImage" content="{{ asset('/front-end/assets/img/favicons/aquina-logo-150x150.jpg') }}">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="{{ asset('/front-end/assets/img/favicons/aquina-apple-icon.jpg') }}">
     <link rel="icon" type="image/png" sizes="32x32"
-        href="{{ asset('/front-end/assets/img/favicons/favicon-32x32.png') }}">
+        href="{{ asset('/front-end/assets/img/favicons/aquina-logo-32x32.jpg') }}">
     <link rel="icon" type="image/png" sizes="16x16"
-        href="{{ asset('/front-end/assets/img/favicons/favicon-16x16.png') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/front-end/assets/img/favicons/favicon.ico') }}">
-    <meta name="msapplication-TileImage" content="{{ asset('/front-end/assets/img/favicons/mstile-150x150.png') }}">
+        href="{{ asset('/front-end/assets/img/favicons/aquina-logo-16x16.jpg') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/front-end/assets/img/favicons/aquina-logo.ico') }}">
+
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link
@@ -32,6 +33,15 @@
     @vite([])
 
     <style>
+        .nav-bottom {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
         .form-control {
             border-radius: 10px;
         }
@@ -44,6 +54,43 @@
 </head>
 
 <body>
+    @include('layouts.loading')
+    <header>
+        <nav
+            class="navbar navbar-light text-dark navbar-expand fixed-bottom d-lg-none d-xl-none rounded nav-bottom mx-4 mb-2 p-0 ">
+            <ul class="navbar-nav nav-justified w-100">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">
+                        <i class="bi bi-house-door fs-3"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('geolocation') }}" class="nav-link">
+                        <i class="bi bi-map-fill fs-3"></i>
+                    </a>
+                </li>
+                @auth
+                    @if (auth()->user()->role === 'admin')
+                        <li class="nav-item">
+                            <a href="{{ route('home') }}" class="nav-link">
+                                <i class="bi bi-person-workspace fs-3"></i>
+                            </a>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a href="{{ route('transaction.guest') }}" class="nav-link">
+                                <i class="bi bi-car-front-fill fs-3"></i>
+                            </a>
+                        </li>
+                    @endif
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+
+                @endauth
+            </ul>
+        </nav>
+    </header>
 
     <!--  Body Wrapper -->
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"

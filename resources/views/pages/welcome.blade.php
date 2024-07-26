@@ -23,11 +23,11 @@ state([
                 <div class="container-fluid">
                     <div class="row align-items-center">
                         <div class="col-md-5 col-lg-6 order-0 order-md-1 text-end">
-                            <img class="pt-7 pt-md-0 hero-img" src="{{ asset('/front-end/assets/img/hero/hero-img.png') }}"
+                            <img class="pt-7 pt-md-0 hero-img" src="https://xpeedstudio.com/themes/carrental/wp-content/uploads/sites/8/2020/08/multiple-car.png"
                                 alt="hero-header" />
                         </div>
                         <div class="col-md-7 col-lg-6 text-md-start text-center py-6">
-                            <h4 class="fw-bold text-danger my-3">JADOO, Teman Setia Perjalanmu</h4>
+                            <h4 class="fw-bold text-danger my-3">Aquina, Teman Setia Perjalanmu</h4>
                             <h1 class="hero-title">Bepergian, nikmati, dan jalani hidup baru</h1>
 
                         </div>
@@ -100,7 +100,7 @@ state([
                         </h3>
                         <h5 class="text-secondary">
                             Kami mengerti bahwa setiap bisnis dan pribadi memiliki kebutuhan transportasi yang beragam. Oleh
-                            karena itu, JADOO menawarkan berbagai layanan sewa kendaraan sebagai solusi untuk memenuhi
+                            karena itu, Aquina menawarkan berbagai layanan sewa kendaraan sebagai solusi untuk memenuhi
                             kebutuhan
                             transportasi yang dapat disesuaikan dengan berbagai kebutuhan.
                         </h5>

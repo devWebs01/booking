@@ -1,28 +1,28 @@
 {
     "name": "Aquina Rental Mobil",
-    "short_name": "Rent Car",
+    "short_name": "Rental Mobil Mobile",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#ffffff",
     "icons": [
         {
-            "src": "/front-end/assets/img/favicons/favicon-32x32.png",
+            "src": "/front-end/assets/img/favicons/aquina-logo-32x32.jpg",
             "sizes": "32x32",
             "type": "image/png"
         },
         {
-            "src": "/front-end/assets/img/favicons/favicon-16x16.png",
+            "src": "/front-end/assets/img/favicons/aquina-logo-16x15.jpg",
             "sizes": "16x16",
             "type": "image/png"
         },
         {
-            "src": "/front-end/assets/img/favicons/apple-touch-icon.png",
+            "src": "/front-end/assets/img/favicons/aquina-apple-icon.jpg",
             "sizes": "180x180",
             "type": "image/png"
         },
         {
-            "src": "/front-end/assets/img/favicons/mstile-150x150.png",
+            "src": "/front-end/assets/img/favicons/aquina-logo-150x150.jpg",
             "sizes": "150x150",
             "type": "image/png"
         }
