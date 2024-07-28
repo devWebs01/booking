@@ -7,7 +7,7 @@ name('transactions.index');
 
 usesPagination(theme: 'bootstrap');
 
-state(['transactions' => fn() => Transaction::query()->latest()->get()]);
+state(['transactions' => fn() => Transaction::latest()->get()]);
 
 ?>
 <x-admin-layout>

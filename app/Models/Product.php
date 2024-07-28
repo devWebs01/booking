@@ -22,7 +22,6 @@ class Product extends Model
         'capacity',
         'space',
         'category_id',
-        'transmission',
         'status'
     ];
 

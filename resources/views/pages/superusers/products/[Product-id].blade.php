@@ -21,7 +21,6 @@ state([
     'capacity' => fn() => $this->product->capacity ?? null,
     'space' => fn() => $this->product->space ?? null,
     'category_id' => fn() => $this->product->category_id ?? null,
-    'transmission' => fn() => $this->product->transmission ?? null,
     'status' => fn() => $this->product->status ?? null,
     'image' => [],
     'prevImage' => null,
@@ -34,7 +33,6 @@ rules([
     'capacity' => 'required|string|max:50',
     'space' => 'required|string|max:50',
     'category_id' => 'required|exists:categories,id',
-    'transmission' => 'required|in:Manual,Automatic,Manual/Automatic',
     'status' => 'required|boolean',
 ]);
 
@@ -76,7 +74,7 @@ $update = function (product $product) {
         }
     }
 
-    $this->reset('name', 'price', 'description', 'capacity', 'space', 'category_id', 'transmission', 'status');
+    $this->reset('name', 'price', 'description', 'capacity', 'space', 'category_id', 'status');
 
     $this->flash(
         'success',
@@ -188,21 +186,7 @@ $update = function (product $product) {
                         </div>
 
                         <div class="row">
-                            <div class="col-md">
-                                <div class="mb-3">
-                                    <label for="transmission" class="form-label">Transmisi</label>
-                                    <select class="form-select @error('transmission') is-invalid @enderror"
-                                        wire:model="transmission" id="transmission">
-                                        <option selected>Select one</option>
-                                        <option value="Manual/Automatic">Manual/Automatic</option>
-                                        <option value="Manual">Manual</option>
-                                        <option value="Automatic">Automatic</option>
-                                    </select>
-                                    @error('transmission')
-                                        <small id="transmissionId" class="form-text text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
+
                             <div class="col-md">
                                 <div class="mb-3">
                                     <label for="category_id" class="form-label">Kategori</label>
