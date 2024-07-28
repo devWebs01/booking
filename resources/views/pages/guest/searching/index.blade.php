@@ -57,7 +57,7 @@ $search = computed(function () {
                 <div class="row">
                     <div class="col-12 mt-5">
                         <div class="bg-white p-5 shadow rounded">
-                            <h1 class="display-4 fw-bold mb-0">Jadwalkan <span class="text-primary">Sewa Mobil</span> mu
+                            <h1 class="display-4 fw-bold mb-0">Jadwalkan <span class="text-primary">Rental Mobil</span> mu
                             </h1>
                             <p>Kemanapun tujuan Anda, rental mobil <span class="text-primary">
                                     {{ $firstRental->name }}</span> adalah pilihan yang tepat.
@@ -131,7 +131,7 @@ $search = computed(function () {
                                                 <div>
                                                     <h5 class="fw-medium">{{ $product->name }}</h5>
                                                     <p class="fs--1 mb-3 fw-medium text-primary">
-                                                        {{ $product->transmission }}
+                                                        {{ $product->category->name }}
                                                     </p>
                                                     <div class="show-onhover position-relative">
                                                         <div class="d-flex gap-3">

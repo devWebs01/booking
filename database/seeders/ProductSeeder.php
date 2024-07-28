@@ -70,8 +70,7 @@ class ProductSeeder extends Seeder
                     'price' => $item['price'],
                     'capacity' => $item['capacity'],
                     'space' => $item['space'],
-                    'transmission' => $item['transmission'],
-                    'description' => '<p>Lorem ipsum dolor sit amet consectetur adipiscing elit donec ultricies porttitor natoque rutrum purus,' . Str::random(100) . ' sociis aliquet pellentesque sollicitudin pulvinar quam molestie porta fringilla elementum condimentum. Fermentum semper hac odio turpis sollicitudin tortor sem a facilisi tristique lacus primis, ligula aliquet pulvinar urna quam suscipit donec montes nulla dignissim.</p>',
+                    'description' => $item['description'],
                 ]);
 
                 // Create product image entry

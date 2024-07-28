@@ -127,18 +127,11 @@ $rentproduct = function () {
 
                                 <div class="my-3">
                                     <span class="h5 fw-bold">
-                                        {{ 'Rp. ' . Number::format($product->price, locale: 'id') }}
+                                        {{ 'Rp. ' . Number::format($product->price, locale: 'id') }}/Hari
                                     </span>
                                 </div>
 
                                 <div class="row">
-                                    <dt class="col-5 mb-2">
-                                        Transmisi
-                                    </dt>
-                                    <dd class="col-7 mb-2">
-                                        {{ $product->transmission }}
-                                    </dd>
-
                                     <dt class="col-5 mb-2">
                                         Kursi
                                     </dt>
@@ -158,6 +151,10 @@ $rentproduct = function () {
                         </div>
 
                         <div class="col-lg-6">
+                            <small class="fw-bold" style="color: #f35525;">Deksripsi/</small>
+                            <h1 class="title text-dark fw-bold">
+                                Kelangkapan
+                            </h1>
                             <div class="mb-3" style="overflow-wrap: anywhere;">
                                 {!! $product->description !!}
                             </div>

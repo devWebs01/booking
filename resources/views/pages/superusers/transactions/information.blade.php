@@ -42,18 +42,11 @@
                             <div class="my-3">
                                 <span class="h5 fw-bold">
                                     {{ $transaction->formatRupiah($transaction->price_product * $transaction->duration) }}
-                                    <small style="color: #f35525;">(Harga Saat Mobil Di sewa)</small>
+                                    <small style="color: #f35525;">(Harga Saat Mobil Dirental)</small>
                                 </span>
                             </div>
 
                             <div class="row">
-                                <dt class="col-5 mb-2">
-                                    Transmisi
-                                </dt>
-                                <dd class="col-7 mb-2">
-                                    {{ $product->transmission }}
-                                </dd>
-
                                 <dt class="col-5 mb-2">
                                     Kursi
                                 </dt>

@@ -56,9 +56,9 @@
                                 <thead class="border-bottom">
                                     <tr>
                                         <th>MOBIL</th>
-                                        <th>TANGGAL SEWA</th>
+                                        <th>TANGGAL RENTAL</th>
                                         <th>DURASI</th>
-                                        <th>AKHIR SEWA</th>
+                                        <th>AKHIR RENTAL</th>
                                         <th>TERLAMBAT</th>
                                         <th>HARGA</th>
                                     </tr>
@@ -86,7 +86,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="3"></td>
-                                        <td>HARGA SEWA</td>
+                                        <td>HARGA RENTAL</td>
                                         <td>
                                             {{ $transaction->formatRupiah($transaction->price_product * $transaction->duration) }}
                                         </td>

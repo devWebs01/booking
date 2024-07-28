@@ -9,12 +9,10 @@ uses([LivewireAlert::class]);
 name('products.index');
 usesPagination(theme: 'bootstrap');
 
-state(['products' => fn() => product::query()->latest()->get()]);
+state(['products' => fn() => Product::latest()->get()]);
 
-$deleted = function (product $product) {
+$deleted = function (Product $product) {
     $product->delete();
-
-    $this->dispatch('status');
 
     $this->flash(
         'success',
@@ -61,7 +59,8 @@ $deleted = function (product $product) {
                             <thead>
                                 <tr>
                                     <th>Nama</th>
-                                    <th>Transmisi</th>
+                                    <th>Kategori</th>
+                                    <th>Harga/Hari</th>
                                     <th>Status</th>
                                     <th>Opsi</th>
                                 </tr>
@@ -70,7 +69,8 @@ $deleted = function (product $product) {
                                 @foreach ($products as $no => $item)
                                     <tr>
                                         <td>{{ $item->name }}</td>
-                                        <td>{{ $item->transmission }}</td>
+                                        <td>{{ $item->category->name }}</td>
+                                        <td>{{ $item->getFormattedPriceAttribute() }}</td>
                                         <td>
                                             <span class="badge bg-{{ $item->status == 1 ? 'success' : 'warning' }} py-2">
                                                 {{ $item->status == 1 ? 'AKTIF' : 'TIDAK AKTIF' }}

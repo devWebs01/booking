@@ -23,87 +23,35 @@ state([
                 <div class="container-fluid">
                     <div class="row align-items-center">
                         <div class="col-md-5 col-lg-6 order-0 order-md-1 text-end">
-                            <img class="pt-7 pt-md-0 hero-img" src="https://xpeedstudio.com/themes/carrental/wp-content/uploads/sites/8/2020/08/multiple-car.png"
+                            <img class="pt-7 pt-md-0 hero-img"
+                                src="https://xpeedstudio.com/themes/carrental/wp-content/uploads/sites/8/2020/08/multiple-car.png"
                                 alt="hero-header" />
                         </div>
                         <div class="col-md-7 col-lg-6 text-md-start text-center py-6">
                             <h4 class="fw-bold text-danger my-3">Aquina, Teman Setia Perjalanmu</h4>
-                            <h1 class="hero-title">Bepergian, nikmati, dan jalani hidup baru</h1>
+                            <p class="hero-title fs-6">Bepergian, nikmati, dan jalani hidup baru</p>
 
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="pt-5" id="destination">
-                <div class="container-fluid">
-                    <div class="position-absolute start-100 bottom-0 translate-middle-x d-none d-xl-block ms-xl-n4">
-                        <img src="{{ asset('/front-end/assets/img/dest/shape.svg') }}" alt="destination" />
-                    </div>
-                    <div class="mb-7 text-center">
-                        <h5 class="text-secondary">Mobil pilihan</h5>
-                        <h3 class="fs-xl-10 fs-lg-8 fs-7 fw-bold font-cursive text-capitalize">Top Rental</h3>
-                    </div>
-                    <div class="row">
-                        @foreach ($products as $product)
-                            <div class="col-md-6 mb-4">
-                                <a class="text-decoration-none"
-                                    href="{{ route('product-detail', ['product' => $product->id]) }}">
-                                    <div class="card position-relative shadow">
-                                        <div class="position-absolute z-index--1 me-10 me-xxl-0"
-                                            style="right:-160px;top:-210px;">
-                                            <img src="{{ asset('/front-end/assets/img/steps/bg.png') }}"
-                                                style="max-width:550px;" alt="shape" />
-                                        </div>
-                                        <div class="card-body p-3">
-                                            <img class="mb-4 mt-2 rounded-2 img"
-                                                src="{{ Storage::url($product->imageProducts->first()->image_path) }}"
-                                                alt="booking" height="300px" width="100%" style="object-fit: cover" />
-                                            <div>
-                                                <h5 class="fw-medium">{{ $product->name }}</h5>
-                                                <p class="fs--1 mb-3 fw-medium text-primary">{{ $product->transmission }}
-                                                </p>
-                                                <div class="show-onhover position-relative">
-                                                    <div class="d-flex gap-3">
-                                                        <!-- Tooltip untuk Koper -->
-                                                        <button class="btn icon-item" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" title="{{ $product->space }} Koper">
-                                                            <i class="fa-solid fa-car"></i>
-                                                        </button>
-
-                                                        <!-- Tooltip untuk Penumpang -->
-                                                        <button class="btn icon-item" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top"
-                                                            title="{{ $product->capacity }} Penumpang">
-                                                            <i class="fa-solid fa-suitcase-rolling"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        @endforeach
-                    </div>
-            </section>
-
-            <section class="pt-5 pt-md-9" id="service">
+            <section class="pt-5 pt-md-2" id="service">
                 <div class="container-fluid">
                     <div class="position-absolute z-index--1 end-0 d-none d-lg-block">
                         <img src="{{ asset('/front-end/assets/img/category/shape.svg') }}" style="max-width: 200px"
                             alt="service" />
                     </div>
                     <div class="mb-7 text-center">
-                        <h3 class="fs-xl-10 fs-lg-8 fs-7 fw-bold font-cursive text-capitalize">Pilihan Terbaik Untuk
+                        <h3 class="fs-xl-10 fs-lg-8 fs-4 fw-bold font-cursive text-capitalize">Pilihan Terbaik Untuk
                             Perjalanan
                         </h3>
-                        <h5 class="text-secondary">
+                        <h6 class="text-secondary">
                             Kami mengerti bahwa setiap bisnis dan pribadi memiliki kebutuhan transportasi yang beragam. Oleh
-                            karena itu, Aquina menawarkan berbagai layanan sewa kendaraan sebagai solusi untuk memenuhi
+                            karena itu, Aquina menawarkan berbagai layanan rental kendaraan sebagai solusi untuk memenuhi
                             kebutuhan
                             transportasi yang dapat disesuaikan dengan berbagai kebutuhan.
-                        </h5>
+                        </h6>
                     </div>
                     <div class="row">
                         <div class="col-lg-3 col-sm-6 mb-6">
@@ -152,6 +100,59 @@ state([
                         </div>
                     </div>
                 </div>
+            </section>
+
+            <section id="destination">
+                <div class="container-fluid">
+                    <div class="position-absolute start-100 bottom-0 translate-middle-x d-none d-xl-block ms-xl-n4">
+                        <img src="{{ asset('/front-end/assets/img/dest/shape.svg') }}" alt="destination" />
+                    </div>
+                    <div class="mb-7 text-center">
+                        <h5 class="text-secondary">Mobil pilihan</h5>
+                        <h3 class="fs-xl-10 fs-lg-8 fs-7 fw-bold font-cursive text-capitalize">Aquina Rental Jambi</h3>
+                    </div>
+                    <div class="row">
+                        @foreach ($products as $product)
+                            <div class="col-md-6 mb-4">
+                                <a class="text-decoration-none"
+                                    href="{{ route('product-detail', ['product' => $product->id]) }}">
+                                    <div class="card position-relative shadow">
+                                        <div class="position-absolute z-index--1 me-10 me-xxl-0"
+                                            style="right:-160px;top:-210px;">
+                                            <img src="{{ asset('/front-end/assets/img/steps/bg.png') }}"
+                                                style="max-width:550px;" alt="shape" />
+                                        </div>
+                                        <div class="card-body p-3">
+                                            <img class="mb-4 mt-2 rounded-2 img"
+                                                src="{{ Storage::url($product->imageProducts->first()->image_path) }}"
+                                                alt="booking" height="300px" width="100%" style="object-fit: cover" />
+                                            <div>
+                                                <h5 class="fw-medium">{{ $product->name }}</h5>
+                                                <p class="fs--1 mb-3 fw-medium text-primary">{{ $product->category->name }}
+                                                </p>
+                                                <div class="show-onhover position-relative">
+                                                    <div class="d-flex gap-3">
+                                                        <!-- Tooltip untuk Koper -->
+                                                        <button class="btn icon-item" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" title="{{ $product->space }} Koper">
+                                                            <i class="fa-solid fa-car"></i>
+                                                        </button>
+
+                                                        <!-- Tooltip untuk Penumpang -->
+                                                        <button class="btn icon-item" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top"
+                                                            title="{{ $product->capacity }} Penumpang">
+                                                            <i class="fa-solid fa-suitcase-rolling"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
             </section>
 
         </div>

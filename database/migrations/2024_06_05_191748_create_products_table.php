@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('price');
             $table->string('capacity');
             $table->string('space');
-            $table->string('transmission');
             $table->boolean('status')->default(1);
             $table->longText('description')->nullable();
             $table->timestamps();

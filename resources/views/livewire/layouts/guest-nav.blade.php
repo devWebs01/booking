@@ -73,7 +73,7 @@
                                 <span class="d-none d-lg-block">
                                     Login
                                 </span>
-                                <i class="bi bi-person-circle fs-5"></i>
+                                <i class="bi bi-person-circle fs-5 d-block d-lg-none"></i>
                             </a>
                         </li>
                         <li class="nav-item px-3 px-xl-4">

@@ -16,15 +16,15 @@ class CategorySeeder extends Seeder
         $categories = [
             ['name' => 'City Car'],
             ['name' => 'MPV'],
-            ['name' => 'SUV'],
-            ['name' => 'Van'],
-            ['name' => 'Mini Bus'],
-            ['name' => 'Bus'],
-            ['name' => 'Sedan'],
-            ['name' => 'Coupe'],
-            ['name' => 'Supercar'],
-            ['name' => 'Luxury MPV'],
-            ['name' => 'Hybrid'],
+            // ['name' => 'SUV'],
+            // ['name' => 'Van'],
+            // ['name' => 'Mini Bus'],
+            // ['name' => 'Bus'],
+            // ['name' => 'Sedan'],
+            // ['name' => 'Coupe'],
+            // ['name' => 'Supercar'],
+            // ['name' => 'Luxury MPV'],
+            // ['name' => 'Hybrid'],
         ];
 
         DB::table('categories')->insert($categories);
