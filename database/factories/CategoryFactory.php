@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Rental;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
