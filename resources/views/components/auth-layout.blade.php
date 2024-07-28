@@ -30,7 +30,7 @@
 
     <script src="https://kit.fontawesome.com/21fb7efcbe.js" crossorigin="anonymous"></script>
 
-    @vite([])
+    
 
     <style>
         .nav-bottom {
