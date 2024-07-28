@@ -96,7 +96,7 @@ $rentproduct = function () {
                                     @foreach ($product->imageProducts as $no => $item)
                                         <div class="carousel-item {{ ++$no == 1 ? 'active' : '' }}">
                                             <img style="width: 100%; height: auto; margin: auto;"
-                                                src="{{ Storage::url($item->image_path) }}" />
+                                                src="{{ Storage::url($item->image_path) }}" class="rounded" />
                                         </div>
                                     @endforeach
                                 </div>
@@ -162,29 +162,35 @@ $rentproduct = function () {
 
                     </div>
 
-                    @auth
-                        <section>
-                            @if (auth()->user()->role == 'customer')
-                                @if ($condition == false)
-                                    <!-- Tombol untuk mengaktifkan status -->
-                                    <div class="d-grid mb-5">
-                                        <button wire:click="turnOnCondition" class="btn btn-primary ">
-                                            Rental Mobil Ini
-                                        </button>
-                                    </div>
-                                @else
-                                    <div class="d-grid mb-5">
-                                        <button wire:click="turnOffCondition" class="btn btn-danger ">
-                                            Batal Rental
-                                        </button>
-                                    </div>
-                                    @include('pages.guest.product.form-rent')
-                                @endif
+                    <section>
+                        @if (Auth::check() && auth()->user()->role == 'customer')
+                            @if ($condition == false)
+                                <!-- Tombol untuk mengaktifkan status -->
+                                <div class="d-grid mb-5">
+                                    <button wire:click="turnOnCondition" class="btn btn-primary ">
+                                        Rental Mobil Ini
+                                    </button>
+                                </div>
+                            @else
+                                <div class="d-grid mb-5">
+                                    <button wire:click="turnOffCondition" class="btn btn-danger ">
+                                        Batal Rental
+                                    </button>
+                                </div>
+                                @include('pages.guest.product.form-rent')
                             @endif
-                        </section>
-                    </div>
-                </section>
-            @endauth
+                        @else
+                            <div class="d-grid mb-5">
+                                <a href="{{ route('login') }}" class="btn btn-primary ">
+                                    Login
+                                </a>
+                            </div>
+                        @endif
+                    </section>
+                    @auth
+                    @endauth
+                </div>
+            </section>
 
         </div>
     @endvolt

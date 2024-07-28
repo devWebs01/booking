@@ -5,9 +5,8 @@
         <div class="d-flex align-items-start row">
             <div class="col-sm-7">
                 <div class="card-body">
-                    <h5 class="card-title text-primary mb-3">Congratulations {{ auth()->user()->name }}! 🎉</h5>
-                    <p class="mb-6">You have done 72% more sales today.<br>Check your new badge in your
-                        profile.</p>
+                    <h5 class="card-title text-primary mb-3">Selamat Datang Kembali {{ auth()->user()->name }}! 🎉</h5>
+                    <p class="mb-6">Kamu memiliki data rental yang perlu kamu cek, lihat segera!</p>
                 </div>
             </div>
             <div class="col-sm-5 text-center text-sm-left">

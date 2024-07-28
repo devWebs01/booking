@@ -4,7 +4,8 @@
         <div class="container">
             <div class="row align-items-lg-center mb-5">
                 <div class="col-md-6 mb-5 mb-md-0">
-                    <h1 class="display-3 fw-bolder">Nikmati pengalaman rental mobil yang mudah, <span class="text-primary">
+                    <h1 class="display-3 fw-bolder">Nikmati pengalaman rental mobil yang mudah, <span
+                            class="text-primary">
                             nyaman, dan
                             terpercaya.</span></h1>
                     <p class="lead fw-bold mt-3 mb-4">Daftarkan diri Anda sekarang juga untuk mendapatkan penawaran
@@ -76,15 +77,15 @@
                                         <input id="password-confirm" type="password" class="form-control"
                                             name="password_confirmation" required autocomplete="new-password">
 
-                                        <button type="button" class="btn btn-light border"
-                                            id="togglePassword">
+                                        <button type="button" class="btn btn-light border" id="togglePassword">
                                             <i class="bi bi-eye" id="toggleIcon"></i>
                                         </button>
                                     </div>
                                 </div>
                                 <div class="d-grid">
-                                    <button type="submit" class="btn btn-primary">Sign
-                                        In</button>
+                                    <button type="submit" class="btn btn-primary">
+                                        Daftar
+                                    </button>
                                 </div>
                             </form>
                         </div>

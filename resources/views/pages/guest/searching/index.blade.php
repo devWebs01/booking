@@ -62,8 +62,6 @@ $search = computed(function () {
                             <p>Kemanapun tujuan Anda, rental mobil <span class="text-primary">
                                     {{ $firstRental->name }}</span> adalah pilihan yang tepat.
                             </p>
-
-
                         </div>
 
                         <div class="row mt-5 mt-lg-0">

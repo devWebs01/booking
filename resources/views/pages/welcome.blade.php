@@ -102,7 +102,7 @@ state([
                 </div>
             </section>
 
-            <section id="destination">
+            <section id="destination" class="pt-0">
                 <div class="container-fluid">
                     <div class="position-absolute start-100 bottom-0 translate-middle-x d-none d-xl-block ms-xl-n4">
                         <img src="{{ asset('/front-end/assets/img/dest/shape.svg') }}" alt="destination" />

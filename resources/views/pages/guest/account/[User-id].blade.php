@@ -1,8 +1,8 @@
 <?php
 
 use function Laravel\Folio\name;
-use function Livewire\Volt\{state, on, rules, uses, usesFileUploads};
 use App\Models\Shop;
+use function Livewire\Volt\{state, on, rules, uses, usesFileUploads};
 use App\Models\Transaction;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
@@ -148,7 +148,7 @@ $save = function () {
                                                 <div class="input-group input-group-merge">
                                                     <span class="input-group-text">IND</span>
                                                     <input wire:model='phone_number' type="number" id="phone_number"
-                                                        name="phone_number" class="form-control" placeholder="202 555 0111">
+                                                        name="phone_number" class="form-control" placeholder="0897XXXXXXX">
                                                 </div>
                                                 @error('phone_number')
                                                     <small class="text-danger fw-bold">

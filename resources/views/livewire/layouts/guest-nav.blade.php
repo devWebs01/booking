@@ -2,7 +2,7 @@
     <style>
         .navbar-brand {
             padding-top: 15px;
-            padding-bottom: 0;
+            padding-bottom: 5px;
             margin-right: 1rem;
             font-size: calc(1.26738rem + .20859vw);
             white-space: nowrap;
@@ -48,12 +48,18 @@
                                 </a>
                             </li>
                             <li class="nav-item px-3 px-xl-4">
-                                <a class="nav-link fw-medium" aria-current="page"
+                                <a class="nav-link fw-medium position-relative" aria-current="page"
                                     href="{{ route('user.account', ['user' => auth()->user()->id]) }}">
                                     <span class="d-none d-lg-block">
                                         Akun Profil
                                     </span>
                                     <i class="bi bi-person-circle fs-5 d-block d-lg-none"></i>
+                                    @if (!auth()->user()->address || !auth()->user()->identify || !auth()->user()->phone_number)
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                                            <span class="visually-hidden">New alerts</span>
+                                        </span>
+                                    @endif
                                 </a>
                             </li>
                             <li class="nav-item px-3 px-xl-4">
@@ -69,18 +75,18 @@
                         @endif
                     @else
                         <li class="nav-item px-3 px-xl-4">
+                            <a class="nav-link fw-medium" aria-current="page" href="{{ route('register') }}">
+                                <span class="d-none d-lg-block">
+                                    Register
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item px-3 px-xl-4">
                             <a class="nav-link fw-medium" aria-current="page" href="{{ route('login') }}">
                                 <span class="d-none d-lg-block">
                                     Login
                                 </span>
                                 <i class="bi bi-person-circle fs-5 d-block d-lg-none"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item px-3 px-xl-4">
-                            <a class="nav-link fw-medium" aria-current="page" href="{{ route('register') }}">
-                                <span class="d-none d-lg-block">
-                                    Register
-                                </span>
                             </a>
                         </li>
                     @endauth
