@@ -32,7 +32,7 @@ rules([
     'space' => 'required|string|max:50',
     'category_id' => 'required|exists:categories,id',
     'status' => 'required|boolean',
-    'image.*' => 'required|image|mimes:jpg,jpeg',
+    'image.*' => 'required|image',
 ]);
 
 $updatingImage = function ($value) {
