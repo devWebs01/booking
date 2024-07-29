@@ -27,6 +27,26 @@
     <meta name="twitter:image" content="{{ asset('/front-end/assets/img/favicons/aquina-logo-150x150.jpg') }}">
     <link rel="canonical" href="https://www.aquina-rental-mobil.my.id">
 
+    <!-- Google  -->
+    <meta name="google-site-verification" content="YHJ5TZaVWyTVFx_I13N3G22U8AeRQgStUbawuUd5JBs" />
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-5ZQFHPFT');
+    </script>
+    <!-- End Google Tag Manager -->
 
     <!-- PWA  -->
     <meta name="theme-color" content="#ffffff">
@@ -49,7 +69,7 @@
 
     <script src="https://kit.fontawesome.com/21fb7efcbe.js" crossorigin="anonymous"></script>
 
-    
+
 
     @livewireStyles
 
@@ -67,6 +87,11 @@
 </head>
 
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5ZQFHPFT" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     @include('layouts.loading')
     <main class="main" id="top">
 
