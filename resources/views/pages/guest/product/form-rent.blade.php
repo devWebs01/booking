@@ -11,7 +11,7 @@
     </div>
 
     <div class="row mb-4">
-        <label for="duration" class="col-sm-2 col-form-label">Durasi</label>
+        <label for="duration" class="col-sm-2 col-form-label">Durasi/Hari</label>
         <div class="col-sm-10">
 
             <div class="input-group input-group-sm justify-content-center">

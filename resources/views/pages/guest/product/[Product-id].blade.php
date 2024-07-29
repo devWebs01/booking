@@ -136,7 +136,7 @@ $rentproduct = function () {
                                         Kursi
                                     </dt>
                                     <dd class="col-7 mb-2">
-                                        {{ $product->capacity }}
+                                        {{ $product->capacity }} Orang
                                     </dd>
 
                                     <dt class="col-5 mb-2">

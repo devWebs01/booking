@@ -41,7 +41,7 @@ $search = computed(function () {
                 $query->where('id', $categoryId);
             });
         })
-        ->paginate(6);
+        ->get();
 
     return $availableProducts;
 });
@@ -153,12 +153,6 @@ $search = computed(function () {
                                     </a>
                                 </div>
                             @endforeach
-                        </div>
-                    @endif
-
-                    @if ($this->search())
-                        <div class="text-center">
-                            {{ $this->search->links() }}
                         </div>
                     @endif
                 </div>
