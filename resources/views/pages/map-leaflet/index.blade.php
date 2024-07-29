@@ -292,7 +292,7 @@
                 }
             }
         </style>
-        @vite([])
+        
     </head>
 
     <body>
