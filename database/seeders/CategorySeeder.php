@@ -16,11 +16,11 @@ class CategorySeeder extends Seeder
         $categories = [
             ['name' => 'City Car'],
             ['name' => 'MPV'],
-            // ['name' => 'SUV'],
+            ['name' => 'SUV'],
             // ['name' => 'Van'],
             // ['name' => 'Mini Bus'],
             // ['name' => 'Bus'],
-            // ['name' => 'Sedan'],
+            ['name' => 'Sedan'],
             // ['name' => 'Coupe'],
             // ['name' => 'Supercar'],
             // ['name' => 'Luxury MPV'],

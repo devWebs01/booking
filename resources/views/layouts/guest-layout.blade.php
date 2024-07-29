@@ -6,11 +6,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ $title ?? '' }} | Rent Car Landing Page UI</title>
+    <!-- SEO  -->
+    <title>{{ $title ?? '' }} | Layanan Rental Mobil Terbaik</title>
+
+    <meta name="description"
+        content="Aquina Rental Mobil menyediakan layanan sewa mobil terbaik dengan berbagai pilihan kendaraan. Nikmati perjalanan Anda bersama kami di Jambi.">
+    <meta name="keywords"
+        content="Aquina Rental Mobil, sewa mobil, layanan rental, sewa mobil Jambi, perjalanan, rental mobil terbaik">
+    <meta name="author" content="Aquina Rental Mobil">
+    <meta property="og:title" content="Aquina Rental Mobil - Layanan Sewa Mobil Terbaik di Jambi">
+    <meta property="og:description"
+        content="Pilih dari berbagai kendaraan dan nikmati pengalaman rental yang mudah dengan Aquina Rental Mobil di Jambi.">
+    <meta property="og:image" content="{{ asset('/front-end/assets/img/favicons/aquina-logo-150x150.jpg') }}">
+    <meta property="og:url" content="https://www.aquina-rental-mobil.my.id">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Aquina Rental Mobil - Layanan Sewa Mobil Terbaik di Jambi">
+    <meta name="twitter:description"
+        content="Pilih dari berbagai kendaraan dan nikmati pengalaman rental yang mudah dengan Aquina Rental Mobil di Jambi.">
+    <meta name="twitter:image" content="{{ asset('/front-end/assets/img/favicons/aquina-logo-150x150.jpg') }}">
+    <link rel="canonical" href="https://www.aquina-rental-mobil.my.id">
+
+
     <!-- PWA  -->
     <meta name="theme-color" content="#ffffff">
 
-    <meta name="msapplication-TileImage" content="{{ asset('/front-end/assets/img/favicons/aquina-logo-150x150.jpg') }}">
+    <meta name="msapplication-TileImage"
+        content="{{ asset('/front-end/assets/img/favicons/aquina-logo-150x150.jpg') }}">
     <link rel="apple-touch-icon" sizes="180x180"
         href="{{ asset('/front-end/assets/img/favicons/aquina-apple-icon.jpg') }}">
     <link rel="icon" type="image/png" sizes="32x32"

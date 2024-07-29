@@ -2,7 +2,9 @@
 
 use App\Models\Shop;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
+use Spatie\Sitemap\SitemapGenerator;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +30,19 @@ Auth::routes();
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
+
+
+Route::get('/generate-sitemap', function () {
+    $path = 'sitemap.xml';
+
+    // Caching the sitemap generation for 60 minutes
+    $sitemap = Cache::remember('sitemap', 60, function () use ($path) {
+        SitemapGenerator::create('https://www.aquina-rental-mobil.my.id/')
+            ->writeToFile($path);
+        return file_get_contents($path);
+    });
+
+    return response($sitemap)
+        ->header('Content-Type', 'application/xml');
 });
