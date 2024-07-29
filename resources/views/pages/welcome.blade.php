@@ -14,7 +14,7 @@ state([
 ?>
 
 <x-guest-layout>
-    <x-slot name="title">Welcome Page</x-slot>
+    <x-slot name="title">Aquina Rental Mobil Jambi</x-slot>
     @volt
         <div>
             <section>
