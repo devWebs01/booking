@@ -37,7 +37,7 @@
                             <tr>
                                 <td>{{ $item->user->name }}</td>
                                 <td>{{ $item->product->name }}</td>
-                                <td>{{ $item->rent_date }}</td>
+                                <td>{{ $item->dating }}</td>
                                 <td>
                                     <span class="badge bg-primary py-2">
                                         {{ $item->status }}

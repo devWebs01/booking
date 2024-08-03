@@ -13,14 +13,14 @@ class Transaction extends Model
     protected $fillable = [
         'user_id',
         'product_id',
-        'rent_date',
+        
         'duration',
         'penalty',
-        'with_driver',
+
         'description',
         'status',
         'price_product',
-        'price_driver',
+
         'subtotal',
         'total',
     ];

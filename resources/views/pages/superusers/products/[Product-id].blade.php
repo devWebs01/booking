@@ -4,7 +4,7 @@ use function Laravel\Folio\name;
 use function Livewire\Volt\{state, usesFileUploads, rules, uses};
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ImageProduct;
+use App\Models\ProductImage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 uses(LivewireAlert::class); // Tambahkan trait LivewireAlert
 
@@ -60,14 +60,14 @@ $update = function (product $product) {
     $this->product->update($validated);
 
     if ($this->image) {
-        $imagesProduct = ImageProduct::where('product_id', $this->product->id)->get();
+        $imagesProduct = productImage::where('product_id', $this->product->id)->get();
 
         foreach ($imagesProduct as $image) {
             $image->delete();
         }
 
         foreach ($this->image as $item) {
-            ImageProduct::create([
+            productImage::create([
                 'product_id' => $this->product->id,
                 'image_path' => $item->store('public/images'), // Pastikan $image adalah objek UploadedFile
             ]);
@@ -217,7 +217,7 @@ $update = function (product $product) {
 
                         <p class="text-center">Preview Gambar Mobil</p>
                         <div class="d-flex overflow-auto gap-3 card-header">
-                            @foreach ($product->imageProducts as $item)
+                            @foreach ($product->productImages as $item)
                                 <a href="{{ Storage::url($item->image_path) }}" data-fancybox="gallery"
                                     data-caption="Car images">
 

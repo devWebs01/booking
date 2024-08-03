@@ -3,8 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
-use App\Models\ImageProduct;
-use Illuminate\Support\Str;
+use App\Models\ProductImage;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
@@ -20,7 +19,7 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         // Path to the JSON file
-        $path = public_path('datajson/cars.json');
+        $path = public_path('datajson/futsal.json');
 
         // Check if the file exists
         if (!File::exists($path)) {
@@ -64,22 +63,20 @@ class ProductSeeder extends Seeder
                 Storage::put($imagePath, $imageData);
 
                 // Create product entry
-                $product = product::create([
-                    'category_id' => $item['category_id'],
+                $product = Product::create([
+                    'category_id' => 1,
                     'name' => $item['name'],
                     'price' => $item['price'],
-                    'capacity' => $item['capacity'],
-                    'space' => $item['space'],
                     'description' => $item['description'],
                 ]);
 
                 // Create product image entry
-                imageProduct::create([
+                ProductImage::create([
                     'product_id' => $product->id,
                     'image_path' => 'images/' . $imageName, // Path without 'public/'
                 ]);
 
-                $this->command->info('Tambah Mobil ' . $product->name);
+                $this->command->info('Tambah ' . $product->name);
             } catch (Exception $e) {
                 Log::error("Error processing item: " . $e->getMessage());
             }

@@ -30,7 +30,7 @@
 
     <script src="https://kit.fontawesome.com/21fb7efcbe.js" crossorigin="anonymous"></script>
 
-    
+
 
     <style>
         .nav-bottom {
@@ -50,11 +50,11 @@
             border-radius: 10px;
         }
     </style>
-
+@vite([])
 </head>
 
 <body>
-    @include('layouts.loading')
+
     <header>
         <nav
             class="navbar navbar-light text-dark navbar-expand fixed-bottom d-lg-none d-xl-none rounded nav-bottom mx-4 mb-2 p-0 ">

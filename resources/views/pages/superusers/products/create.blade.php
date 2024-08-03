@@ -3,7 +3,7 @@ use function Laravel\Folio\name;
 use function Livewire\Volt\{state, usesFileUploads, uses, rules};
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\imageProduct;
+use App\Models\ProductImage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 uses(LivewireAlert::class); // Tambahkan trait LivewireAlert
 
@@ -59,7 +59,7 @@ $store = function () {
     $product = product::create($validate);
 
     foreach ($this->image as $item) {
-        imageProduct::create([
+        productImage::create([
             'product_id' => $product->id,
             'image_path' => $item->store('public/images'), // Pastikan $image adalah objek UploadedFile
         ]);

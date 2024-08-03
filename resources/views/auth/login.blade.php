@@ -4,10 +4,10 @@
         <div class="container">
             <div class="row align-items-lg-center mb-5">
                 <div class="col-md-6 mb-5 mb-md-0">
-                    <h1 class="display-1 fw-bolder">Nikmati perjalanan yang mudah <span class="text-primary">dan
-                            nyaman dengan mobil kami.</span></h1>
-                    <p class="lead fw-bold mt-3 mb-4">Masuk ke akun Anda untuk memulai perjalanan Anda dengan mobil
-                        impian.
+                    <h1 class="display-1 fw-bolder">Masuk untuk melanjutkan pesanan <span class="text-primary"> lapangan
+                            futsal kamu.</span></h1>
+                    <p class="lead fw-bold mt-3 mb-4">Bersiaplah untuk pengalaman booking yang mudah dan cepat. Ayo kejar
+                        mimpi futsalmu!
                     </p>
 
                 </div>
@@ -15,7 +15,9 @@
                     <div class="card">
                         <a href="/"
                             class="text-nowrap logo-img text-center d-block pt-5 w-100 text-decoration-none">
-                            <h3 class="fw-bolder">Aquina Rental Jambi</h3>
+                            <h3 class="fw-bolder">
+                                Selamat datang kembali!
+                            </h3>
                         </a>
                         <div class="card-body">
                             <form method="POST" action="{{ route('login') }}">

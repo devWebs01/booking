@@ -6,28 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *'user_id', 'product_id', 'rent_date', 'duration', 'penalty', 'with_driver', 'description',
-     'dateOfConfirmation',
-        'dateOfUse',
-        'dateOfFinished',
-        'dateOfCancelled',
-     */
+   
     public function up(): void
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
-            $table->date('rent_date');
+
             $table->string('price_product');
-            $table->string('price_driver');
+
             $table->string('subtotal')->nullable();
             $table->string('total')->nullable();
             $table->integer('duration');
             $table->string('penalty')->nullable();
-            $table->boolean('with_driver');
+
             $table->enum('status', [
                 'MENUNGGU_KONFIRMASI',
                 'DIKONFIRMASI',

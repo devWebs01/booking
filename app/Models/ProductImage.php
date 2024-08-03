@@ -2,20 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ImageProduct extends Model
+class ProductImage extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'product_id', 'image_path'
     ];
 
     /**
-     * Get the product that owns the imageProduct
+     * Get the product that owns the productImage
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

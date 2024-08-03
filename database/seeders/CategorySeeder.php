@@ -14,17 +14,7 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            ['name' => 'City Car'],
-            ['name' => 'MPV'],
-            ['name' => 'SUV'],
-            // ['name' => 'Van'],
-            // ['name' => 'Mini Bus'],
-            // ['name' => 'Bus'],
-            ['name' => 'Sedan'],
-            // ['name' => 'Coupe'],
-            // ['name' => 'Supercar'],
-            // ['name' => 'Luxury MPV'],
-            // ['name' => 'Hybrid'],
+            ['name' => 'Lapangan Futsal'],
         ];
 
         DB::table('categories')->insert($categories);

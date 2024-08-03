@@ -2,7 +2,6 @@
 
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, on, rules};
-use App\Models\Shop;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 
@@ -90,10 +89,10 @@ $rentproduct = function () {
             <section class="pb-5">
                 <div class="container-fluid">
                     <div class="mb-3 justify-content-center text-center">
-                        @if ($product->imageProducts->isNotEmpty())
+                        @if ($product->productImages->isNotEmpty())
                             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
-                                    @foreach ($product->imageProducts as $no => $item)
+                                    @foreach ($product->productImages as $no => $item)
                                         <div class="carousel-item {{ ++$no == 1 ? 'active' : '' }}">
                                             <img style="width: 100%; height: auto; margin: auto;"
                                                 src="{{ Storage::url($item->image_path) }}" class="rounded" />

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Shop;
+use App\Models\Profile;
 use Illuminate\Database\Seeder;
 
 
@@ -13,7 +13,7 @@ class RentalSeeder extends Seeder
      */
     public function run(): void
     {
-        Shop::create([
+        Profile::create([
             'name' => 'Aquina Rent Jambi',
             'thumbnail' => 'https://lh5.googleusercontent.com/p/AF1QipOj9a4uSsUFj-lFtu3jEkxKZMJalrFWHMUKlqY4=w408-h544-k-no',
             'url_maps' => 'https://maps.app.goo.gl/QfMM9mXvq97hZgB38',

@@ -2,7 +2,6 @@
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, computed, rules, mount};
 use App\Models\Product;
-use App\Models\Shop;
 use App\Models\Transaction;
 
 name('transactions.create');

@@ -1,7 +1,6 @@
 <?php
 
 use function Laravel\Folio\name;
-use App\Models\Shop;
 use function Livewire\Volt\{state, on, rules, uses, usesFileUploads};
 use App\Models\Transaction;
 use Jantinnerezo\LivewireAlert\LivewireAlert;

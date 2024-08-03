@@ -1,7 +1,6 @@
 <?php
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state, computed, usesPagination};
-use App\Models\Shop;
 use App\Models\Category;
 use App\Models\Product;
 use Carbon\Carbon;
@@ -12,7 +11,7 @@ usesPagination(theme: 'bootstrap');
 
 state(['selectedDate', 'categoryId'])->url();
 state([
-    'firstRental' => fn() => shop::first(),
+
     'categories' => fn() => Category::get(),
     'duration',
     'rent_date',
@@ -60,7 +59,7 @@ $search = computed(function () {
                             <h1 class="display-4 fw-bold mb-0">Jadwalkan <span class="text-primary">Rental Mobil</span> mu
                             </h1>
                             <p>Kemanapun tujuan Anda, rental mobil <span class="text-primary">
-                                    {{ $firstRental->name }}</span> adalah pilihan yang tepat.
+                                    </span> adalah pilihan yang tepat.
                             </p>
                         </div>
 
@@ -121,7 +120,7 @@ $search = computed(function () {
                                             </div>
                                             <div class="card-body p-3">
                                                 <img class="mb-4 mt-2 rounded-2 img"
-                                                    @if ($product->imageProducts->isNotEmpty()) src="{{ Storage::url($product->imageProducts->first()->image_path) }}"
+                                                    @if ($product->productImages->isNotEmpty()) src="{{ Storage::url($product->productImages->first()->image_path) }}"
                                                 @else src="https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg" @endif
                                                     alt="booking" height="300px" width="100%"
                                                     style="object-fit: cover" />

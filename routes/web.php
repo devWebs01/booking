@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Shop;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
@@ -21,11 +20,6 @@ Route::get('/', function () {
     return view('pages.welcome');
 });
 
-Route::get('/test', function () {
-    $rentals = shop::all();
-    return view('pages.map-leaflet.index', compact('rentals'));
-});
-
 Auth::routes();
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -38,7 +32,7 @@ Route::get('/generate-sitemap', function () {
 
     // Caching the sitemap generation for 60 minutes
     $sitemap = Cache::remember('sitemap', 60, function () use ($path) {
-        SitemapGenerator::create('https://www.aquina-rental-mobil.my.id/')
+        SitemapGenerator::create('http://localhost/')
             ->writeToFile($path);
         return file_get_contents($path);
     });

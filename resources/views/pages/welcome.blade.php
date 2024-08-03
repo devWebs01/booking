@@ -2,13 +2,12 @@
 use function Laravel\Folio\name;
 use function Livewire\Volt\{state};
 use App\Models\Product;
-use App\Models\Shop;
 
 name('welcome');
 
 state([
-    'products' => fn() => Product::has('imageProducts')->with('imageProducts')->inRandomOrder()->limit(6)->get(),
-    'shop' => fn() => Shop::first(),
+    'products' => fn() => Product::has('productImages')->with('productImages')->inRandomOrder()->limit(6)->get(),
+
 ]);
 
 ?>
@@ -124,7 +123,7 @@ state([
                                         </div>
                                         <div class="card-body p-3">
                                             <img class="mb-4 mt-2 rounded-2 img"
-                                                src="{{ Storage::url($product->imageProducts->first()->image_path) }}"
+                                                src="{{ Storage::url($product->productImages->first()->image_path) }}"
                                                 alt="booking" height="300px" width="100%" style="object-fit: cover" />
                                             <div>
                                                 <h5 class="fw-medium">{{ $product->name }}</h5>

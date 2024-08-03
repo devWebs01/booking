@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Category;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
-use App\Models\ImageProduct;
+use App\Models\ProductImage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,8 +19,7 @@ class Product extends Model
         'name',
         'price',
         'description',
-        'capacity',
-        'space',
+        
         'category_id',
         'status'
     ];
@@ -35,13 +34,13 @@ class Product extends Model
     }
 
     /**
-     * Get all of the imageProduct for the product
+     * Get all of the productImage for the product
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function imageProducts(): HasMany
+    public function productImages(): HasMany
     {
-        return $this->hasMany(imageProduct::class);
+        return $this->hasMany(ProductImage::class);
     }
 
     /**

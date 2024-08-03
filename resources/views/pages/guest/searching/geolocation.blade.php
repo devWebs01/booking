@@ -1,12 +1,6 @@
 <?php
 
 use function Livewire\Volt\{state};
-use App\Models\Shop;
-
-state([
-    'shop' => fn() => Shop::first(),
-]);
-
 ?>
 
 
@@ -19,10 +13,7 @@ state([
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
-        {{-- @include('layouts.leaflet-rental') --}}
-
         <div class="container-fluid">
-            {{-- <div id="map" class="rounded" style="width: 100%; height: 800px;"></div> --}}
 
             <div class="d-grid current-location-btn my-4 rounded">
                 <a href="https://www.google.com/maps/place/Aquina+Rental+Jambi/@-1.6308662,103.6228865,916m/data=!3m1!1e3!4m6!3m5!1s0x2e258746bea4f70d:0xe4cc5dbf51a39b33!8m2!3d-1.6308662!4d103.6228865!16s%2Fg%2F11v3_s9s6s?entry=ttu"

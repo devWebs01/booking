@@ -19,7 +19,7 @@ class DatingFactory extends Factory
     public function definition(): array
     {
         $transaction = Transaction::inRandomOrder()->first();
-        $dateOfTransaction = $transaction->rent_date;
+        $dateOfTransaction = $transaction->created_at;
         $status = $transaction->status;
 
         return [

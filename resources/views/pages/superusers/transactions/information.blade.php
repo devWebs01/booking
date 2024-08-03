@@ -4,10 +4,10 @@
         <div class="card-body">
             <div class="ps-lg-3 text-break">
                 <div class="mb-3 d-flex justify-content-center">
-                    @if ($product->imageProducts->isNotEmpty())
+                    @if ($product->productImages->isNotEmpty())
                     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
-                            @foreach ($product->imageProducts as $no => $item)
+                            @foreach ($product->productImages as $no => $item)
                                 <div class="carousel-item {{ ++$no == 1 ? 'active' : '' }}">
                                     <img style="width: 100%; height: auto; margin: auto;"
                                         src="{{ Storage::url($item->image_path) }}" />

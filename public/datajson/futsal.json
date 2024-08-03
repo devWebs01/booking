@@ -1,0 +1,50 @@
+[
+    {
+        "image": "https://gelora-public-storage.s3-ap-southeast-1.amazonaws.com/upload/public-20230322122450.jpg",
+        "name": "ASATU ARENA CIKINI",
+        "price": "1500000",
+        "description": "1 Lapangan "
+    },
+    {
+        "image": "https://gelora-public-storage.s3-ap-southeast-1.amazonaws.com/upload/public-20221227111233.jpg",
+        "name": "ALA.PANG.AN Permata Hijau",
+        "price": "1050000",
+        "description": "1 Lapangan "
+    },
+    {
+        "image": "https://gelora-public-storage.s3-ap-southeast-1.amazonaws.com/upload/public-20220913084040.jpg",
+        "name": "British School Jakarta Tennis",
+        "price": "400000",
+        "description": "2 Lapangan "
+    },
+    {
+        "image": "https://gelora-public-storage.s3-ap-southeast-1.amazonaws.com/upload/public-20240506074008.jpg",
+        "name": "Big Man 3on3",
+        "price": "200000",
+        "description": "1 Lapangan "
+    },
+    {
+        "image": "https://gelora-public-storage.s3-ap-southeast-1.amazonaws.com/upload/public-20220902070946.jpg",
+        "name": "POP Mini Soccer Jakarta",
+        "price": "500000",
+        "description": "2 Lapangan "
+    },
+    {
+        "image": "https://gelora-public-storage.s3-ap-southeast-1.amazonaws.com/upload/public-20210928053548.jpg",
+        "name": "Koramil Arena 04",
+        "price": "300000",
+        "description": "2 Lapangan "
+    },
+    {
+        "image": "https://gelora-public-storage.s3-ap-southeast-1.amazonaws.com/upload/public-20231122083554.jpg",
+        "name": "Inspire Arena Sulut",
+        "price": "125000",
+        "description": "4 Lapangan "
+    },
+    {
+        "image": "https://gelora-public-storage.s3-ap-southeast-1.amazonaws.com/upload/public-20221002131122.jpg",
+        "name": "STC Basketball",
+        "price": "400000",
+        "description": "2 Lapangan "
+    }
+]

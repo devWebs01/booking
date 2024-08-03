@@ -4,12 +4,14 @@
         <div class="container">
             <div class="row align-items-lg-center mb-5">
                 <div class="col-md-6 mb-5 mb-md-0">
-                    <h1 class="display-3 fw-bolder">Nikmati pengalaman rental mobil yang mudah, <span
-                            class="text-primary">
-                            nyaman, dan
-                            terpercaya.</span></h1>
-                    <p class="lead fw-bold mt-3 mb-4">Daftarkan diri Anda sekarang juga untuk mendapatkan penawaran
-                        spesial!</p>
+                    <h1 class="display-3 fw-bolder">Bergabunglah dengan komunitas <span class="text-primary">
+                            pencinta futsal kami!
+                        </span></h1>
+                    <p class="lead fw-bold mt-3 mb-4">
+                        Daftar sekarang
+                        untuk mendapatkan akses booking yang
+                        terjamin.
+                        Mulailah perjalanan futsalmu hari ini!</p>
                 </div>
                 <div class="col-md-5 col-md-6">
                     <div class="card">
@@ -21,7 +23,9 @@
                                 @csrf
 
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">{{ __('Name') }}</label>
+                                    <label for="name" class="form-label">
+                                        Nama Lengkap
+                                    </label>
                                     <input id="name" type="text"
                                         class="form-control @error('name') is-invalid @enderror" name="name"
                                         value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -35,7 +39,9 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">{{ __('Email Address') }}</label>
+                                    <label for="email" class="form-label">
+                                        Email
+                                    </label>
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
                                         value="{{ old('email') }}" required autocomplete="email">
@@ -49,7 +55,9 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="password" class="form-label">{{ __('Password') }}</label>
+                                    <label for="password" class="form-label">
+                                        Kata Sandi
+                                    </label>
 
                                     <div class="input-group">
 
@@ -69,8 +77,9 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="password-confirm"
-                                        class="form-label">{{ __('Confirm Password') }}</label>
+                                    <label for="password-confirm" class="form-label">
+                                        Ulangi Kata Sandi
+                                    </label>
 
                                     <div class="input-group">
 
